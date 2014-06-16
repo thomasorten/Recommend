@@ -21,6 +21,16 @@
 		45F6F6AB194F848D00289EF0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F68D194F848D00289EF0 /* UIKit.framework */; };
 		45F6F6B3194F848D00289EF0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45F6F6B1194F848D00289EF0 /* InfoPlist.strings */; };
 		45F6F6B5194F848D00289EF0 /* RecommendTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F6B4194F848D00289EF0 /* RecommendTests.m */; };
+		45F6F6BF194F86BB00289EF0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F6BE194F86BB00289EF0 /* AudioToolbox.framework */; };
+		45F6F6C1194F86C100289EF0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F6C0194F86C100289EF0 /* CFNetwork.framework */; };
+		45F6F6C3194F86CF00289EF0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F6C2194F86CF00289EF0 /* CoreLocation.framework */; };
+		45F6F6C5194F86D700289EF0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F6C4194F86D700289EF0 /* libz.dylib */; };
+		45F6F6C7194F86DE00289EF0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F6C6194F86DE00289EF0 /* MobileCoreServices.framework */; };
+		45F6F6C9194F86E500289EF0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F6C8194F86E500289EF0 /* QuartzCore.framework */; };
+		45F6F6CB194F86EA00289EF0 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F6CA194F86EA00289EF0 /* Security.framework */; };
+		45F6F6CD194F86F100289EF0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F6CC194F86F100289EF0 /* StoreKit.framework */; };
+		45F6F6CF194F86F700289EF0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F6CE194F86F700289EF0 /* SystemConfiguration.framework */; };
+		45F6F6D1194F870200289EF0 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F6D0194F870200289EF0 /* Parse.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +63,16 @@
 		45F6F6B0194F848D00289EF0 /* RecommendTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RecommendTests-Info.plist"; sourceTree = "<group>"; };
 		45F6F6B2194F848D00289EF0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		45F6F6B4194F848D00289EF0 /* RecommendTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendTests.m; sourceTree = "<group>"; };
+		45F6F6BE194F86BB00289EF0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		45F6F6C0194F86C100289EF0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		45F6F6C2194F86CF00289EF0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		45F6F6C4194F86D700289EF0 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		45F6F6C6194F86DE00289EF0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		45F6F6C8194F86E500289EF0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		45F6F6CA194F86EA00289EF0 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		45F6F6CC194F86F100289EF0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		45F6F6CE194F86F700289EF0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		45F6F6D0194F870200289EF0 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +80,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45F6F6CF194F86F700289EF0 /* SystemConfiguration.framework in Frameworks */,
+				45F6F6CD194F86F100289EF0 /* StoreKit.framework in Frameworks */,
+				45F6F6CB194F86EA00289EF0 /* Security.framework in Frameworks */,
+				45F6F6C9194F86E500289EF0 /* QuartzCore.framework in Frameworks */,
+				45F6F6C7194F86DE00289EF0 /* MobileCoreServices.framework in Frameworks */,
+				45F6F6C5194F86D700289EF0 /* libz.dylib in Frameworks */,
+				45F6F6D1194F870200289EF0 /* Parse.framework in Frameworks */,
+				45F6F6C3194F86CF00289EF0 /* CoreLocation.framework in Frameworks */,
 				45F6F68C194F848D00289EF0 /* CoreGraphics.framework in Frameworks */,
+				45F6F6C1194F86C100289EF0 /* CFNetwork.framework in Frameworks */,
+				45F6F6BF194F86BB00289EF0 /* AudioToolbox.framework in Frameworks */,
 				45F6F68E194F848D00289EF0 /* UIKit.framework in Frameworks */,
 				45F6F68A194F848D00289EF0 /* Foundation.framework in Frameworks */,
 			);
@@ -101,6 +131,16 @@
 		45F6F688194F848D00289EF0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				45F6F6D0194F870200289EF0 /* Parse.framework */,
+				45F6F6CE194F86F700289EF0 /* SystemConfiguration.framework */,
+				45F6F6CC194F86F100289EF0 /* StoreKit.framework */,
+				45F6F6CA194F86EA00289EF0 /* Security.framework */,
+				45F6F6C8194F86E500289EF0 /* QuartzCore.framework */,
+				45F6F6C6194F86DE00289EF0 /* MobileCoreServices.framework */,
+				45F6F6C4194F86D700289EF0 /* libz.dylib */,
+				45F6F6C2194F86CF00289EF0 /* CoreLocation.framework */,
+				45F6F6C0194F86C100289EF0 /* CFNetwork.framework */,
+				45F6F6BE194F86BB00289EF0 /* AudioToolbox.framework */,
 				45F6F689194F848D00289EF0 /* Foundation.framework */,
 				45F6F68B194F848D00289EF0 /* CoreGraphics.framework */,
 				45F6F68D194F848D00289EF0 /* UIKit.framework */,
@@ -376,6 +416,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Recommend/Recommend-Prefix.pch";
 				INFOPLIST_FILE = "Recommend/Recommend-Info.plist";
@@ -389,6 +433,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Recommend/Recommend-Prefix.pch";
 				INFOPLIST_FILE = "Recommend/Recommend-Info.plist";
