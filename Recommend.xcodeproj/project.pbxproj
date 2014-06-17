@@ -34,6 +34,7 @@
 		45F6F6D4194F8F5900289EF0 /* AddRecommendationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F6D3194F8F5900289EF0 /* AddRecommendationViewController.m */; };
 		45F6F6D7194F8F7A00289EF0 /* MapViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F6D6194F8F7A00289EF0 /* MapViewViewController.m */; };
 		45F6F6DA194F921D00289EF0 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F6D9194F921D00289EF0 /* LocationViewController.m */; };
+		45F6F6DF1950CBAA00289EF0 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F6DE1950CBAA00289EF0 /* AssetsLibrary.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,11 @@
 		45F6F6D6194F8F7A00289EF0 /* MapViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewViewController.m; sourceTree = "<group>"; };
 		45F6F6D8194F921D00289EF0 /* LocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
 		45F6F6D9194F921D00289EF0 /* LocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
+		45F6F6DE1950CBAA00289EF0 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		45F6F6E01950CCEE00289EF0 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		45F6F6E11950CCEE00289EF0 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		45F6F6E41950CD2F00289EF0 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		45F6F6E61950CD5700289EF0 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45F6F6DF1950CBAA00289EF0 /* AssetsLibrary.framework in Frameworks */,
 				45F6F6CF194F86F700289EF0 /* SystemConfiguration.framework in Frameworks */,
 				45F6F6CD194F86F100289EF0 /* StoreKit.framework in Frameworks */,
 				45F6F6CB194F86EA00289EF0 /* Security.framework in Frameworks */,
@@ -140,6 +147,11 @@
 		45F6F688194F848D00289EF0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				45F6F6E61950CD5700289EF0 /* CoreVideo.framework */,
+				45F6F6E41950CD2F00289EF0 /* CoreMedia.framework */,
+				45F6F6E01950CCEE00289EF0 /* CoreImage.framework */,
+				45F6F6E11950CCEE00289EF0 /* ImageIO.framework */,
+				45F6F6DE1950CBAA00289EF0 /* AssetsLibrary.framework */,
 				45F6F6D0194F870200289EF0 /* Parse.framework */,
 				45F6F6CE194F86F700289EF0 /* SystemConfiguration.framework */,
 				45F6F6CC194F86F100289EF0 /* StoreKit.framework */,

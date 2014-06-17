@@ -11,4 +11,5 @@
 @interface AddRecommendationViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField *recommendationTextField;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
+@property (weak, nonatomic) IBOutlet UIImageView *capturedImageView;
 @end

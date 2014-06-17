@@ -73,11 +73,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xqF-XD-5eK" userLabel="BG - to be hidden">
-                                <rect key="frame" x="-10" y="-11" width="330" height="579"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LWQ-Ng-YjR">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.45955757472826086" green="0.45955757472826086" blue="0.45955757472826086" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
+                            </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X6F-Ei-hM3">
                                 <rect key="frame" x="-5" y="-5" width="330" height="579"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -97,7 +96,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="What do you recommend?" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m8s-DQ-6bv">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="What do you recommend?" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m8s-DQ-6bv">
                                         <rect key="frame" x="25" y="293" width="280" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -107,10 +106,11 @@
                                             <outlet property="delegate" destination="SBR-78-eyY" id="Bzs-9C-jZN"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9em-Va-cbz">
-                                        <rect key="frame" x="122" y="477" width="87" height="30"/>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9em-Va-cbz">
+                                        <rect key="frame" x="110" y="452" width="113" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Set Location">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -118,30 +118,28 @@
                                             <segue destination="XyQ-Y2-tSz" kind="push" id="UHJ-V9-BkG"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUx-0s-1mh">
-                                        <rect key="frame" x="45" y="434" width="44" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUx-0s-1mh">
+                                        <rect key="frame" x="25" y="441" width="56" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Album">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                        <state key="normal" image="cameraroll"/>
                                         <connections>
                                             <action selector="onAlbumPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="V8H-I1-fYP"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4w-xb-dbt">
-                                        <rect key="frame" x="243" y="434" width="37" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4w-xb-dbt">
+                                        <rect key="frame" x="258" y="444" width="44" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Flash">
+                                        <state key="normal" image="flash">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="onFlashPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="HGZ-Wc-S17"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m5x-6b-0FO">
-                                        <rect key="frame" x="147" y="434" width="36" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m5x-6b-0FO">
+                                        <rect key="frame" x="125" y="424" width="83" height="83"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Snap">
+                                        <state key="normal" image="snap">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -158,6 +156,16 @@
                                             <outlet property="delegate" destination="SBR-78-eyY" id="ber-RB-xdO"/>
                                         </connections>
                                     </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WyJ-mD-LOd">
+                                        <rect key="frame" x="270" y="28" width="32" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="close">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onCloseCameraPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="xj8-b7-wM1"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </scrollView>
                         </subviews>
@@ -165,7 +173,9 @@
                     <navigationItem key="navigationItem" id="SxA-sF-ieT"/>
                     <connections>
                         <outlet property="cameraScrollView" destination="X6F-Ei-hM3" id="ThF-jx-t5K"/>
+                        <outlet property="capturedImageView" destination="LWQ-Ng-YjR" id="9NI-jK-sRG"/>
                         <outlet property="descriptionTextView" destination="K8x-Kl-G27" id="0Ey-Vb-9iJ"/>
+                        <outlet property="flashButton" destination="J4w-xb-dbt" id="qZf-18-exu"/>
                         <outlet property="recommendationTextField" destination="m8s-DQ-6bv" id="A78-KL-YyL"/>
                     </connections>
                 </viewController>
@@ -251,6 +261,12 @@
             <point key="canvasLocation" x="684" y="824"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cameraroll" width="50" height="50"/>
+        <image name="close" width="32" height="32"/>
+        <image name="flash" width="32" height="32"/>
+        <image name="snap" width="83" height="83"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
