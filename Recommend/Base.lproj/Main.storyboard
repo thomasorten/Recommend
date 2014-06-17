@@ -147,9 +147,9 @@
                                         </connections>
                                     </textField>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9em-Va-cbz">
-                                        <rect key="frame" x="62" y="422" width="206" height="31"/>
+                                        <rect key="frame" x="41" y="417" width="251" height="36"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                         <state key="normal" title="Great! Now set photo location">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -207,7 +207,7 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NH3-wj-gkM">
-                                        <rect key="frame" x="99" y="461" width="133" height="30"/>
+                                        <rect key="frame" x="84" y="477" width="155" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                         <state key="normal" title="Take another photo">
@@ -218,6 +218,13 @@
                                             <action selector="onTakeAnotherPhotoPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="HGg-iO-U65"/>
                                         </connections>
                                     </button>
+                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="or" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sli-A9-VIg">
+                                        <rect key="frame" x="158" y="453" width="16" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </scrollView>
                         </subviews>
@@ -231,6 +238,7 @@
                         <outlet property="flashButton" destination="J4w-xb-dbt" id="qZf-18-exu"/>
                         <outlet property="lineThree" destination="jrZ-ih-EdD" id="wAl-Pa-BDW"/>
                         <outlet property="lineTwo" destination="lyj-cX-3Qz" id="PiG-Ly-nm7"/>
+                        <outlet property="orLabel" destination="sli-A9-VIg" id="N1e-tF-JDH"/>
                         <outlet property="recommendationTextField" destination="m8s-DQ-6bv" id="A78-KL-YyL"/>
                         <outlet property="setLocationButton" destination="9em-Va-cbz" id="Ufo-UA-5Zm"/>
                         <outlet property="takeAnotherButton" destination="NH3-wj-gkM" id="riG-qg-iPI"/>

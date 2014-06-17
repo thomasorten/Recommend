@@ -7,7 +7,6 @@
 //
 
 #import "AddRecommendationViewController.h"
-#import "HomeViewController.h"
 
 #define defaultTitleString @"What do you recommend?"
 #define defaultDescriptionString @"Write a short description here."
@@ -26,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIView *topLine;
 @property (weak, nonatomic) IBOutlet UIView *lineTwo;
 @property (weak, nonatomic) IBOutlet UIView *lineThree;
+@property (weak, nonatomic) IBOutlet UILabel *orLabel;
 @end
 
 @implementation AddRecommendationViewController
@@ -83,6 +83,7 @@
     self.lineTwo.hidden = NO;
     self.lineThree.hidden = NO;
 
+    self.orLabel.hidden = YES;
     self.capturedImageView.hidden = YES;
     self.setLocationButton.hidden = YES;
     self.takeAnotherButton.hidden = YES;
@@ -90,6 +91,14 @@
 
 - (void)hideCamera
 {
+    [self.setLocationButton.layer setBorderWidth:1.0];
+    [self.setLocationButton.layer setCornerRadius:5];
+    [self.setLocationButton.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+
+    [self.takeAnotherButton.layer setBorderWidth:1.0];
+    [self.takeAnotherButton.layer setCornerRadius:5];
+    [self.takeAnotherButton.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+
     self.takePictureButton.hidden = YES;
     self.cameraRollButton.hidden = YES;
     self.flashButton.hidden = YES;
@@ -97,6 +106,7 @@
     self.lineTwo.hidden = YES;
     self.lineThree.hidden = YES;
 
+    self.orLabel.hidden = NO;
     self.capturedImageView.hidden = NO;
     self.setLocationButton.hidden = NO;
     self.takeAnotherButton.hidden = NO;
