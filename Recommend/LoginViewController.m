@@ -7,7 +7,6 @@
 //
 
 #import "LoginViewController.h"
-#import <Parse/Parse.h>
 
 
 @interface LoginViewController ()
@@ -20,9 +19,8 @@
 {
     [super viewDidLoad];
 
-    id permissions = @[@"permission"];
-
-    [PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error) {
+    NSArray *permissionsArray = @[@"user_about_me", @"user_relationships", @"user_birthday", @"user_location"];
+    [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
         if (!user) {
             NSLog(@"User cancelled the facebook login.");
         } else if (user.isNew) {
