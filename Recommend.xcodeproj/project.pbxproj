@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2678FC2E1950847400270B7F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2678FC2D1950847400270B7F /* MapKit.framework */; };
 		45F6F68A194F848D00289EF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F689194F848D00289EF0 /* Foundation.framework */; };
 		45F6F68C194F848D00289EF0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F68B194F848D00289EF0 /* CoreGraphics.framework */; };
 		45F6F68E194F848D00289EF0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F68D194F848D00289EF0 /* UIKit.framework */; };
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2678FC2D1950847400270B7F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		45F6F686194F848D00289EF0 /* Recommend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recommend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45F6F689194F848D00289EF0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		45F6F68B194F848D00289EF0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -89,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2678FC2E1950847400270B7F /* MapKit.framework in Frameworks */,
 				45F6F6CF194F86F700289EF0 /* SystemConfiguration.framework in Frameworks */,
 				45F6F6CD194F86F100289EF0 /* StoreKit.framework in Frameworks */,
 				45F6F6CB194F86EA00289EF0 /* Security.framework in Frameworks */,
@@ -118,6 +121,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2678FC2C194F97B500270B7F /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				45F6F6D2194F8F5900289EF0 /* AddRecommendationViewController.h */,
+				45F6F6D3194F8F5900289EF0 /* AddRecommendationViewController.m */,
+				45F6F6D5194F8F7A00289EF0 /* MapViewViewController.h */,
+				45F6F6D6194F8F7A00289EF0 /* MapViewViewController.m */,
+				45F6F6D8194F921D00289EF0 /* LocationViewController.h */,
+				45F6F6D9194F921D00289EF0 /* LocationViewController.m */,
+				45F6F69E194F848D00289EF0 /* HomeViewController.h */,
+				45F6F69F194F848D00289EF0 /* HomeViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
 		45F6F67D194F848D00289EF0 = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +158,7 @@
 		45F6F688194F848D00289EF0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2678FC2D1950847400270B7F /* MapKit.framework */,
 				45F6F6D0194F870200289EF0 /* Parse.framework */,
 				45F6F6CE194F86F700289EF0 /* SystemConfiguration.framework */,
 				45F6F6CC194F86F100289EF0 /* StoreKit.framework */,
@@ -161,17 +180,10 @@
 		45F6F68F194F848D00289EF0 /* Recommend */ = {
 			isa = PBXGroup;
 			children = (
-				45F6F698194F848D00289EF0 /* AppDelegate.h */,
-				45F6F6D2194F8F5900289EF0 /* AddRecommendationViewController.h */,
-				45F6F6D3194F8F5900289EF0 /* AddRecommendationViewController.m */,
-				45F6F6D5194F8F7A00289EF0 /* MapViewViewController.h */,
-				45F6F6D6194F8F7A00289EF0 /* MapViewViewController.m */,
-				45F6F699194F848D00289EF0 /* AppDelegate.m */,
 				45F6F69B194F848D00289EF0 /* Main.storyboard */,
-				45F6F6D8194F921D00289EF0 /* LocationViewController.h */,
-				45F6F6D9194F921D00289EF0 /* LocationViewController.m */,
-				45F6F69E194F848D00289EF0 /* HomeViewController.h */,
-				45F6F69F194F848D00289EF0 /* HomeViewController.m */,
+				45F6F698194F848D00289EF0 /* AppDelegate.h */,
+				45F6F699194F848D00289EF0 /* AppDelegate.m */,
+				2678FC2C194F97B500270B7F /* ViewControllers */,
 				45F6F6A1194F848D00289EF0 /* Images.xcassets */,
 				45F6F690194F848D00289EF0 /* Supporting Files */,
 			);
@@ -522,6 +534,7 @@
 				45F6F6BA194F848D00289EF0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		45F6F6BB194F848D00289EF0 /* Build configuration list for PBXNativeTarget "RecommendTests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +543,7 @@
 				45F6F6BD194F848D00289EF0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
