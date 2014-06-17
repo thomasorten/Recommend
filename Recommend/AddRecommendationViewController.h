@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface AddRecommendationViewController : UIViewController
-
+@property (weak, nonatomic) IBOutlet UITextField *recommendationTextField;
+@property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
 @end

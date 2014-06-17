@@ -162,11 +162,11 @@
 			isa = PBXGroup;
 			children = (
 				45F6F698194F848D00289EF0 /* AppDelegate.h */,
+				45F6F699194F848D00289EF0 /* AppDelegate.m */,
 				45F6F6D2194F8F5900289EF0 /* AddRecommendationViewController.h */,
 				45F6F6D3194F8F5900289EF0 /* AddRecommendationViewController.m */,
 				45F6F6D5194F8F7A00289EF0 /* MapViewViewController.h */,
 				45F6F6D6194F8F7A00289EF0 /* MapViewViewController.m */,
-				45F6F699194F848D00289EF0 /* AppDelegate.m */,
 				45F6F69B194F848D00289EF0 /* Main.storyboard */,
 				45F6F6D8194F921D00289EF0 /* LocationViewController.h */,
 				45F6F6D9194F921D00289EF0 /* LocationViewController.m */,
@@ -522,6 +522,7 @@
 				45F6F6BA194F848D00289EF0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		45F6F6BB194F848D00289EF0 /* Build configuration list for PBXNativeTarget "RecommendTests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +531,7 @@
 				45F6F6BD194F848D00289EF0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
