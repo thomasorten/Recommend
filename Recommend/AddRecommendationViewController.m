@@ -18,7 +18,14 @@
 @property UITextView *activeTextView;
 @property UIImagePickerController *picker;
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
+@property (weak, nonatomic) IBOutlet UIButton *takeAnotherButton;
 @property UIImage *currentFlashImage;
+@property (weak, nonatomic) IBOutlet UIButton *setLocationButton;
+@property (weak, nonatomic) IBOutlet UIButton *cameraRollButton;
+@property (weak, nonatomic) IBOutlet UIButton *takePictureButton;
+@property (weak, nonatomic) IBOutlet UIView *topLine;
+@property (weak, nonatomic) IBOutlet UIView *lineTwo;
+@property (weak, nonatomic) IBOutlet UIView *lineThree;
 @end
 
 @implementation AddRecommendationViewController
@@ -67,6 +74,34 @@
     }
 }
 
+- (void)showCamera
+{
+    self.takePictureButton.hidden = NO;
+    self.cameraRollButton.hidden = NO;
+    self.flashButton.hidden = NO;
+    self.topLine.hidden = NO;
+    self.lineTwo.hidden = NO;
+    self.lineThree.hidden = NO;
+
+    self.capturedImageView.hidden = YES;
+    self.setLocationButton.hidden = YES;
+    self.takeAnotherButton.hidden = YES;
+}
+
+- (void)hideCamera
+{
+    self.takePictureButton.hidden = YES;
+    self.cameraRollButton.hidden = YES;
+    self.flashButton.hidden = YES;
+    self.topLine.hidden = YES;
+    self.lineTwo.hidden = YES;
+    self.lineThree.hidden = YES;
+
+    self.capturedImageView.hidden = NO;
+    self.setLocationButton.hidden = NO;
+    self.takeAnotherButton.hidden = NO;
+}
+
 - (IBAction)onAlbumPressed:(id)sender
 {
     
@@ -75,6 +110,11 @@
 - (IBAction)onTakePhotoPressed:(id)sender
 {
     [self.picker takePicture];
+}
+
+- (IBAction)onTakeAnotherPhotoPressed:(id)sender
+{
+    [self showCamera];
 }
 
 - (IBAction)onFlashPressed:(id)sender
@@ -88,16 +128,18 @@
     }
 }
 
-- (IBAction)onSetLocationPressed:(id)sender
-{
-
-}
-
 - (IBAction)onCloseCameraPressed:(id)sender
 {
     [self.picker dismissViewControllerAnimated:NO completion:^{
     }];
     [self.tabBarController setSelectedIndex:0];
+}
+
+- (IBAction)onSetLocationPressed:(id)sender
+{
+    [self.picker dismissViewControllerAnimated:NO completion:^{
+    }];
+    [self performSegueWithIdentifier:@"LocationSegue" sender:self];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -106,6 +148,9 @@
     NSURL *path = [info valueForKey:UIImagePickerControllerReferenceURL];
 
     self.capturedImageView.image = image;
+
+    [self hideCamera];
+
     [picker dismissViewControllerAnimated:YES completion:^{
     }];
 }

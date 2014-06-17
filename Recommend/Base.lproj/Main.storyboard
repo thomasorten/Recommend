@@ -147,15 +147,15 @@
                                         </connections>
                                     </textField>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9em-Va-cbz">
-                                        <rect key="frame" x="110" y="452" width="113" height="31"/>
+                                        <rect key="frame" x="62" y="422" width="206" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Set Location">
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                        <state key="normal" title="Great! Now set photo location">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="onSetLocationPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="Vvs-lC-nPY"/>
-                                            <segue destination="XyQ-Y2-tSz" kind="push" id="UHJ-V9-BkG"/>
+                                            <action selector="onSetLocationPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="qq8-A7-4PU"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUx-0s-1mh">
@@ -206,22 +206,42 @@
                                             <action selector="onCloseCameraPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="xj8-b7-wM1"/>
                                         </connections>
                                     </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NH3-wj-gkM">
+                                        <rect key="frame" x="99" y="461" width="133" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                        <state key="normal" title="Take another photo">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onTakeAnotherPhotoPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="HGg-iO-U65"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </scrollView>
                         </subviews>
                     </view>
                     <navigationItem key="navigationItem" id="SxA-sF-ieT"/>
                     <connections>
+                        <outlet property="cameraRollButton" destination="nUx-0s-1mh" id="8y0-8L-Ep7"/>
                         <outlet property="cameraScrollView" destination="X6F-Ei-hM3" id="ThF-jx-t5K"/>
                         <outlet property="capturedImageView" destination="LWQ-Ng-YjR" id="9NI-jK-sRG"/>
                         <outlet property="descriptionTextView" destination="K8x-Kl-G27" id="0Ey-Vb-9iJ"/>
                         <outlet property="flashButton" destination="J4w-xb-dbt" id="qZf-18-exu"/>
+                        <outlet property="lineThree" destination="jrZ-ih-EdD" id="wAl-Pa-BDW"/>
+                        <outlet property="lineTwo" destination="lyj-cX-3Qz" id="PiG-Ly-nm7"/>
                         <outlet property="recommendationTextField" destination="m8s-DQ-6bv" id="A78-KL-YyL"/>
+                        <outlet property="setLocationButton" destination="9em-Va-cbz" id="Ufo-UA-5Zm"/>
+                        <outlet property="takeAnotherButton" destination="NH3-wj-gkM" id="riG-qg-iPI"/>
+                        <outlet property="takePictureButton" destination="m5x-6b-0FO" id="C4Y-jd-ptl"/>
+                        <outlet property="topLine" destination="Ohc-Xd-gv1" id="JD3-H6-X90"/>
+                        <segue destination="XyQ-Y2-tSz" kind="push" identifier="LocationSegue" id="iau-8Q-9nH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i4e-Il-k94" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1210" y="824"/>
+            <point key="canvasLocation" x="1226" y="824"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Tzo-Gv-GDH">
