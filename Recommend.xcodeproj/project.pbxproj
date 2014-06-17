@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2678FC2E1950847400270B7F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2678FC2D1950847400270B7F /* MapKit.framework */; };
+		269650D41950CC0000418FCE /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269650D31950CC0000418FCE /* LoginViewController.m */; };
+		269650D71950CE1500418FCE /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269650D61950CE1500418FCE /* FacebookSDK.framework */; };
 		45F6F68A194F848D00289EF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F689194F848D00289EF0 /* Foundation.framework */; };
 		45F6F68C194F848D00289EF0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F68B194F848D00289EF0 /* CoreGraphics.framework */; };
 		45F6F68E194F848D00289EF0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F68D194F848D00289EF0 /* UIKit.framework */; };
@@ -49,6 +51,9 @@
 
 /* Begin PBXFileReference section */
 		2678FC2D1950847400270B7F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		269650D21950CC0000418FCE /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		269650D31950CC0000418FCE /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		269650D61950CE1500418FCE /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		45F6F686194F848D00289EF0 /* Recommend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recommend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45F6F689194F848D00289EF0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		45F6F68B194F848D00289EF0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -102,6 +107,7 @@
 				45F6F6C3194F86CF00289EF0 /* CoreLocation.framework in Frameworks */,
 				45F6F68C194F848D00289EF0 /* CoreGraphics.framework in Frameworks */,
 				45F6F6C1194F86C100289EF0 /* CFNetwork.framework in Frameworks */,
+				269650D71950CE1500418FCE /* FacebookSDK.framework in Frameworks */,
 				45F6F6BF194F86BB00289EF0 /* AudioToolbox.framework in Frameworks */,
 				45F6F68E194F848D00289EF0 /* UIKit.framework in Frameworks */,
 				45F6F68A194F848D00289EF0 /* Foundation.framework in Frameworks */,
@@ -158,6 +164,7 @@
 		45F6F688194F848D00289EF0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				269650D61950CE1500418FCE /* FacebookSDK.framework */,
 				2678FC2D1950847400270B7F /* MapKit.framework */,
 				45F6F6D0194F870200289EF0 /* Parse.framework */,
 				45F6F6CE194F86F700289EF0 /* SystemConfiguration.framework */,
@@ -192,6 +199,8 @@
 				45F6F6D9194F921D00289EF0 /* LocationViewController.m */,
 				45F6F69E194F848D00289EF0 /* HomeViewController.h */,
 				45F6F69F194F848D00289EF0 /* HomeViewController.m */,
+				269650D21950CC0000418FCE /* LoginViewController.h */,
+				269650D31950CC0000418FCE /* LoginViewController.m */,
 				45F6F6A1194F848D00289EF0 /* Images.xcassets */,
 				45F6F690194F848D00289EF0 /* Supporting Files */,
 			);
@@ -328,6 +337,7 @@
 				45F6F6DA194F921D00289EF0 /* LocationViewController.m in Sources */,
 				45F6F69A194F848D00289EF0 /* AppDelegate.m in Sources */,
 				45F6F6D7194F8F7A00289EF0 /* MapViewViewController.m in Sources */,
+				269650D41950CC0000418FCE /* LoginViewController.m in Sources */,
 				45F6F696194F848D00289EF0 /* main.m in Sources */,
 				45F6F6D4194F8F5900289EF0 /* AddRecommendationViewController.m in Sources */,
 			);
@@ -454,6 +464,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -471,6 +482,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

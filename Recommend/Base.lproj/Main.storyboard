@@ -67,6 +67,7 @@
                                 <state key="normal" title="Set Location"/>
                                 <connections>
                                     <action selector="onSetButtonPressed:" destination="XyQ-Y2-tSz" eventType="touchUpInside" id="gVU-Rx-e7i"/>
+                                    <segue destination="CCy-zA-3Mc" kind="modal" id="1G7-dD-5Nm"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -81,6 +82,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="odz-jN-dcm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1701" y="824"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="oMZ-pO-JRG">
+            <objects>
+                <viewController id="CCy-zA-3Mc" customClass="LoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="M9u-Id-Yv4"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZIV-vU-1i6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xpM-AT-ypd">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jK7-fa-b3j" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2142" y="824"/>
         </scene>
         <!--Add Recommendation View Controller-->
         <scene sceneID="K2o-GF-bxi">
