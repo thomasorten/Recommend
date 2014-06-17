@@ -37,6 +37,7 @@
 		45F6F6F31950EA6C00289EF0 /* AddRecommendationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F6E91950EA6C00289EF0 /* AddRecommendationViewController.m */; };
 		45F6F6F41950EA6C00289EF0 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F6EB1950EA6C00289EF0 /* HomeViewController.m */; };
 		45F6F6F71950EA6C00289EF0 /* MapViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F6F01950EA6C00289EF0 /* MapViewViewController.m */; };
+		45F6F6FB1950EBB300289EF0 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F6FA1950EBB300289EF0 /* LocationViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,8 @@
 		45F6F6EB1950EA6C00289EF0 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		45F6F6EF1950EA6C00289EF0 /* MapViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewViewController.h; sourceTree = "<group>"; };
 		45F6F6F01950EA6C00289EF0 /* MapViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewViewController.m; sourceTree = "<group>"; };
+		45F6F6F91950EBB300289EF0 /* LocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
+		45F6F6FA1950EBB300289EF0 /* LocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +184,8 @@
 		45F6F68F194F848D00289EF0 /* Recommend */ = {
 			isa = PBXGroup;
 			children = (
+				45F6F6F91950EBB300289EF0 /* LocationViewController.h */,
+				45F6F6FA1950EBB300289EF0 /* LocationViewController.m */,
 				45F6F6E81950EA6C00289EF0 /* AddRecommendationViewController.h */,
 				45F6F6E91950EA6C00289EF0 /* AddRecommendationViewController.m */,
 				45F6F6EA1950EA6C00289EF0 /* HomeViewController.h */,
@@ -326,6 +331,7 @@
 			files = (
 				45F6F69A194F848D00289EF0 /* AppDelegate.m in Sources */,
 				269650D41950CC0000418FCE /* LoginViewController.m in Sources */,
+				45F6F6FB1950EBB300289EF0 /* LocationViewController.m in Sources */,
 				45F6F6F71950EA6C00289EF0 /* MapViewViewController.m in Sources */,
 				45F6F696194F848D00289EF0 /* main.m in Sources */,
 				45F6F6F41950EA6C00289EF0 /* HomeViewController.m in Sources */,
