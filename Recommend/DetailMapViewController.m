@@ -7,9 +7,10 @@
 //
 
 #import "DetailMapViewController.h"
+#import <MapKit/MapKit.h>
 
 @interface DetailMapViewController ()
-
+@property (weak, nonatomic) IBOutlet MKMapView *detailMapView;
 @end
 
 @implementation DetailMapViewController
