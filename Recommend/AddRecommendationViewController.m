@@ -79,9 +79,6 @@
     self.takePictureButton.hidden = NO;
     self.cameraRollButton.hidden = NO;
     self.flashButton.hidden = NO;
-    self.topLine.hidden = NO;
-    self.lineTwo.hidden = NO;
-    self.lineThree.hidden = NO;
 
     self.orLabel.hidden = YES;
     self.capturedImageView.hidden = YES;
@@ -102,9 +99,6 @@
     self.takePictureButton.hidden = YES;
     self.cameraRollButton.hidden = YES;
     self.flashButton.hidden = YES;
-    self.topLine.hidden = YES;
-    self.lineTwo.hidden = YES;
-    self.lineThree.hidden = YES;
 
     self.orLabel.hidden = NO;
     self.capturedImageView.hidden = NO;
