@@ -8,10 +8,24 @@
 
 #import "AddRecommendationViewController.h"
 
+#define defaultTitleString @"What do you recommend?"
+#define defaultDescriptionString @"Write a short description here."
+
 @interface AddRecommendationViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;
 @property UITextField *activeTextField;
 @property UITextView *activeTextView;
+@property UIImagePickerController *picker;
+@property (weak, nonatomic) IBOutlet UIButton *flashButton;
+@property (weak, nonatomic) IBOutlet UIButton *takeAnotherButton;
+@property UIImage *currentFlashImage;
+@property (weak, nonatomic) IBOutlet UIButton *setLocationButton;
+@property (weak, nonatomic) IBOutlet UIButton *cameraRollButton;
+@property (weak, nonatomic) IBOutlet UIButton *takePictureButton;
+@property (weak, nonatomic) IBOutlet UIView *topLine;
+@property (weak, nonatomic) IBOutlet UIView *lineTwo;
+@property (weak, nonatomic) IBOutlet UIView *lineThree;
+@property (weak, nonatomic) IBOutlet UILabel *orLabel;
 @end
 
 @implementation AddRecommendationViewController
@@ -26,6 +40,8 @@
 {
     [super viewDidAppear:animated];
 
+    self.currentFlashImage = self.flashButton.imageView.image;
+
     [self registerForKeyboardNotifications];
 
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
@@ -36,23 +52,64 @@
 
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
 
-        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-        picker.delegate = self;
-        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        picker.showsCameraControls = NO;
+        self.picker = [[UIImagePickerController alloc] init];
+        self.picker.delegate = self;
+        self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        self.picker.showsCameraControls = NO;
         CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, 27.0);
         CGAffineTransform scale = CGAffineTransformScale(translate, 1.6, 1.6);
-        picker.cameraViewTransform = scale;
-        picker.cameraOverlayView = self.view;
+        self.picker.cameraViewTransform = scale;
+        self.picker.cameraOverlayView = self.view;
 
         if([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear]) {
-            picker.cameraDevice =  UIImagePickerControllerCameraDeviceRear;
+            self.picker.cameraDevice =  UIImagePickerControllerCameraDeviceRear;
         } else {
-            picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+            self.picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
         }
 
-        [self presentViewController:picker animated:YES completion:nil];
+        [self.picker setCameraCaptureMode:UIImagePickerControllerCameraCaptureModePhoto];
+        [self.picker setCameraFlashMode:UIImagePickerControllerCameraFlashModeOff];
+
+        [self presentViewController:self.picker animated:YES completion:nil];
     }
+}
+
+- (void)showCamera
+{
+    self.takePictureButton.hidden = NO;
+    self.cameraRollButton.hidden = NO;
+    self.flashButton.hidden = NO;
+    self.topLine.hidden = NO;
+    self.lineTwo.hidden = NO;
+    self.lineThree.hidden = NO;
+
+    self.orLabel.hidden = YES;
+    self.capturedImageView.hidden = YES;
+    self.setLocationButton.hidden = YES;
+    self.takeAnotherButton.hidden = YES;
+}
+
+- (void)hideCamera
+{
+    [self.setLocationButton.layer setBorderWidth:1.0];
+    [self.setLocationButton.layer setCornerRadius:5];
+    [self.setLocationButton.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+
+    [self.takeAnotherButton.layer setBorderWidth:1.0];
+    [self.takeAnotherButton.layer setCornerRadius:5];
+    [self.takeAnotherButton.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+
+    self.takePictureButton.hidden = YES;
+    self.cameraRollButton.hidden = YES;
+    self.flashButton.hidden = YES;
+    self.topLine.hidden = YES;
+    self.lineTwo.hidden = YES;
+    self.lineThree.hidden = YES;
+
+    self.orLabel.hidden = NO;
+    self.capturedImageView.hidden = NO;
+    self.setLocationButton.hidden = NO;
+    self.takeAnotherButton.hidden = NO;
 }
 
 - (IBAction)onAlbumPressed:(id)sender
@@ -62,17 +119,50 @@
 
 - (IBAction)onTakePhotoPressed:(id)sender
 {
+    [self.picker takePicture];
+}
 
+- (IBAction)onTakeAnotherPhotoPressed:(id)sender
+{
+    [self showCamera];
 }
 
 - (IBAction)onFlashPressed:(id)sender
 {
+    if (self.currentFlashImage == [UIImage imageNamed:@"flash"]) {
+        [self.flashButton setImage:[UIImage imageNamed:@"flash-off"] forState:UIControlStateNormal];
+        self.currentFlashImage = [UIImage imageNamed:@"flash-off"];
+    } else {
+        [self.flashButton setImage:[UIImage imageNamed:@"flash"] forState:UIControlStateNormal];
+        self.currentFlashImage = [UIImage imageNamed:@"flash"];
+    }
+}
 
+- (IBAction)onCloseCameraPressed:(id)sender
+{
+    [self.picker dismissViewControllerAnimated:NO completion:^{
+    }];
+    [self.tabBarController setSelectedIndex:0];
 }
 
 - (IBAction)onSetLocationPressed:(id)sender
 {
+    [self.picker dismissViewControllerAnimated:NO completion:^{
+    }];
+    [self performSegueWithIdentifier:@"LocationSegue" sender:self];
+}
 
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    NSURL *path = [info valueForKey:UIImagePickerControllerReferenceURL];
+
+    self.capturedImageView.image = image;
+
+    [self hideCamera];
+
+    [picker dismissViewControllerAnimated:YES completion:^{
+    }];
 }
 
 - (BOOL) textView:(UITextView *)textView
@@ -105,7 +195,7 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
+                                                 name:UIKeyboardWillShowNotification object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
@@ -146,17 +236,23 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
+    if ([textField.text isEqual:defaultTitleString]) {
+        textField.text = @"";
+    }
     self.activeTextField = textField;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    if ([textField.text isEqual:@""]) {
+        textField.text = defaultTitleString;
+    }
     self.activeTextField = nil;
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    if ([textView.text isEqual:@"Write a short description here."]) {
+    if ([textView.text isEqual:defaultDescriptionString]) {
         textView.text = @"";
     }
     self.activeTextView = textView;
@@ -165,7 +261,7 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
     if ([textView.text isEqual:@""]) {
-        textView.text = @"Write a short description here.";
+        textView.text = defaultDescriptionString;
     }
     self.activeTextView = nil;
 }
