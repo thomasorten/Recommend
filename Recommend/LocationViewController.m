@@ -72,8 +72,13 @@
     [self.setButton setHidden:YES];
     CLLocationCoordinate2D selectedLocation;
     selectedLocation = [self.mapView centerCoordinate];
+
+
+    NSMutableDictionary *locationDictionary = [[NSMutableDictionary alloc] initWithObjects:@[@(selectedLocation.latitude), @(selectedLocation.longitude)] forKeys:@[@"latitude", @"longitude"]];
+
+    [self.recommendation addEntriesFromDictionary:locationDictionary];
     
-    NSLog(@"%f,%f",selectedLocation.latitude, selectedLocation.longitude);
+    NSLog(@"%@",self.recommendation);
 }
 
 @end
