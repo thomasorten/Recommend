@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *closeToMeTableView;
 @property NSMutableArray *recommendationsArray;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property PFGeoPoint *userLocation;
 @end
 
 @implementation CloseToMeTableViewController
@@ -22,6 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.searchBar.delegate = self;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -61,11 +63,39 @@
 {
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         if (!error) {
+            self.userLocation = geoPoint;
             PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
             [query includeKey:@"location"];
-            [query whereKey:@"location" nearGeoPoint:geoPoint];
+            [query whereKey:@"location" nearGeoPoint:geoPoint withinKilometers:10];
             query.limit = 50;
-            [self.recommendationsArray addObjectsFromArray:[query findObjects]];
+            [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                if (!error) {
+                    [self.recommendationsArray addObjectsFromArray:objects];
+                    [self.closeToMeTableView reloadData];
+                }
+            }];
+        }
+    }];
+}
+
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    // cancel any scheduled lookup
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    // start a new one in 0.3 seconds
+    [self performSelector:@selector(doRemoteQuery) withObject:nil afterDelay:0.3];
+}
+
+- (void)doRemoteQuery
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
+    [query includeKey:@"location"];
+    [query whereKey:@"location" nearGeoPoint:self.userLocation withinKilometers:30];
+    query.limit = 100;
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            self.recommendationsArray = [[NSMutableArray alloc] initWithArray:objects];
+            [self.closeToMeTableView reloadData];
         }
     }];
 }
