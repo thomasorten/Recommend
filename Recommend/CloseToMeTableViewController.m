@@ -11,9 +11,10 @@
 #import "DetailViewController.h"
 #import <Parse/Parse.h>
 
-@interface CloseToMeTableViewController () <UITableViewDelegate, UITableViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate>
+@interface CloseToMeTableViewController () <UITableViewDelegate, UITableViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate, UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *closeToMeTableView;
 @property NSMutableArray *recommendationsArray;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @end
 
 @implementation CloseToMeTableViewController
