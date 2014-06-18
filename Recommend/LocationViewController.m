@@ -8,7 +8,7 @@
 
 #import "LocationViewController.h"
 
-@interface LocationViewController ()<CLLocationManagerDelegate,MKMapViewDelegate>
+@interface LocationViewController () <CLLocationManagerDelegate,MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *setButton;
 
 @property CLLocationManager *locationManager;
