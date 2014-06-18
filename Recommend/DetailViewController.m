@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#import "DetailMapViewController.h"
 
 @interface DetailViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *recommendationImageView;
@@ -40,5 +41,10 @@
 
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    DetailMapViewController *vc = segue.destinationViewController;
+    vc.recommendation = self.recommendation;
+}
 
 @end

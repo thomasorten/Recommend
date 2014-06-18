@@ -11,5 +11,5 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface CloseToMeMapViewController : UIViewController
-@property NSArray *matchesArray;
+@property NSArray *recommendationsArray;
 @end

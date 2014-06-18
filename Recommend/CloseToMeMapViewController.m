@@ -7,8 +7,11 @@
 //
 
 #import "CloseToMeMapViewController.h"
+#import <Parse/Parse.h>
+#import <MapKit/MapKit.h>
 
-@interface CloseToMeMapViewController ()
+@interface CloseToMeMapViewController () <MKMapViewDelegate>
+@property (weak, nonatomic) IBOutlet MKMapView *allLocationsMapView;
 
 @end
 
@@ -17,7 +20,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    for (NSDictionary *recommendation in self.recommendationsArray) {
+        MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+        PFGeoPoint *point = [recommendation objectForKey:@"location"];
+        CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(point.latitude, point.longitude);
+
+        annotation.coordinate = coordinate;
+        annotation.title = [recommendation objectForKey:@"title"];
+        annotation.subtitle = [recommendation objectForKey:@"description"];
+
+        [self.allLocationsMapView addAnnotation:annotation];
+    }
+
+    [self.allLocationsMapView showAnnotations:self.allLocationsMapView.annotations animated:YES];
 }
 
 @end

@@ -221,6 +221,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="lNb-yH-hbF"/>
                     <connections>
+                        <outlet property="allLocationsMapView" destination="59F-A1-vwJ" id="9Wz-Oo-3Td"/>
                         <segue destination="JqG-Us-2wi" kind="push" identifier="MapToDetailSegue" id="q87-Dt-oGJ"/>
                     </connections>
                 </viewController>
@@ -607,7 +608,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="q87-Dt-oGJ"/>
         <segue reference="eqa-xD-Jr9"/>
-        <segue reference="hHy-05-Hr6"/>
     </inferredMetricsTieBreakers>
 </document>
