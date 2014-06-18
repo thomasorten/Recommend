@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		260D76D51951F78300A05669 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26E5CA151950E4C800A64A7D /* LocationViewController.m */; };
 		2678FC2E1950847400270B7F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2678FC2D1950847400270B7F /* MapKit.framework */; };
 		269650D71950CE1500418FCE /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269650D61950CE1500418FCE /* FacebookSDK.framework */; };
 		26E5CA1D1951DEDE00A64A7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F695194F848D00289EF0 /* main.m */; };
@@ -289,7 +290,7 @@
 				ORGANIZATIONNAME = "Orten, Thomas";
 				TargetAttributes = {
 					45F6F685194F848D00289EF0 = {
-						DevelopmentTeam = 4NJCGM5C75;
+						DevelopmentTeam = Y9KZH5XQDN;
 					};
 					45F6F6A6194F848D00289EF0 = {
 						TestTargetID = 45F6F685194F848D00289EF0;
@@ -341,6 +342,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				260D76D51951F78300A05669 /* LocationViewController.m in Sources */,
 				26E5CA1D1951DEDE00A64A7D /* main.m in Sources */,
 				45F6F69A194F848D00289EF0 /* AppDelegate.m in Sources */,
 				45F6F7011951E98600289EF0 /* DetailViewController.m in Sources */,
