@@ -288,7 +288,6 @@
                                 <state key="normal" title="Set Location"/>
                                 <connections>
                                     <action selector="onSetButtonPressed:" destination="XyQ-Y2-tSz" eventType="touchUpInside" id="gVU-Rx-e7i"/>
-                                    <segue destination="CCy-zA-3Mc" kind="modal" id="1G7-dD-5Nm"/>
                                 </connections>
                             </button>
                             <view alpha="0.64999999999999969" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uUL-Fq-xK4">
@@ -324,11 +323,17 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="bIt-1y-viH">
+                                <rect key="frame" x="142" y="397" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="147-5E-6rF"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="bIt-1y-viH" id="UXR-Nu-vmm"/>
                         <outlet property="descriptionLabel" destination="Rwc-SK-1em" id="gzc-Ja-JeF"/>
                         <outlet property="imageView" destination="m7n-oP-kf7" id="flu-i7-LFP"/>
                         <outlet property="mapView" destination="zrj-HI-O8A" id="uil-IX-7Us"/>
