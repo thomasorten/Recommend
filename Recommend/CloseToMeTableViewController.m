@@ -9,10 +9,10 @@
 #import "CloseToMeTableViewController.h"
 #import "CloseToMeMapViewController.h"
 #import "DetailViewController.h"
+#import <Parse/Parse.h>
 
 @interface CloseToMeTableViewController () <UITableViewDelegate, UITableViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *closeToMeTableView;
-@property CLLocationManager *locationManager;
 @property NSMutableArray *matchesArray;
 @end
 
@@ -26,6 +26,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self locateUser];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -53,6 +54,19 @@
         CloseToMeMapViewController *destinationController = segue.destinationViewController;
         destinationController.matchesArray = self.matchesArray;
     }
+}
+
+- (void)locateUser
+{
+    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+        if (!error) {
+            PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
+            [query includeKey:@"location"];
+            [query whereKey:@"location" nearGeoPoint:geoPoint];
+            query.limit = 50;
+            [self.matchesArray addObjectsFromArray:[query findObjects]];
+        }
+    }];
 }
 
 @end

@@ -164,7 +164,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    NSURL *path = [info valueForKey:UIImagePickerControllerReferenceURL];
+   // NSURL *path = [info valueForKey:UIImagePickerControllerReferenceURL];
 
     self.capturedImageView.image = image;
 
