@@ -10,6 +10,7 @@
 		260D76D51951F78300A05669 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26E5CA151950E4C800A64A7D /* LocationViewController.m */; };
 		260D76D81952007A00A05669 /* AddRecommendationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 260D76D71952007A00A05669 /* AddRecommendationViewController.m */; };
 		2678FC2E1950847400270B7F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2678FC2D1950847400270B7F /* MapKit.framework */; };
+		2681704B19520DE0008A2692 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269650D31950CC0000418FCE /* LoginViewController.m */; };
 		269650D71950CE1500418FCE /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269650D61950CE1500418FCE /* FacebookSDK.framework */; };
 		26E5CA1D1951DEDE00A64A7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F695194F848D00289EF0 /* main.m */; };
 		45F6F68A194F848D00289EF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F689194F848D00289EF0 /* Foundation.framework */; };
@@ -338,6 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2681704B19520DE0008A2692 /* LoginViewController.m in Sources */,
 				260D76D51951F78300A05669 /* LocationViewController.m in Sources */,
 				26E5CA1D1951DEDE00A64A7D /* main.m in Sources */,
 				45F6F69A194F848D00289EF0 /* AppDelegate.m in Sources */,

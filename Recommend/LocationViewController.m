@@ -76,15 +76,31 @@
 - (IBAction)onSetButtonPressed:(id)sender {
 
     [self.setButton setHidden:YES];
-    CLLocationCoordinate2D selectedLocation;
-    selectedLocation = [self.mapView centerCoordinate];
+    CLLocationCoordinate2D selectedLocation = [self.mapView centerCoordinate];
 
     PFGeoPoint *location = [PFGeoPoint geoPointWithLatitude:selectedLocation.latitude longitude:selectedLocation.longitude];
 
     NSMutableDictionary *locationDictionary = [[NSMutableDictionary alloc] initWithObjects:@[location] forKeys:@[@"location"]];
     [self.recommendation addEntriesFromDictionary:locationDictionary];
-    
-    NSLog(@"%@",self.recommendation);
+    [self reverseGeocode:selectedLocation];
+}
+
+
+- (void)reverseGeocode:(CLLocationCoordinate2D)locationCord{
+
+    CLGeocoder *geo = [[CLGeocoder alloc] init];
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:locationCord.latitude longitude:locationCord.longitude];
+
+    [geo reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        CLPlacemark *addressPlacmark = [placemarks firstObject];
+        NSString *street = [NSString stringWithFormat:@"%@ %@",addressPlacmark.subThoroughfare, addressPlacmark.thoroughfare];
+        NSString *city = [NSString stringWithFormat:@"%@",addressPlacmark.locality];
+
+        NSMutableDictionary *addressDictionary = [[NSMutableDictionary alloc] initWithObjects:@[street, city] forKeys:@[@"street", @"city"]];
+
+        [self.recommendation addEntriesFromDictionary:addressDictionary];
+        NSLog(@"%@",self.recommendation);
+    }];
 }
 
 @end
