@@ -225,6 +225,13 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please enter a title and description for your recommendation" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="160" translatesAutoresizingMaskIntoConstraints="NO" id="BjZ-68-9Gy">
+                                        <rect key="frame" x="81" y="120" width="160" height="108"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </scrollView>
                         </subviews>
@@ -244,6 +251,7 @@
                         <outlet property="takeAnotherButton" destination="NH3-wj-gkM" id="riG-qg-iPI"/>
                         <outlet property="takePictureButton" destination="m5x-6b-0FO" id="C4Y-jd-ptl"/>
                         <outlet property="topLine" destination="Ohc-Xd-gv1" id="JD3-H6-X90"/>
+                        <outlet property="warningLabel" destination="BjZ-68-9Gy" id="00Z-tp-pGt"/>
                         <segue destination="XyQ-Y2-tSz" kind="push" identifier="LocationSegue" id="iau-8Q-9nH"/>
                     </connections>
                 </viewController>

@@ -7,6 +7,7 @@
 //
 
 #import "AddRecommendationViewController.h"
+#import "LocationViewController.h"
 
 #define defaultTitleString @"What do you recommend?"
 #define defaultDescriptionString @"Write a short description here."
@@ -26,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIView *lineTwo;
 @property (weak, nonatomic) IBOutlet UIView *lineThree;
 @property (weak, nonatomic) IBOutlet UILabel *orLabel;
+@property (weak, nonatomic) IBOutlet UILabel *warningLabel;
 @end
 
 @implementation AddRecommendationViewController
@@ -79,9 +81,6 @@
     self.takePictureButton.hidden = NO;
     self.cameraRollButton.hidden = NO;
     self.flashButton.hidden = NO;
-    self.topLine.hidden = NO;
-    self.lineTwo.hidden = NO;
-    self.lineThree.hidden = NO;
 
     self.orLabel.hidden = YES;
     self.capturedImageView.hidden = YES;
@@ -102,9 +101,6 @@
     self.takePictureButton.hidden = YES;
     self.cameraRollButton.hidden = YES;
     self.flashButton.hidden = YES;
-    self.topLine.hidden = YES;
-    self.lineTwo.hidden = YES;
-    self.lineThree.hidden = YES;
 
     self.orLabel.hidden = NO;
     self.capturedImageView.hidden = NO;
@@ -147,9 +143,22 @@
 
 - (IBAction)onSetLocationPressed:(id)sender
 {
-    [self.picker dismissViewControllerAnimated:NO completion:^{
-    }];
-    [self performSegueWithIdentifier:@"LocationSegue" sender:self];
+    if ([self.recommendationTextField.text isEqualToString:defaultTitleString] || [self.recommendationTextField.text isEqualToString:defaultDescriptionString]) {
+        [UIView animateWithDuration:1.0 animations:^{
+            self.warningLabel.alpha = 1.0;
+        }];
+    } else {
+        [self.picker dismissViewControllerAnimated:NO completion:^{
+        }];
+        [self performSegueWithIdentifier:@"LocationSegue" sender:self];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    LocationViewController *vc = segue.destinationViewController;
+    NSMutableDictionary *recommendation = [[NSMutableDictionary alloc] initWithObjects:@[self.recommendationTextField.text, self.descriptionTextView.text, self.capturedImageView.image] forKeys:@[@"title", @"description", @"file"]];
+    vc.recommendation = recommendation;
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -238,6 +247,9 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     if ([textField.text isEqual:defaultTitleString]) {
         textField.text = @"";
+        [UIView animateWithDuration:0.2 animations:^{
+            self.warningLabel.alpha = 0.0;
+        }];
     }
     self.activeTextField = textField;
 }
@@ -254,6 +266,9 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     if ([textView.text isEqual:defaultDescriptionString]) {
         textView.text = @"";
+        [UIView animateWithDuration:0.2 animations:^{
+            self.warningLabel.alpha = 0.0;
+        }];
     }
     self.activeTextView = textView;
 }

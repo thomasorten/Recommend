@@ -11,5 +11,5 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface LocationViewController : UIViewController
-
+@property NSMutableDictionary *recommendation;
 @end
