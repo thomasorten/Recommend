@@ -14,6 +14,7 @@
 		2681704D195228AE008A2692 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26E5CA121950E4BE00A64A7D /* HomeViewController.m */; };
 		269650D71950CE1500418FCE /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269650D61950CE1500418FCE /* FacebookSDK.framework */; };
 		26E5CA1D1951DEDE00A64A7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F695194F848D00289EF0 /* main.m */; };
+		45D7F86E1952140C0051105A /* DetailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45D7F86D1952140C0051105A /* DetailMapViewController.m */; };
 		45F6F68A194F848D00289EF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F689194F848D00289EF0 /* Foundation.framework */; };
 		45F6F68C194F848D00289EF0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F68B194F848D00289EF0 /* CoreGraphics.framework */; };
 		45F6F68E194F848D00289EF0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F68D194F848D00289EF0 /* UIKit.framework */; };
@@ -63,6 +64,8 @@
 		26E5CA121950E4BE00A64A7D /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		26E5CA141950E4C800A64A7D /* LocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
 		26E5CA151950E4C800A64A7D /* LocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
+		45D7F86C1952140C0051105A /* DetailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailMapViewController.h; sourceTree = "<group>"; };
+		45D7F86D1952140C0051105A /* DetailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailMapViewController.m; sourceTree = "<group>"; };
 		45F6F686194F848D00289EF0 /* Recommend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recommend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45F6F689194F848D00289EF0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		45F6F68B194F848D00289EF0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -197,6 +200,8 @@
 				45F6F6FC1951E8FD00289EF0 /* CloseToMeMapViewController.h */,
 				45F6F6FD1951E8FD00289EF0 /* CloseToMeMapViewController.m */,
 				45F6F69B194F848D00289EF0 /* Main.storyboard */,
+				45D7F86C1952140C0051105A /* DetailMapViewController.h */,
+				45D7F86D1952140C0051105A /* DetailMapViewController.m */,
 				45F6F6FF1951E98600289EF0 /* DetailViewController.h */,
 				45F6F7001951E98600289EF0 /* DetailViewController.m */,
 				45F6F698194F848D00289EF0 /* AppDelegate.h */,
@@ -290,7 +295,7 @@
 				ORGANIZATIONNAME = "Orten, Thomas";
 				TargetAttributes = {
 					45F6F685194F848D00289EF0 = {
-						DevelopmentTeam = Y9KZH5XQDN;
+						DevelopmentTeam = 4NJCGM5C75;
 					};
 					45F6F6A6194F848D00289EF0 = {
 						TestTargetID = 45F6F685194F848D00289EF0;
@@ -349,6 +354,7 @@
 				45F6F69A194F848D00289EF0 /* AppDelegate.m in Sources */,
 				260D76D81952007A00A05669 /* AddRecommendationViewController.m in Sources */,
 				45F6F7011951E98600289EF0 /* DetailViewController.m in Sources */,
+				45D7F86E1952140C0051105A /* DetailMapViewController.m in Sources */,
 				45F6F6F71950EA6C00289EF0 /* CloseToMeTableViewController.m in Sources */,
 				45F6F6FE1951E8FD00289EF0 /* CloseToMeMapViewController.m in Sources */,
 			);
