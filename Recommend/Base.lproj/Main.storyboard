@@ -159,7 +159,6 @@
                                 <state key="normal" title="Set Location"/>
                                 <connections>
                                     <action selector="onSetButtonPressed:" destination="XyQ-Y2-tSz" eventType="touchUpInside" id="gVU-Rx-e7i"/>
-                                    <segue destination="CCy-zA-3Mc" kind="modal" id="1G7-dD-5Nm"/>
                                 </connections>
                             </button>
                             <view alpha="0.64999999999999969" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uUL-Fq-xK4">
