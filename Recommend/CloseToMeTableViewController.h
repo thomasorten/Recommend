@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface MapViewViewController : UIViewController
+@interface CloseToMeTableViewController : UIViewController
 
 @end
