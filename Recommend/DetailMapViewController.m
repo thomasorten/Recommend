@@ -8,6 +8,7 @@
 
 #import "DetailMapViewController.h"
 #import <MapKit/MapKit.h>
+#import <Parse/Parse.h>
 
 @interface DetailMapViewController ()
 @property (weak, nonatomic) IBOutlet MKMapView *detailMapView;
@@ -18,7 +19,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+
+    MKPointAnnotation *mapRecommendation = [[MKPointAnnotation alloc] init];
+    PFGeoPoint *point = [self.recommendation objectForKey:@"location"];
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(point.latitude, point.longitude);
+
+    mapRecommendation.coordinate = coordinate;
+    mapRecommendation.title = [self.recommendation objectForKey:@"title"];
+    mapRecommendation.subtitle = [self.recommendation objectForKey:@"description"];
+
+    [self.detailMapView addAnnotation:mapRecommendation];
+
+    [self.detailMapView showAnnotations:self.detailMapView.annotations animated:YES];
 }
 
 @end

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface DetailMapViewController : UIViewController
-
+@property NSDictionary *recommendation;
 @end

@@ -39,9 +39,14 @@
                                 <rect key="frame" x="-5" y="0.0" width="325" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" id="D8X-v9-oEf">
+                                    <rect key="frame" x="0.0" y="64" width="325" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MatchCell" textLabel="TPV-N3-ItV" detailTextLabel="mTf-jK-Zt0" style="IBUITableViewCellStyleSubtitle" id="s5q-yh-4D4">
-                                        <rect key="frame" x="0.0" y="86" width="325" height="44"/>
+                                        <rect key="frame" x="0.0" y="130" width="325" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="s5q-yh-4D4" id="dSM-s8-ayU">
                                             <rect key="frame" x="0.0" y="0.0" width="292" height="43"/>
@@ -81,6 +86,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="closeToMeTableView" destination="DHk-P9-I0T" id="BxZ-Jb-HTi"/>
+                        <outlet property="searchBar" destination="D8X-v9-oEf" id="8GP-4x-eeZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -221,6 +227,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="lNb-yH-hbF"/>
                     <connections>
+                        <outlet property="allLocationsMapView" destination="59F-A1-vwJ" id="9Wz-Oo-3Td"/>
                         <segue destination="JqG-Us-2wi" kind="push" identifier="MapToDetailSegue" id="q87-Dt-oGJ"/>
                     </connections>
                 </viewController>
@@ -612,7 +619,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="eqa-xD-Jr9"/>
         <segue reference="hHy-05-Hr6"/>
+        <segue reference="eqa-xD-Jr9"/>
     </inferredMetricsTieBreakers>
 </document>

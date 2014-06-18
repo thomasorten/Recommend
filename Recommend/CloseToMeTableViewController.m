@@ -11,9 +11,10 @@
 #import "DetailViewController.h"
 #import <Parse/Parse.h>
 
-@interface CloseToMeTableViewController () <UITableViewDelegate, UITableViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate>
+@interface CloseToMeTableViewController () <UITableViewDelegate, UITableViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate, UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *closeToMeTableView;
-@property NSMutableArray *matchesArray;
+@property NSMutableArray *recommendationsArray;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @end
 
 @implementation CloseToMeTableViewController
@@ -31,13 +32,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.matchesArray.count;
+    return self.recommendationsArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MatchCell"];
-    NSDictionary *recommendation = [self.matchesArray objectAtIndex:indexPath.row];
+    NSDictionary *recommendation = [self.recommendationsArray objectAtIndex:indexPath.row];
     cell.textLabel.text = [recommendation objectForKey:@"title"];
     cell.detailTextLabel.text = [recommendation objectForKey:@"description"];
     return cell;
@@ -48,11 +49,11 @@
     if ([segue.identifier isEqualToString:@"TableToDetailSegue"]) {
         DetailViewController *destinationController = segue.destinationViewController;
         NSIndexPath *selectedRow = [self.closeToMeTableView indexPathForSelectedRow];
-        destinationController.recommendation = [self.matchesArray objectAtIndex:selectedRow.row];
+        destinationController.recommendation = [self.recommendationsArray objectAtIndex:selectedRow.row];
     }
     if ([segue.identifier isEqualToString:@"TableToMapSegue"]) {
         CloseToMeMapViewController *destinationController = segue.destinationViewController;
-        destinationController.matchesArray = self.matchesArray;
+        destinationController.recommendationsArray = self.recommendationsArray;
     }
 }
 
@@ -64,7 +65,7 @@
             [query includeKey:@"location"];
             [query whereKey:@"location" nearGeoPoint:geoPoint];
             query.limit = 50;
-            [self.matchesArray addObjectsFromArray:[query findObjects]];
+            [self.recommendationsArray addObjectsFromArray:[query findObjects]];
         }
     }];
 }
