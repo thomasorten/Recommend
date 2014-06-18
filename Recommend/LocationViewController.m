@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -26,6 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.activityIndicator setHidden:YES];
 
     self.setButton.layer.cornerRadius = 5;
     self.imageView.image = [self.recommendation objectForKey:@"file"];
@@ -76,6 +78,9 @@
 - (IBAction)onSetButtonPressed:(id)sender {
 
     [self.setButton setHidden:YES];
+    [self.activityIndicator setHidden:NO];
+    [self.activityIndicator startAnimating];
+
     CLLocationCoordinate2D selectedLocation = [self.mapView centerCoordinate];
 
     PFGeoPoint *location = [PFGeoPoint geoPointWithLatitude:selectedLocation.latitude longitude:selectedLocation.longitude];
@@ -83,6 +88,43 @@
     NSMutableDictionary *locationDictionary = [[NSMutableDictionary alloc] initWithObjects:@[location] forKeys:@[@"location"]];
     [self.recommendation addEntriesFromDictionary:locationDictionary];
     [self reverseGeocode:selectedLocation];
+    NSData *imageData = UIImageJPEGRepresentation([self.recommendation objectForKey:@"file"], 0.7);
+    PFFile *imageFile = [PFFile fileWithData:imageData];
+
+    PFObject *newRecommend = [PFObject objectWithClassName:@"Photo"];
+    newRecommend[@"creator"] = [PFUser currentUser];
+    newRecommend[@"description"] = [self.recommendation objectForKey:@"description"];
+    newRecommend[@"title"] = [self.recommendation objectForKey:@"title"];
+    newRecommend[@"file"] = imageFile;
+
+    PFObject *newLocation = [PFObject objectWithClassName:@"Location"];
+    newLocation[@"point"] = [self.recommendation objectForKey:@"location"];
+    newLocation[@"parent"] = newRecommend;
+
+    [newLocation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+
+            [self.activityIndicator stopAnimating];
+            [self.activityIndicator setHidden:YES];
+
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Recomendation Added!" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+
+        NSLog(@"Sucess!");
+
+
+        }
+        else{
+
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"OOPS Something Went Wrong" message:nil delegate:self cancelButtonTitle:@"Try Again" otherButtonTitles:nil];
+            [alert show];
+            [self.activityIndicator stopAnimating];
+            [self.activityIndicator setHidden:YES];
+            [self.setButton setHidden:NO];
+
+            NSLog(@"Fuck");
+        }
+    }];
 
     
 
