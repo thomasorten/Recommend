@@ -9,10 +9,13 @@
 #import "LocationViewController.h"
 
 @interface LocationViewController () <CLLocationManagerDelegate,MKMapViewDelegate>
-@property (weak, nonatomic) IBOutlet UIButton *setButton;
 
 @property CLLocationManager *locationManager;
 
+@property (weak, nonatomic) IBOutlet UIButton *setButton;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @end
@@ -25,6 +28,9 @@
     [super viewDidLoad];
 
     self.setButton.layer.cornerRadius = 5;
+    self.imageView.image = [self.recommendation objectForKey:@"file"];
+    self.titleLabel.text = [self.recommendation objectForKey:@"title"];
+    self.descriptionLabel.text = [self.recommendation objectForKey:@"description"];
 
     UIImageView *pinImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"location"]];
     [pinImage setCenter:CGPointMake(self.mapView.frame.size.width/2, self.mapView.frame.size.height/2 - pinImage.frame.size.height)];
@@ -59,7 +65,6 @@
 }
 
 
-
 - (void)setMapViewRegion{
     CLLocationCoordinate2D zoomCenter;
     zoomCenter = self.locationManager.location.coordinate;
@@ -67,15 +72,16 @@
     MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomCenter, 500, 500);
     [self.mapView setRegion:viewRegion animated:YES];
 }
+
 - (IBAction)onSetButtonPressed:(id)sender {
 
     [self.setButton setHidden:YES];
     CLLocationCoordinate2D selectedLocation;
     selectedLocation = [self.mapView centerCoordinate];
 
+    PFGeoPoint *location = [PFGeoPoint geoPointWithLatitude:selectedLocation.latitude longitude:selectedLocation.longitude];
 
-    NSMutableDictionary *locationDictionary = [[NSMutableDictionary alloc] initWithObjects:@[@(selectedLocation.latitude), @(selectedLocation.longitude)] forKeys:@[@"latitude", @"longitude"]];
-
+    NSMutableDictionary *locationDictionary = [[NSMutableDictionary alloc] initWithObjects:@[location] forKeys:@[@"location"]];
     [self.recommendation addEntriesFromDictionary:locationDictionary];
     
     NSLog(@"%@",self.recommendation);
