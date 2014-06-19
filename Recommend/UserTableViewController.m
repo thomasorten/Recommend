@@ -8,6 +8,7 @@
 
 #import "UserTableViewController.h"
 #import "MultipleRecommendationsMapViewController.h"
+#import "DetailViewController.h"
 #import <Parse/Parse.h>
 
 @interface UserTableViewController ()
@@ -56,8 +57,15 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    MultipleRecommendationsMapViewController *destinationController = segue.destinationViewController;
-    destinationController.recommendationsArray = self.recommendationsArray;
+    if ([segue.identifier isEqualToString:@"UserTableToDetailSegue"]) {
+        DetailViewController *destinationController = segue.destinationViewController;
+        NSIndexPath *selectedRow = [self.userTableView indexPathForSelectedRow];
+        destinationController.recommendation = [self.recommendationsArray objectAtIndex:selectedRow.row];
+    }
+    if ([segue.identifier isEqualToString:@"UserTableToMapSegue"]) {
+        MultipleRecommendationsMapViewController *destinationController = segue.destinationViewController;
+        destinationController.recommendationsArray = self.recommendationsArray;
+    }
 }
 
 @end

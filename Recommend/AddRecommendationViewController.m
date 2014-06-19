@@ -76,6 +76,11 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:YES];
+}
+
 - (void)showCamera
 {
     self.takePictureButton.hidden = NO;
