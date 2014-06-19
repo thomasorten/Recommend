@@ -73,11 +73,6 @@
     [self setTabBarVisible:NO animated:YES];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [self setTabBarVisible:YES animated:YES];
-}
-
 - (IBAction)onRecommendButtonPressed:(id)sender
 {
     // Check if user has liked
@@ -132,6 +127,7 @@
         DetailMapViewController *vc = segue.destinationViewController;
         vc.recommendation = self.recommendation;
     }
+    [self setTabBarVisible:YES animated:YES];
 }
 
 // a param to describe the state change, and an animated flag
