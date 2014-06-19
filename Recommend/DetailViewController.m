@@ -73,6 +73,11 @@
     [self setTabBarVisible:NO animated:YES];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self setTabBarVisible:YES animated:YES];
+}
+
 - (IBAction)onRecommendButtonPressed:(id)sender
 {
     // Check if user has liked

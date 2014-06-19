@@ -313,7 +313,6 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 
 - (void)setLatestImageOffAlbum
 {
-    __block UIImage *latestPhoto;
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
 
     // Enumerate just the photos and videos group by using ALAssetsGroupSavedPhotos.
