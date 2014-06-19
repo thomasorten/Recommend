@@ -23,7 +23,7 @@
     self.recommendationsArray = [[NSMutableArray alloc] init];
     PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
     [query includeKey:@"creator"];
-    [query whereKey:@"creator" equalTo:[PFUser currentUser]];
+    [query whereKey:@"creator" equalTo:[[self.recommendation objectForKey:@"photo"] objectForKey:@"creator"]];
     query.limit = 1000;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
