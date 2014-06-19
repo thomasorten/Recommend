@@ -8,6 +8,7 @@
 
 #import "AddRecommendationViewController.h"
 #import "LocationViewController.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 #define defaultTitleString @"What do you recommend?"
 #define defaultDescriptionString @"Write a short description here."
@@ -17,6 +18,7 @@
 @property UITextField *activeTextField;
 @property UITextView *activeTextView;
 @property UIImagePickerController *picker;
+@property UIImagePickerController *imageRollPicker;
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
 @property (weak, nonatomic) IBOutlet UIButton *takeAnotherButton;
 @property UIImage *currentFlashImage;
@@ -42,6 +44,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
+    [self setLatestImageOffAlbum];
 
     self.currentFlashImage = self.flashButton.imageView.image;
 
@@ -87,6 +91,7 @@
     self.takePictureButton.hidden = NO;
     self.cameraRollButton.hidden = NO;
     self.flashButton.hidden = NO;
+    self.cameraRollPreview.hidden = NO;
 
     self.orLabel.hidden = YES;
     self.capturedImageView.hidden = YES;
@@ -107,6 +112,7 @@
     self.takePictureButton.hidden = YES;
     self.cameraRollButton.hidden = YES;
     self.flashButton.hidden = YES;
+    self.cameraRollPreview.hidden = YES;
 
     self.orLabel.hidden = NO;
     self.capturedImageView.hidden = NO;
@@ -116,7 +122,18 @@
 
 - (IBAction)onAlbumPressed:(id)sender
 {
-    
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+
+        [self.picker dismissViewControllerAnimated:NO completion:^{
+        }];
+        
+        self.imageRollPicker = [[UIImagePickerController alloc] init];
+        self.imageRollPicker.allowsEditing = YES;
+        self.imageRollPicker.delegate = self;
+        self.imageRollPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+
+        [self presentViewController:self.imageRollPicker animated:YES completion:nil];
+    }
 }
 
 - (IBAction)onTakePhotoPressed:(id)sender
@@ -285,6 +302,34 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
         textView.text = defaultDescriptionString;
     }
     self.activeTextView = nil;
+}
+
+- (void)setLatestImageOffAlbum
+{
+    __block UIImage *latestPhoto;
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+
+    // Enumerate just the photos and videos group by using ALAssetsGroupSavedPhotos.
+    [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+
+        // Within the group enumeration block, filter to enumerate just photos.
+        [group setAssetsFilter:[ALAssetsFilter allPhotos]];
+
+        // Chooses the photo at the last index
+        [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *alAsset, NSUInteger index, BOOL *innerStop) {
+
+            // The end of the enumeration is signaled by asset == nil.
+            if (alAsset) {
+                ALAssetRepresentation *representation = [alAsset defaultRepresentation];
+                self.cameraRollPreview.image = [UIImage imageWithCGImage:[representation fullScreenImage]];
+                // Stop the enumerations
+                *stop = YES; *innerStop = YES;
+            }
+        }];
+    } failureBlock: ^(NSError *error) {
+        // Typically you should handle an error more gracefully than this.
+        NSLog(@"No groups");
+    }];
 }
 
 @end
