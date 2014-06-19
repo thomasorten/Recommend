@@ -115,6 +115,7 @@
 
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Recomendation Added!" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
+            [self performSegueWithIdentifier:@"BackToMain" sender:self];
 
             NSLog(@"Sucess!");
 
