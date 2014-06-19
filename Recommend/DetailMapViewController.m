@@ -21,15 +21,15 @@
     [super viewDidLoad];
 
 
-    MKPointAnnotation *mapRecommendation = [[MKPointAnnotation alloc] init];
-    PFGeoPoint *point = [self.recommendation objectForKey:@"location"];
+    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+    PFGeoPoint *point = [self.recommendation objectForKey:@"point"];
     CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(point.latitude, point.longitude);
 
-    mapRecommendation.coordinate = coordinate;
-    mapRecommendation.title = [self.recommendation objectForKey:@"title"];
-    mapRecommendation.subtitle = [self.recommendation objectForKey:@"description"];
+    annotation.coordinate = coordinate;
+    annotation.title = [[self.recommendation objectForKey:@"photo"] objectForKey:@"title"];
+    annotation.subtitle = [[self.recommendation objectForKey:@"photo"] objectForKey:@"description"];
 
-    [self.detailMapView addAnnotation:mapRecommendation];
+    [self.detailMapView addAnnotation:annotation];
 
     [self.detailMapView showAnnotations:self.detailMapView.annotations animated:YES];
 }

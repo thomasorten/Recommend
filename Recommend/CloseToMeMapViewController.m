@@ -23,12 +23,12 @@
 
     for (NSDictionary *recommendation in self.recommendationsArray) {
         MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-        PFGeoPoint *point = [recommendation objectForKey:@"location"];
+        PFGeoPoint *point = [recommendation objectForKey:@"point"];
         CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(point.latitude, point.longitude);
 
         annotation.coordinate = coordinate;
-        annotation.title = [recommendation objectForKey:@"title"];
-        annotation.subtitle = [recommendation objectForKey:@"description"];
+        annotation.title = [[recommendation objectForKey:@"photo"] objectForKey:@"title"];
+        annotation.subtitle = [[recommendation objectForKey:@"photo"] objectForKey:@"description"];
 
         [self.allLocationsMapView addAnnotation:annotation];
     }

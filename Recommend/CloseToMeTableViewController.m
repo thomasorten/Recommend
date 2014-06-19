@@ -14,6 +14,7 @@
 @interface CloseToMeTableViewController () <UITableViewDelegate, UITableViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate, UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *closeToMeTableView;
 @property NSMutableArray *recommendationsArray;
+@property NSMutableArray *allRecommendationsArray;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property PFGeoPoint *userLocation;
 @end
@@ -23,13 +24,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.searchBar.delegate = self;
+    self.allRecommendationsArray = [[NSMutableArray alloc] init];
+    self.recommendationsArray = [[NSMutableArray alloc] init];
+    [self locateUser];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self locateUser];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -41,8 +43,8 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MatchCell"];
     NSDictionary *recommendation = [self.recommendationsArray objectAtIndex:indexPath.row];
-    cell.textLabel.text = [recommendation objectForKey:@"title"];
-    cell.detailTextLabel.text = [recommendation objectForKey:@"description"];
+    cell.textLabel.text = [[recommendation objectForKey:@"photo" ] objectForKey:@"title"];
+    cell.detailTextLabel.text = [[recommendation objectForKey:@"photo" ] objectForKey:@"description"];
     return cell;
 }
 
@@ -64,14 +66,20 @@
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         if (!error) {
             self.userLocation = geoPoint;
-            PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
-            [query includeKey:@"location"];
-            [query whereKey:@"location" nearGeoPoint:geoPoint withinKilometers:10];
+            PFQuery *query = [PFQuery queryWithClassName:@"Location"];
+            [query includeKey:@"parent"];
+            [query whereKey:@"point" nearGeoPoint:geoPoint withinKilometers:10];
             query.limit = 50;
             [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                 if (!error) {
-                    [self.recommendationsArray addObjectsFromArray:objects];
-                    [self.closeToMeTableView reloadData];
+                    for (PFObject *recommendation in objects) {
+                        PFObject *photo = recommendation[@"parent"];
+                        [photo fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                            [self.recommendationsArray addObject:@{@"photo": photo, @"point": [recommendation objectForKey:@"point"]}];
+                            [self.allRecommendationsArray addObject:@{@"photo": photo, @"point" : [recommendation objectForKey:@"point"]}];
+                            [self.closeToMeTableView reloadData];
+                        }];
+                    }
                 }
             }];
         }
@@ -80,24 +88,40 @@
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    // cancel any scheduled lookup
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    // start a new one in 0.3 seconds
-    [self performSelector:@selector(doRemoteQuery) withObject:nil afterDelay:0.3];
+    if ([searchText isEqualToString:@""]) {
+        [self.searchBar resignFirstResponder];
+        self.recommendationsArray = self.allRecommendationsArray;
+        [self.closeToMeTableView reloadData];
+    } else {
+        [self performSelector:@selector(doSearchQuery:) withObject:searchText afterDelay:0.3];
+    }
 }
 
-- (void)doRemoteQuery
+- (void)doTheQuery:(PFQuery *)query
 {
-    PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
-    [query includeKey:@"location"];
-    [query whereKey:@"location" nearGeoPoint:self.userLocation withinKilometers:30];
-    query.limit = 100;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             self.recommendationsArray = [[NSMutableArray alloc] initWithArray:objects];
-            [self.closeToMeTableView reloadData];
+            for (PFObject *recommendation in objects) {
+                PFObject *photo = recommendation[@"parent"];
+                [photo fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                    [self.recommendationsArray addObject:@{@"photo": photo, @"point" : [recommendation objectForKey:@"point"]}];
+                    [self.allRecommendationsArray addObject:@{@"photo": photo, @"point" : [recommendation objectForKey:@"point"]}];
+                    [self.closeToMeTableView reloadData];
+                }];
+            }
         }
     }];
+}
+
+- (void)doSearchQuery:(NSString *)searchString
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Location"];
+    [query includeKey:@"parent"];
+    [query whereKey:@"point" nearGeoPoint:self.userLocation withinKilometers:50];
+    query.limit = 100;
+    [self doTheQuery:query];
 }
 
 @end

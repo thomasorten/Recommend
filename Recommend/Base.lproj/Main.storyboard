@@ -43,6 +43,9 @@
                                     <rect key="frame" x="0.0" y="64" width="325" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="vXZ-lx-hvc" id="9Nt-PN-0Gy"/>
+                                    </connections>
                                 </searchBar>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MatchCell" textLabel="TPV-N3-ItV" detailTextLabel="mTf-jK-Zt0" style="IBUITableViewCellStyleSubtitle" id="s5q-yh-4D4">
@@ -73,6 +76,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="BgE-Y8-XLt"/>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="z98-PJ-Drq"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -619,7 +626,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="q87-Dt-oGJ"/>
+        <segue reference="hHy-05-Hr6"/>
         <segue reference="eqa-xD-Jr9"/>
     </inferredMetricsTieBreakers>
 </document>

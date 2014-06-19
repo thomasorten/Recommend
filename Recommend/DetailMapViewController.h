@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface DetailMapViewController : UIViewController
-@property NSDictionary *recommendation;
+@property PFObject *recommendation;
 @end
