@@ -25,6 +25,7 @@
     [super viewDidLoad];
     self.recentArray = [NSMutableArray new];
     self.popularArray = [NSMutableArray new];
+    
     self.automaticallyAdjustsScrollViewInsets = YES;
 
     [PFAnonymousUtils logInWithBlock:^(PFUser *user, NSError *error) {
@@ -39,7 +40,7 @@
     [self reloadNew];
 
     PFQuery *popular = [PFQuery queryWithClassName:@"Photo"];
-    [popular orderByAscending:@"numLikes"];
+    [popular orderByDescending:@"numLikes"];
     [popular findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 
         for (PFObject *photo in objects) {
@@ -50,11 +51,9 @@
 
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [self reloadNew];
-}
 
 -(void)reloadNew{
+    [self.recentArray removeAllObjects];
     PFQuery *new = [PFQuery queryWithClassName:@"Photo"];
     [new orderByDescending:@"createdAt"];
     [new findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -70,7 +69,8 @@
 #pragma mark - CollectionView Datasource/Delegate
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    int count;
+
+    long count;
 
     if ([collectionView isEqual:self.popularCollectionView]) {
         count = self.popularArray.count;
@@ -85,8 +85,6 @@
 
     UICollectionViewCell *cell = [UICollectionViewCell new];
     cell.backgroundView = nil;
-
-
 
     if ([collectionView isEqual:self.newestCollectionView]) {
 

@@ -13,11 +13,11 @@
                         <viewControllerLayoutGuide type="bottom" id="mOh-CB-SVz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="1Az-xa-9wC">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ifW-az-Tk0">
-                                <rect key="frame" x="0.0" y="0.0" width="160" height="504"/>
+                                <rect key="frame" x="0.0" y="0.0" width="160" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="1" id="kE8-lO-ACz">
@@ -44,7 +44,7 @@
                                 </connections>
                             </collectionView>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="V5m-yM-tDQ">
-                                <rect key="frame" x="160" y="0.0" width="160" height="504"/>
+                                <rect key="frame" x="160" y="0.0" width="160" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="1" id="hGT-Lq-STY">
@@ -73,7 +73,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="E9H-tD-G6h"/>
                     <connections>
                         <outlet property="newestCollectionView" destination="ifW-az-Tk0" id="d05-yU-MeU"/>
@@ -408,7 +407,7 @@
                         <outlet property="mapView" destination="zrj-HI-O8A" id="uil-IX-7Us"/>
                         <outlet property="setButton" destination="NVK-Ju-du4" id="saR-5d-lgT"/>
                         <outlet property="titleLabel" destination="evE-9d-38c" id="Ugp-n8-zeM"/>
-                        <segue destination="UYi-uD-mqO" kind="push" identifier="BackToMain" id="gcS-ZO-eBy"/>
+                        <segue destination="gz2-ea-DMQ" kind="modal" identifier="BackToMain" id="kQc-ee-v7r"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="odz-jN-dcm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -757,7 +756,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="gcS-ZO-eBy"/>
+        <segue reference="kQc-ee-v7r"/>
         <segue reference="8tO-JE-dhP"/>
         <segue reference="tPd-Hs-wQD"/>
         <segue reference="eqa-xD-Jr9"/>
