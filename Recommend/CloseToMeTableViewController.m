@@ -77,6 +77,7 @@
         if (!error) {
             self.userLocation = geoPoint;
             PFQuery *query = [PFQuery queryWithClassName:@"Location"];
+            [query orderByDescending:@"createdAt"];
             [query includeKey:@"parent"];
             [query whereKey:@"point" nearGeoPoint:geoPoint withinKilometers:10];
             query.limit = 50;
@@ -114,7 +115,7 @@
 - (void)doTheQuery:(PFQuery *)query
 {
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error && objects.count) {
+        if (!error) {
             self.recommendationsArray = [[NSMutableArray alloc] initWithArray:objects];
             for (PFObject *recommendation in objects) {
                 PFObject *photo = recommendation[@"parent"];
@@ -132,9 +133,10 @@
 {
     PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
     [query whereKey:@"title" containsString:searchString];
+    [query orderByDescending:@"createdAt"];
     query.limit = 100;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error && objects.count) {
+        if (!error) {
             self.recommendationsArray = [[NSMutableArray alloc] init];
             for (PFObject *photo in objects) {
                 [self.recommendationsArray addObject:@{@"photo": photo}];
