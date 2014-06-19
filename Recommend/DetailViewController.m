@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *likesLabel;
 @property (weak, nonatomic) IBOutlet UIButton *addressButton;
 @property (weak, nonatomic) IBOutlet UIButton *personButton;
+@property BOOL hasLikedPhoto;
 @end
 
 @implementation DetailViewController
@@ -29,6 +30,10 @@
     self.titleLabel.text = [[self.recommendation objectForKey:@"photo"] objectForKey:@"title"];
     self.descriptionLabel.text = [[self.recommendation objectForKey:@"photo"] objectForKey:@"description"];
     [self.personButton setTitle:[[PFUser currentUser] objectForKey:@"username"] forState:UIControlStateNormal];
+    if ([[self.recommendation objectForKey:@"photo"] objectForKey:@"numLikes"]) {
+        NSNumber *numLikes = [[self.recommendation objectForKey:@"photo"] objectForKey:@"numLikes"];
+        self.likesLabel.text = [NSString stringWithFormat:@"%@", numLikes];
+    }
 
     // Get image file
     PFFile *userImageFile = [[self.recommendation objectForKey:@"photo"] objectForKey:@"file"];
@@ -52,14 +57,14 @@
         }
     }];
 
-    // Get Likes
-    PFQuery *likesQuery = [PFQuery queryWithClassName:@"Like"];
-    [likesQuery whereKey:@"photo" equalTo:[self.recommendation objectForKey:@"photo"]];
-    [likesQuery countObjectsInBackgroundWithBlock:^(int count, NSError *error) {
-        if (!error && count) {
-            self.likesLabel.text = @(count).description;
-        }
-    }];
+//    // Get Likes
+//    PFQuery *likesQuery = [PFQuery queryWithClassName:@"Like"];
+//    [likesQuery whereKey:@"photo" equalTo:[self.recommendation objectForKey:@"photo"]];
+//    [likesQuery countObjectsInBackgroundWithBlock:^(int count, NSError *error) {
+//        if (!error && count) {
+//            self.likesLabel.text = @(count).description;
+//        }
+//    }];
 
 }
 
@@ -75,7 +80,37 @@
 
 - (IBAction)onRecommendButtonPressed:(id)sender
 {
-
+    // Check if user has liked
+    if (self.hasLikedPhoto) {
+         NSLog(@"User already liked.");
+        return;
+    }
+    PFQuery *likeQuery = [PFQuery queryWithClassName:@"Like"];
+    [likeQuery whereKey:@"photo" equalTo:[self.recommendation objectForKey:@"photo"]];
+    [likeQuery whereKey:@"user" equalTo:[PFUser currentUser]];
+    [likeQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        if (!object) {
+            // Increment counter on photo object for fast retrieval
+            PFObject *photoLikes = [self.recommendation objectForKey:@"photo"];
+            [photoLikes incrementKey:@"numLikes"];
+            [photoLikes saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    self.likesLabel.text = [NSString stringWithFormat:@"%@", photoLikes[@"numLikes"]];
+                    self.hasLikedPhoto = YES;
+                }
+            }];
+            // Save in likes table
+            PFObject *userLike = [PFObject objectWithClassName:@"Like"];
+            userLike[@"photo"] = [self.recommendation objectForKey:@"photo"];
+            userLike[@"user"] = [PFUser currentUser];
+            [userLike saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                self.hasLikedPhoto = YES;
+            }];
+        } else {
+            // The find succeeded.
+            NSLog(@"User already liked.");
+        }
+    }];
 }
 
 - (IBAction)onLocationButtonPressed:(id)sender
