@@ -557,7 +557,11 @@
                                             <action selector="onSetLocationPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="qq8-A7-4PU"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUx-0s-1mh">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bxx-7z-JDj">
+                                        <rect key="frame" x="31" y="444" width="45" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUx-0s-1mh" userLabel="Button - Cameraroll">
                                         <rect key="frame" x="25" y="441" width="56" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="cameraroll"/>
@@ -638,6 +642,7 @@
                     <navigationItem key="navigationItem" id="SxA-sF-ieT"/>
                     <connections>
                         <outlet property="cameraRollButton" destination="nUx-0s-1mh" id="8y0-8L-Ep7"/>
+                        <outlet property="cameraRollPreview" destination="Bxx-7z-JDj" id="OMG-Ts-b5J"/>
                         <outlet property="cameraScrollView" destination="X6F-Ei-hM3" id="ThF-jx-t5K"/>
                         <outlet property="capturedImageView" destination="LWQ-Ng-YjR" id="9NI-jK-sRG"/>
                         <outlet property="descriptionTextView" destination="K8x-Kl-G27" id="0Ey-Vb-9iJ"/>

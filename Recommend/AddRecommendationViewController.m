@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIView *lineThree;
 @property (weak, nonatomic) IBOutlet UILabel *orLabel;
 @property (weak, nonatomic) IBOutlet UILabel *warningLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *cameraRollPreview;
 @end
 
 @implementation AddRecommendationViewController
