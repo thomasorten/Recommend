@@ -10,6 +10,6 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface CloseToMeMapViewController : UIViewController
+@interface MultipleRecommendationsMapViewController : UIViewController
 @property NSMutableArray *recommendationsArray;
 @end

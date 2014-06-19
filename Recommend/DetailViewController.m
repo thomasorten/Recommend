@@ -61,8 +61,10 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    DetailMapViewController *vc = segue.destinationViewController;
-    vc.recommendation = self.recommendation;
+    if ([segue.identifier isEqualToString:@"DetailToMapViewSegue"]) {
+        DetailMapViewController *vc = segue.destinationViewController;
+        vc.recommendation = self.recommendation;
+    }
 }
 
 // a param to describe the state change, and an animated flag

@@ -7,7 +7,7 @@
 //
 
 #import "CloseToMeTableViewController.h"
-#import "CloseToMeMapViewController.h"
+#import "MultipleRecommendationsMapViewController.h"
 #import "DetailViewController.h"
 #import <Parse/Parse.h>
 
@@ -56,7 +56,7 @@
         destinationController.recommendation = [self.recommendationsArray objectAtIndex:selectedRow.row];
     }
     if ([segue.identifier isEqualToString:@"TableToMapSegue"]) {
-        CloseToMeMapViewController *destinationController = segue.destinationViewController;
+        MultipleRecommendationsMapViewController *destinationController = segue.destinationViewController;
         destinationController.recommendationsArray = self.recommendationsArray;
     }
 }

@@ -148,7 +148,7 @@
                                 </state>
                                 <connections>
                                     <action selector="onLocationButtonPressed:" destination="JqG-Us-2wi" eventType="touchUpInside" id="cvw-MP-rBY"/>
-                                    <segue destination="7VK-Jt-0OT" kind="push" id="KPP-wZ-mej"/>
+                                    <segue destination="7VK-Jt-0OT" kind="push" identifier="DetailToMapViewSegue" id="KPP-wZ-mej"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Recommended by" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CVB-N5-3jX">
@@ -181,6 +181,7 @@
                                 </state>
                                 <connections>
                                     <action selector="onPersonPressed:" destination="JqG-Us-2wi" eventType="touchUpInside" id="xBx-hz-sw6"/>
+                                    <segue destination="ahP-rO-kCk" kind="push" id="9vE-KC-YRE"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ql-Mo-bB0">
@@ -193,7 +194,7 @@
                                 </state>
                                 <connections>
                                     <action selector="onLocationButtonPressed:" destination="JqG-Us-2wi" eventType="touchUpInside" id="1HR-kx-Hxa"/>
-                                    <segue destination="7VK-Jt-0OT" kind="push" id="eqa-xD-Jr9"/>
+                                    <segue destination="7VK-Jt-0OT" kind="push" identifier="DetailToMapViewSegue" id="eqa-xD-Jr9"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -213,10 +214,10 @@
             </objects>
             <point key="canvasLocation" x="2142" y="-557"/>
         </scene>
-        <!--Close To Me Map View Controller-->
+        <!--Multiple Recommendations Map View Controller-->
         <scene sceneID="TeT-3E-Mfu">
             <objects>
-                <viewController id="TBC-5l-Bxi" customClass="CloseToMeMapViewController" sceneMemberID="viewController">
+                <viewController id="TBC-5l-Bxi" customClass="MultipleRecommendationsMapViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8DI-uS-q8w"/>
                         <viewControllerLayoutGuide type="bottom" id="P73-rn-LUN"/>
@@ -369,6 +370,52 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jK7-fa-b3j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2142" y="824"/>
+        </scene>
+        <!--User Table View Controller-->
+        <scene sceneID="SAW-8o-4rd">
+            <objects>
+                <viewController id="ahP-rO-kCk" customClass="UserTableViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wCk-H4-oDQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="DcQ-Xp-Fxp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Eto-aF-dBT">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2Dv-Nw-aMB">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserRecommendationCell" id="bmA-O6-eLT">
+                                        <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bmA-O6-eLT" id="hbK-7n-cEP">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="TBC-5l-Bxi" kind="push" id="gIh-CZ-EU8"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="ahP-rO-kCk" id="fCo-C1-6q8"/>
+                                    <outlet property="delegate" destination="ahP-rO-kCk" id="fMD-oh-zQ4"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="hc1-MM-9Wt"/>
+                    <connections>
+                        <outlet property="userTableView" destination="2Dv-Nw-aMB" id="x1G-8I-0xf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MSZ-GT-s12" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2609" y="138"/>
         </scene>
         <!--Add Recommendation View Controller-->
         <scene sceneID="K2o-GF-bxi">
@@ -628,5 +675,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="hHy-05-Hr6"/>
         <segue reference="eqa-xD-Jr9"/>
+        <segue reference="gIh-CZ-EU8"/>
     </inferredMetricsTieBreakers>
 </document>

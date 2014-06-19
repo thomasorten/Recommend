@@ -6,16 +6,16 @@
 //  Copyright (c) 2014 Orten, Thomas. All rights reserved.
 //
 
-#import "CloseToMeMapViewController.h"
+#import "MultipleRecommendationsMapViewController.h"
 #import <Parse/Parse.h>
 #import <MapKit/MapKit.h>
 
-@interface CloseToMeMapViewController () <MKMapViewDelegate>
+@interface MultipleRecommendationsMapViewController () <MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *allLocationsMapView;
 
 @end
 
-@implementation CloseToMeMapViewController
+@implementation MultipleRecommendationsMapViewController
 
 - (void)viewDidLoad
 {

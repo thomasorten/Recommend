@@ -15,6 +15,7 @@
 		269650D71950CE1500418FCE /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269650D61950CE1500418FCE /* FacebookSDK.framework */; };
 		26E5CA1D1951DEDE00A64A7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F695194F848D00289EF0 /* main.m */; };
 		45D7F86E1952140C0051105A /* DetailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45D7F86D1952140C0051105A /* DetailMapViewController.m */; };
+		45D7F8711953264E0051105A /* UserTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45D7F8701953264E0051105A /* UserTableViewController.m */; };
 		45F6F68A194F848D00289EF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F689194F848D00289EF0 /* Foundation.framework */; };
 		45F6F68C194F848D00289EF0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F68B194F848D00289EF0 /* CoreGraphics.framework */; };
 		45F6F68E194F848D00289EF0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F68D194F848D00289EF0 /* UIKit.framework */; };
@@ -39,7 +40,7 @@
 		45F6F6D1194F870200289EF0 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F6D0194F870200289EF0 /* Parse.framework */; };
 		45F6F6DF1950CBAA00289EF0 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F6DE1950CBAA00289EF0 /* AssetsLibrary.framework */; };
 		45F6F6F71950EA6C00289EF0 /* CloseToMeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F6F01950EA6C00289EF0 /* CloseToMeTableViewController.m */; };
-		45F6F6FE1951E8FD00289EF0 /* CloseToMeMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F6FD1951E8FD00289EF0 /* CloseToMeMapViewController.m */; };
+		45F6F6FE1951E8FD00289EF0 /* MultipleRecommendationsMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F6FD1951E8FD00289EF0 /* MultipleRecommendationsMapViewController.m */; };
 		45F6F7011951E98600289EF0 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F7001951E98600289EF0 /* DetailViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,8 @@
 		26E5CA151950E4C800A64A7D /* LocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
 		45D7F86C1952140C0051105A /* DetailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailMapViewController.h; sourceTree = "<group>"; };
 		45D7F86D1952140C0051105A /* DetailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailMapViewController.m; sourceTree = "<group>"; };
+		45D7F86F1953264E0051105A /* UserTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTableViewController.h; sourceTree = "<group>"; };
+		45D7F8701953264E0051105A /* UserTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTableViewController.m; sourceTree = "<group>"; };
 		45F6F686194F848D00289EF0 /* Recommend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recommend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45F6F689194F848D00289EF0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		45F6F68B194F848D00289EF0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -100,8 +103,8 @@
 		45F6F6E61950CD5700289EF0 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		45F6F6EF1950EA6C00289EF0 /* CloseToMeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloseToMeTableViewController.h; sourceTree = "<group>"; };
 		45F6F6F01950EA6C00289EF0 /* CloseToMeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloseToMeTableViewController.m; sourceTree = "<group>"; };
-		45F6F6FC1951E8FD00289EF0 /* CloseToMeMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloseToMeMapViewController.h; sourceTree = "<group>"; };
-		45F6F6FD1951E8FD00289EF0 /* CloseToMeMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloseToMeMapViewController.m; sourceTree = "<group>"; };
+		45F6F6FC1951E8FD00289EF0 /* MultipleRecommendationsMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipleRecommendationsMapViewController.h; sourceTree = "<group>"; };
+		45F6F6FD1951E8FD00289EF0 /* MultipleRecommendationsMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipleRecommendationsMapViewController.m; sourceTree = "<group>"; };
 		45F6F6FF1951E98600289EF0 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		45F6F7001951E98600289EF0 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -197,9 +200,11 @@
 				260D76D71952007A00A05669 /* AddRecommendationViewController.m */,
 				45F6F6EF1950EA6C00289EF0 /* CloseToMeTableViewController.h */,
 				45F6F6F01950EA6C00289EF0 /* CloseToMeTableViewController.m */,
-				45F6F6FC1951E8FD00289EF0 /* CloseToMeMapViewController.h */,
-				45F6F6FD1951E8FD00289EF0 /* CloseToMeMapViewController.m */,
+				45F6F6FC1951E8FD00289EF0 /* MultipleRecommendationsMapViewController.h */,
+				45F6F6FD1951E8FD00289EF0 /* MultipleRecommendationsMapViewController.m */,
 				45F6F69B194F848D00289EF0 /* Main.storyboard */,
+				45D7F86F1953264E0051105A /* UserTableViewController.h */,
+				45D7F8701953264E0051105A /* UserTableViewController.m */,
 				45D7F86C1952140C0051105A /* DetailMapViewController.h */,
 				45D7F86D1952140C0051105A /* DetailMapViewController.m */,
 				45F6F6FF1951E98600289EF0 /* DetailViewController.h */,
@@ -356,7 +361,8 @@
 				45F6F7011951E98600289EF0 /* DetailViewController.m in Sources */,
 				45D7F86E1952140C0051105A /* DetailMapViewController.m in Sources */,
 				45F6F6F71950EA6C00289EF0 /* CloseToMeTableViewController.m in Sources */,
-				45F6F6FE1951E8FD00289EF0 /* CloseToMeMapViewController.m in Sources */,
+				45F6F6FE1951E8FD00289EF0 /* MultipleRecommendationsMapViewController.m in Sources */,
+				45D7F8711953264E0051105A /* UserTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
