@@ -36,6 +36,9 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <segue destination="JqG-Us-2wi" kind="push" identifier="NewestSegue" id="KFk-6R-Jdo"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -63,6 +66,9 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <segue destination="JqG-Us-2wi" kind="push" identifier="PopularSegue" id="iXj-G9-Isr"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -407,7 +413,7 @@
                         <outlet property="mapView" destination="zrj-HI-O8A" id="uil-IX-7Us"/>
                         <outlet property="setButton" destination="NVK-Ju-du4" id="saR-5d-lgT"/>
                         <outlet property="titleLabel" destination="evE-9d-38c" id="Ugp-n8-zeM"/>
-                        <segue destination="gz2-ea-DMQ" kind="modal" identifier="BackToMain" id="kQc-ee-v7r"/>
+                        <segue destination="IPV-IT-zWL" kind="modal" identifier="BackToMain" id="jRp-YE-6Nn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="odz-jN-dcm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -450,7 +456,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserRecommendationCell" textLabel="CMI-vY-VTX" detailTextLabel="SD9-eC-Y62" style="IBUITableViewCellStyleSubtitle" id="bmA-O6-eLT">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bmA-O6-eLT" id="hbK-7n-cEP">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -761,9 +767,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="kQc-ee-v7r"/>
-        <segue reference="8tO-JE-dhP"/>
-        <segue reference="tPd-Hs-wQD"/>
+        <segue reference="CeK-hA-7vZ"/>
+        <segue reference="hHy-05-Hr6"/>
         <segue reference="eqa-xD-Jr9"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -7,6 +7,7 @@
 //
 
 #import "HomeViewController.h"
+#import "DetailViewController.h"
 
 @interface HomeViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
 
@@ -115,6 +116,21 @@
     return cell;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UICollectionViewCell *)sender{
+
+    DetailViewController *destination = [segue destinationViewController];
+
+
+    if ([segue.identifier isEqualToString:@"NewestSegue"]) {
+        NSIndexPath *selected = [self.newestCollectionView indexPathForCell:sender];
+        destination.recommendation = @{@"photo": [self.recentArray objectAtIndex:selected.row]};
+    }
+    else if ([segue.identifier isEqualToString:@"PopularSegue"]){
+        NSIndexPath *selected = [self.popularCollectionView indexPathForCell:sender];
+        destination.recommendation = @{@"photo":[self.popularArray objectAtIndex:selected.row]};
+    }
+
+}
 
 
 

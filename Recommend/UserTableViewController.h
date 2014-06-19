@@ -10,5 +10,5 @@
 #import <Parse/Parse.h>
 
 @interface UserTableViewController : UIViewController
-@property PFObject *recommendation;
+@property NSDictionary *recommendation;
 @end
