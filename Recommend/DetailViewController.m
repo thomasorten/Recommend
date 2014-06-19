@@ -132,6 +132,7 @@
         DetailMapViewController *vc = segue.destinationViewController;
         vc.recommendation = self.recommendation;
     }
+    [self setTabBarVisible:YES animated:YES];
 }
 
 // a param to describe the state change, and an animated flag
