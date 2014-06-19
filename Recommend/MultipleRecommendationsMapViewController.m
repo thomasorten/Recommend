@@ -21,8 +21,11 @@
 {
     [super viewDidLoad];
 
+    self.allLocationsMapView.delegate = self;
+
     for (NSDictionary *recommendation in self.recommendationsArray) {
         MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+
         PFGeoPoint *point = [recommendation objectForKey:@"point"];
         CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(point.latitude, point.longitude);
 
@@ -34,6 +37,20 @@
     }
 
     [self.allLocationsMapView showAnnotations:self.allLocationsMapView.annotations animated:YES];
+}
+
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    MKAnnotationView *annView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"RecommendationPin"];
+
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"location"]];
+
+    annView.canShowCallout = YES;
+    annView.calloutOffset = CGPointMake(-5, 5);
+    annView.image = nil;
+
+    [annView addSubview:imageView];
+    return annView;
 }
 
 @end

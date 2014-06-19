@@ -8,6 +8,7 @@
 
 #import "UserTableViewController.h"
 #import "MultipleRecommendationsMapViewController.h"
+#import "DetailViewController.h"
 #import <Parse/Parse.h>
 
 @interface UserTableViewController ()
@@ -22,17 +23,14 @@
     [super viewDidLoad];
     self.recommendationsArray = [[NSMutableArray alloc] init];
     PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
-    [query includeKey:@"creator"];
-    [query whereKey:@"creator" equalTo:[[self.recommendation objectForKey:@"photo"] objectForKey:@"creator"]];
+    PFUser *user = [[self.recommendation objectForKey:@"photo"] objectForKey:@"creator"];
+    [query whereKey:@"creator" equalTo:user];
     query.limit = 1000;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             for (PFObject *recommendation in objects) {
-                PFObject *photo = recommendation[@"parent"];
-                [photo fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                    [self.recommendationsArray addObject:@{@"photo": photo, @"point": [recommendation objectForKey:@"point"]}];
-                    [self.userTableView reloadData];
-                }];
+                [self.recommendationsArray addObject:@{@"photo": recommendation}];
+                [self.userTableView reloadData];
             }
         }
     }];
@@ -59,8 +57,15 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    MultipleRecommendationsMapViewController *destinationController = segue.destinationViewController;
-    destinationController.recommendationsArray = self.recommendationsArray;
+    if ([segue.identifier isEqualToString:@"UserTableToDetailSegue"]) {
+        DetailViewController *destinationController = segue.destinationViewController;
+        NSIndexPath *selectedRow = [self.userTableView indexPathForSelectedRow];
+        destinationController.recommendation = [self.recommendationsArray objectAtIndex:selectedRow.row];
+    }
+    if ([segue.identifier isEqualToString:@"UserTableToMapSegue"]) {
+        MultipleRecommendationsMapViewController *destinationController = segue.destinationViewController;
+        destinationController.recommendationsArray = self.recommendationsArray;
+    }
 }
 
 @end

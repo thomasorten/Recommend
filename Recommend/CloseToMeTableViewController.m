@@ -17,6 +17,7 @@
 @property NSMutableArray *allRecommendationsArray;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property PFGeoPoint *userLocation;
+@property UIRefreshControl *refreshControl;
 @end
 
 @implementation CloseToMeTableViewController
@@ -24,14 +25,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.allRecommendationsArray = [[NSMutableArray alloc] init];
-    self.recommendationsArray = [[NSMutableArray alloc] init];
     [self locateUser];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.closeToMeTableView addSubview:self.refreshControl];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.closeToMeTableView reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -63,6 +71,8 @@
 
 - (void)locateUser
 {
+    self.allRecommendationsArray = [[NSMutableArray alloc] init];
+    self.recommendationsArray = [[NSMutableArray alloc] init];
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         if (!error) {
             self.userLocation = geoPoint;
@@ -73,14 +83,17 @@
             [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                 if (!error) {
                     for (PFObject *recommendation in objects) {
-                        PFObject *photo = recommendation[@"parent"];
-                        [photo fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                            [self.recommendationsArray addObject:@{@"photo": photo, @"point": [recommendation objectForKey:@"point"]}];
-                            [self.allRecommendationsArray addObject:@{@"photo": photo, @"point" : [recommendation objectForKey:@"point"]}];
-                            [self.closeToMeTableView reloadData];
-                        }];
+                        if (![self.recommendationsArray containsObject:recommendation]) {
+                            PFObject *photo = recommendation[@"parent"];
+                            [photo fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                                [self.recommendationsArray addObject:@{@"photo": photo, @"point": [recommendation objectForKey:@"point"]}];
+                                [self.allRecommendationsArray addObject:@{@"photo": photo, @"point" : [recommendation objectForKey:@"point"]}];
+                                [self.closeToMeTableView reloadData];
+                            }];
+                        }
                     }
                 }
+                [self.refreshControl endRefreshing];
             }];
         }
     }];
@@ -101,7 +114,7 @@
 - (void)doTheQuery:(PFQuery *)query
 {
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
+        if (!error && objects.count) {
             self.recommendationsArray = [[NSMutableArray alloc] initWithArray:objects];
             for (PFObject *recommendation in objects) {
                 PFObject *photo = recommendation[@"parent"];
@@ -117,11 +130,23 @@
 
 - (void)doSearchQuery:(NSString *)searchString
 {
-    PFQuery *query = [PFQuery queryWithClassName:@"Location"];
-    [query includeKey:@"parent"];
-    [query whereKey:@"point" nearGeoPoint:self.userLocation withinKilometers:50];
+    PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
+    [query whereKey:@"title" containsString:searchString];
     query.limit = 100;
-    [self doTheQuery:query];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error && objects.count) {
+            self.recommendationsArray = [[NSMutableArray alloc] init];
+            for (PFObject *photo in objects) {
+                [self.recommendationsArray addObject:@{@"photo": photo}];
+            }
+            [self.closeToMeTableView reloadData];
+        }
+    }];
+}
+
+- (void)refresh:(id)sender
+{
+    [self locateUser];
 }
 
 @end
