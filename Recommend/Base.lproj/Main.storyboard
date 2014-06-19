@@ -148,7 +148,7 @@
                                 </state>
                                 <connections>
                                     <action selector="onLocationButtonPressed:" destination="JqG-Us-2wi" eventType="touchUpInside" id="cvw-MP-rBY"/>
-                                    <segue destination="7VK-Jt-0OT" kind="push" identifier="DetailToMapViewSegue" id="KPP-wZ-mej"/>
+                                    <segue destination="7VK-Jt-0OT" kind="push" identifier="" id="KPP-wZ-mej"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Recommended by" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CVB-N5-3jX">
@@ -181,7 +181,7 @@
                                 </state>
                                 <connections>
                                     <action selector="onPersonPressed:" destination="JqG-Us-2wi" eventType="touchUpInside" id="xBx-hz-sw6"/>
-                                    <segue destination="ahP-rO-kCk" kind="push" id="9vE-KC-YRE"/>
+                                    <segue destination="ahP-rO-kCk" kind="push" identifier="DetailToTableViewSegue" id="9vE-KC-YRE"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ql-Mo-bB0">
@@ -194,7 +194,7 @@
                                 </state>
                                 <connections>
                                     <action selector="onLocationButtonPressed:" destination="JqG-Us-2wi" eventType="touchUpInside" id="1HR-kx-Hxa"/>
-                                    <segue destination="7VK-Jt-0OT" kind="push" identifier="DetailToMapViewSegue" id="eqa-xD-Jr9"/>
+                                    <segue destination="7VK-Jt-0OT" kind="push" identifier="" id="eqa-xD-Jr9"/>
                                 </connections>
                             </button>
                         </subviews>

@@ -8,6 +8,7 @@
 
 #import "DetailViewController.h"
 #import "DetailMapViewController.h"
+#import "UserTableViewController.h"
 #import <Parse/Parse.h>
 
 @interface DetailViewController ()
@@ -25,8 +26,6 @@
 {
     [super viewDidLoad];
 
-    [self setTabBarVisible:NO animated:YES];
-
     self.titleLabel.text = [[self.recommendation objectForKey:@"photo"] objectForKey:@"title"];
     self.descriptionLabel.text = [[self.recommendation objectForKey:@"photo"] objectForKey:@"description"];
     [self.personButton setTitle:[[PFUser currentUser] objectForKey:@"username"] forState:UIControlStateNormal];
@@ -37,6 +36,11 @@
             self.recommendationImageView.image = [UIImage imageWithData:imageData];
         }
     }];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self setTabBarVisible:NO animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -61,7 +65,10 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"DetailToMapViewSegue"]) {
+    if ([segue.identifier isEqualToString:@"DetailToTableViewSegue"]) {
+        UserTableViewController *vc = segue.destinationViewController;
+        vc.recommendation = self.recommendation;
+    } else {
         DetailMapViewController *vc = segue.destinationViewController;
         vc.recommendation = self.recommendation;
     }
