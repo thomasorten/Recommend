@@ -49,7 +49,6 @@
     [self.locationManager startUpdatingLocation];
 }
 
-
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
 
     for (CLLocation *current in locations) {
@@ -88,7 +87,12 @@
     NSMutableDictionary *locationDictionary = [[NSMutableDictionary alloc] initWithObjects:@[location] forKeys:@[@"location"]];
     [self.recommendation addEntriesFromDictionary:locationDictionary];
     [self reverseGeocode:selectedLocation];
-    NSData *imageData = UIImageJPEGRepresentation([self.recommendation objectForKey:@"file"], 0.7);
+
+}
+
+- (void)uploadData{
+
+    NSData *imageData = UIImageJPEGRepresentation([self.recommendation objectForKey:@"file"], 0.4);
     PFFile *imageFile = [PFFile fileWithData:imageData];
 
     PFObject *newRecommend = [PFObject objectWithClassName:@"Photo"];
@@ -100,6 +104,8 @@
     PFObject *newLocation = [PFObject objectWithClassName:@"Location"];
     newLocation[@"point"] = [self.recommendation objectForKey:@"location"];
     newLocation[@"parent"] = newRecommend;
+    newLocation[@"street"] = [self.recommendation objectForKey:@"street"];
+    newLocation[@"city"] = [self.recommendation objectForKey:@"city"];
 
     [newLocation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
@@ -110,8 +116,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Recomendation Added!" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
 
-        NSLog(@"Sucess!");
-
+            NSLog(@"Sucess!");
 
         }
         else{
@@ -121,13 +126,10 @@
             [self.activityIndicator stopAnimating];
             [self.activityIndicator setHidden:YES];
             [self.setButton setHidden:NO];
-
+            
             NSLog(@"Fuck");
         }
     }];
-
-    
-
 
 }
 
@@ -145,6 +147,7 @@
         NSMutableDictionary *addressDictionary = [[NSMutableDictionary alloc] initWithObjects:@[street, city] forKeys:@[@"street", @"city"]];
 
         [self.recommendation addEntriesFromDictionary:addressDictionary];
+        [self uploadData];
         NSLog(@"%@",self.recommendation);
     }];
 }
