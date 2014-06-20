@@ -88,7 +88,7 @@
                             PFObject *photo = recommendation[@"parent"];
                             [photo fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
                                 [self.recommendationsArray addObject:@{@"photo": photo, @"point": [recommendation objectForKey:@"point"]}];
-                                [self.allRgiecommendationsArray addObject:@{@"photo": photo, @"point" : [recommendation objectForKey:@"point"]}];
+                                [self.allRecommendationsArray addObject:@{@"photo": photo, @"point" : [recommendation objectForKey:@"point"]}];
                                 [self.closeToMeTableView reloadData];
                             }];
                         }
