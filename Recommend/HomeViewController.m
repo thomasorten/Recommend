@@ -8,14 +8,16 @@
 
 #import "HomeViewController.h"
 #import "DetailViewController.h"
+#import "ParseRecommendation.h"
+#import "Recommendation.h"
 
-@interface HomeViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
+@interface HomeViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, RecommendationDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *newestCollectionView;
 @property (weak, nonatomic) IBOutlet UICollectionView *popularCollectionView;
 @property NSMutableArray *popularArray;
 @property NSMutableArray *recentArray;
-
+@property Recommendation *newestRecommendations;
 @end
 
 @implementation HomeViewController
@@ -24,6 +26,13 @@
 
 {
     [super viewDidLoad];
+
+    Recommendation *popularRecommendations = [[Recommendation alloc] initWithIdentifier:@"popular"];
+    popularRecommendations.delegate = self;
+
+    self.newestRecommendations = [[Recommendation alloc] initWithIdentifier:@"new"];
+    self.newestRecommendations.delegate = self;
+
     self.recentArray = [NSMutableArray new];
     self.popularArray = [NSMutableArray new];
     
@@ -40,31 +49,25 @@
 
     [self reloadNew];
 
-    PFQuery *popular = [PFQuery queryWithClassName:@"Photo"];
-    [popular orderByDescending:@"numLikes"];
-    [popular findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-
-        for (PFObject *photo in objects) {
-            [self.popularArray addObject:photo];
-        }
-        [self.popularCollectionView reloadData];
-    }];
-
+    [popularRecommendations getRecommendations:5 orderByDescending:@"numLikes"];
 }
 
 
 -(void)reloadNew{
     [self.recentArray removeAllObjects];
-    PFQuery *new = [PFQuery queryWithClassName:@"Photo"];
-    [new orderByDescending:@"createdAt"];
-    [new findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    [self.newestRecommendations getRecommendations:5];
+}
 
-        for (PFObject *photo in objects) {
-            [self.recentArray addObject:photo];
-        }
+-(void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier
+{
+    if ([identifier isEqualToString:@"new"]) {
+        [self.recentArray addObjectsFromArray:recommendations];
         [self.newestCollectionView reloadData];
-    }];
-
+    }
+    if ([identifier isEqualToString:@"popular"]) {
+        [self.popularArray addObjectsFromArray:recommendations];
+        [self.popularCollectionView reloadData];
+    }
 }
 
 #pragma mark - CollectionView Datasource/Delegate
@@ -123,11 +126,11 @@
 
     if ([segue.identifier isEqualToString:@"NewestSegue"]) {
         NSIndexPath *selected = [self.newestCollectionView indexPathForCell:sender];
-        destination.recommendation = @{@"photo": [self.recentArray objectAtIndex:selected.row]};
+        destination.recommendation = [self.recentArray objectAtIndex:selected.row];
     }
     else if ([segue.identifier isEqualToString:@"PopularSegue"]){
         NSIndexPath *selected = [self.popularCollectionView indexPathForCell:sender];
-        destination.recommendation = @{@"photo":[self.popularArray objectAtIndex:selected.row]};
+        destination.recommendation = [self.popularArray objectAtIndex:selected.row];
     }
 
 }

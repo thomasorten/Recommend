@@ -10,11 +10,32 @@
 
 @implementation Recommendation
 
+- (id)initWithIdentifier:(NSString *)identifier
+{
+    self.identifier = identifier;
+    return self;
+}
+
 - (void)getRecommendations:(int)limit
 {
     [self setupQuery];
     self.query.limit = limit;
-    [self loadRecommendations:limit nearPoint:nil withinKm:-1];
+    [self loadRecommendations:limit orderByDescending:nil nearPoint:nil withinKm:-1];
+}
+
+- (void)getRecommendations:(int)limit byUser:(PFUser *)user
+{
+    [self setupQuery];
+    [self.query whereKey:@"creator" equalTo:user];
+    [self loadRecommendations:limit orderByDescending:nil nearPoint:nil withinKm:-1];
+}
+
+- (void)getRecommendations:(int)limit orderByDescending:(NSString *)column
+{
+    [self setupQuery];
+    self.query.limit = limit;
+    [self.query orderByDescending:column];
+    [self loadRecommendations:limit orderByDescending:column nearPoint:nil withinKm:-1];
 }
 
 - (void)getRecommendations:(int)limit withinRadius:(double)km
@@ -22,7 +43,7 @@
     [self setupQuery];
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         if (!error) {
-            [self loadRecommendations:limit nearPoint:geoPoint withinKm:km];
+            [self loadRecommendations:limit orderByDescending:nil nearPoint:geoPoint withinKm:km];
         }
     }];
 }
@@ -33,7 +54,7 @@
     [self.query whereKey:key containsString:string];
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         if (!error) {
-            [self loadRecommendations:limit nearPoint:geoPoint withinKm:km];
+            [self loadRecommendations:limit orderByDescending:nil nearPoint:geoPoint withinKm:km];
         }
     }];
 }
@@ -41,14 +62,7 @@
 - (void)getRecommendations:(int)limit withinRadius:(double)km ofRecommendation:(PFObject *)recommendation
 {
     [self setupQuery];
-    [self loadRecommendations:limit nearPoint:(PFGeoPoint *)recommendation[@"point"] withinKm:km];
-}
-
-- (void)getRecommendations:(int)limit withinRadius:(double)km ofUser:(PFUser *)user
-{
-    [self setupQuery];
-    [self.query whereKey:@"user" equalTo:user];
-    [self loadRecommendations:limit nearPoint:nil withinKm:-1];
+    [self loadRecommendations:limit orderByDescending:nil nearPoint:(PFGeoPoint *)recommendation[@"point"] withinKm:km];
 }
 
 - (BOOL)recommendationAlreadyExists:(PFObject *)recommendation
@@ -73,9 +87,11 @@
     }
 }
 
-- (void)loadRecommendations:(int)limit nearPoint:(PFGeoPoint *)point withinKm:(double)km
+- (void)loadRecommendations:(int)limit orderByDescending:(NSString *)column nearPoint:(PFGeoPoint *)point withinKm:(double)km
 {
-    self.query.limit = limit;
+    if (limit) {
+        self.query.limit = limit;
+    }
 
     if (point && km) {
         [self.query whereKey:@"point" nearGeoPoint:point withinKilometers:km];
@@ -83,14 +99,19 @@
         [self.query whereKey:@"point" nearGeoPoint:point];
     } else {}
 
-    [self.query orderByDescending:@"createdAt"];
+    if (column) {
+        [self.query orderByDescending:column];
+    } else {
+        [self.query orderByDescending:@"createdAt"];
+    }
 
     [self.query includeKey:@"creator"];
 
     [self.query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             if (objects.count < self.recommendations.count) {
-                self.recommendations = [[NSMutableArray alloc] initWithArray:objects];
+                [self.recommendations removeAllObjects];
+                [self.recommendations addObjectsFromArray:objects];
             } else {
                 for (PFObject *recommendation in objects) {
                     if (![self recommendationAlreadyExists:recommendation]) {
@@ -99,7 +120,7 @@
                 }
             }
             self.query = nil;
-            [self.delegate recommendationsLoaded: (NSArray *) self.recommendations];
+            [self.delegate recommendationsLoaded:(NSArray *)self.recommendations forIdentifier:(NSString *)self.identifier];
         }
     }];
 }

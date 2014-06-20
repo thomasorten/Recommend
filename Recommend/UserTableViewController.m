@@ -9,9 +9,11 @@
 #import "UserTableViewController.h"
 #import "MultipleRecommendationsMapViewController.h"
 #import "DetailViewController.h"
+#import "ParseRecommendation.h"
+#import "Recommendation.h"
 #import <Parse/Parse.h>
 
-@interface UserTableViewController ()
+@interface UserTableViewController () <RecommendationDelegate>
 @property NSMutableArray *recommendationsArray;
 @property (weak, nonatomic) IBOutlet UITableView *userTableView;
 @end
@@ -22,23 +24,23 @@
 {
     [super viewDidLoad];
     self.recommendationsArray = [[NSMutableArray alloc] init];
-    PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
-    PFUser *user = [[self.recommendation objectForKey:@"photo"] objectForKey:@"creator"];
-    [query whereKey:@"creator" equalTo:user];
-    query.limit = 1000;
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            for (PFObject *recommendation in objects) {
-                [self.recommendationsArray addObject:@{@"photo": recommendation}];
-                [self.userTableView reloadData];
-            }
-        }
-    }];
+
+    Recommendation *userRecommendations = [[Recommendation alloc] init];
+    userRecommendations.delegate = self;
+
+    [userRecommendations getRecommendations:-1 byUser:[self.recommendation objectForKey:@"creator"]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self.userTableView reloadData];
+}
+
+- (void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier
+{
+    [self.recommendationsArray addObjectsFromArray:recommendations];
+    [self.userTableView reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -50,8 +52,16 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserRecommendationCell"];
     NSDictionary *recommendation = [self.recommendationsArray objectAtIndex:indexPath.row];
-    cell.textLabel.text = [[recommendation objectForKey:@"photo" ] objectForKey:@"title"];
-    cell.detailTextLabel.text = [[recommendation objectForKey:@"photo" ] objectForKey:@"description"];
+    cell.textLabel.text = [recommendation objectForKey:@"title"];
+    cell.detailTextLabel.text = [recommendation objectForKey:@"description"];
+
+    PFFile *image = [recommendation objectForKey:@"file"];
+    [image getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
+        if (!error) {
+            cell.imageView.image = [UIImage imageWithData:imageData];
+        }
+    }];
+
     return cell;
 }
 

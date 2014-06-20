@@ -90,7 +90,7 @@
     [self.recommendations getRecommendations:50 withinRadius:10];
 }
 
-- (void)recommendationsLoaded:(NSArray *)recommendations
+- (void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier
 {
     self.recommendationsArray = recommendations;
     [self.closeToMeTableView reloadData];

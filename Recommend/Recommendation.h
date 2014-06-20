@@ -12,7 +12,7 @@
 
 @protocol RecommendationDelegate
 
-- (void)recommendationsLoaded:(NSArray *)recommendations;
+- (void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier;
 
 @end
 
@@ -23,15 +23,19 @@
 @property NSMutableArray *recommendations;
 @property ParseRecommendation *recommendation;
 @property PFQuery *query;
+@property NSString *identifier;
+
+- (id)initWithIdentifier:(NSString *)identifier;
 
 - (void)getRecommendations:(int)limit;
+
+- (void)getRecommendations:(int)limit byUser:(PFUser *)user;
+
+- (void)getRecommendations:(int)limit orderByDescending:(NSString *)column;
 
 - (void)getRecommendations:(int)limit withinRadius:(double)km;
 
 - (void)getRecommendations:(int)limit withinRadius:(double)km whereKey:(NSString *)key containsString:(NSString *)string;
 
 - (void)getRecommendations:(int)limit withinRadius:(double)km ofRecommendation:(PFObject *)recommendation;
-
-- (void)getRecommendations:(int)limit withinRadius:(double)km ofUser:(PFUser *)user;
-
 @end
