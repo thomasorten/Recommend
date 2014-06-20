@@ -9,15 +9,18 @@
 #import "CloseToMeTableViewController.h"
 #import "MultipleRecommendationsMapViewController.h"
 #import "DetailViewController.h"
+#import "ParseRecommendation.h"
+#import "Recommendation.h"
 #import <Parse/Parse.h>
 
-@interface CloseToMeTableViewController () <UITableViewDelegate, UITableViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate, UISearchBarDelegate>
+@interface CloseToMeTableViewController () <UITableViewDelegate, UITableViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate, UISearchBarDelegate, RecommendationDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *closeToMeTableView;
-@property NSMutableArray *recommendationsArray;
+@property NSArray *recommendationsArray;
 @property NSMutableArray *allRecommendationsArray;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property PFGeoPoint *userLocation;
 @property UIRefreshControl *refreshControl;
+@property Recommendation *recommendations;
 @end
 
 @implementation CloseToMeTableViewController
@@ -25,7 +28,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self locateUser];
+
+    self.recommendations = [[Recommendation alloc] init];
+    self.recommendations.delegate = self;
+
+    [self getRecommendationsCloseToUser];
+
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [self.closeToMeTableView addSubview:self.refreshControl];
@@ -51,8 +59,16 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MatchCell"];
     NSDictionary *recommendation = [self.recommendationsArray objectAtIndex:indexPath.row];
-    cell.textLabel.text = [[recommendation objectForKey:@"photo" ] objectForKey:@"title"];
-    cell.detailTextLabel.text = [[recommendation objectForKey:@"photo" ] objectForKey:@"description"];
+    cell.textLabel.text = [recommendation objectForKey:@"title"];
+    cell.detailTextLabel.text = [recommendation objectForKey:@"description"];
+
+    PFFile *image = [recommendation objectForKey:@"file"];
+    [image getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
+        if (!error) {
+            cell.imageView.image = [UIImage imageWithData:imageData];
+        }
+    }];
+
     return cell;
 }
 
@@ -69,35 +85,16 @@
     }
 }
 
-- (void)locateUser
+- (void)getRecommendationsCloseToUser
 {
-    self.allRecommendationsArray = [[NSMutableArray alloc] init];
-    self.recommendationsArray = [[NSMutableArray alloc] init];
-    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-        if (!error) {
-            self.userLocation = geoPoint;
-            PFQuery *query = [PFQuery queryWithClassName:@"Location"];
-            [query orderByDescending:@"createdAt"];
-            [query includeKey:@"parent"];
-            [query whereKey:@"point" nearGeoPoint:geoPoint withinKilometers:10];
-            query.limit = 50;
-            [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-                if (!error) {
-                    for (PFObject *recommendation in objects) {
-                        if (![self.recommendationsArray containsObject:recommendation]) {
-                            PFObject *photo = recommendation[@"parent"];
-                            [photo fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                                [self.recommendationsArray addObject:@{@"photo": photo, @"point": [recommendation objectForKey:@"point"]}];
-                                [self.allRecommendationsArray addObject:@{@"photo": photo, @"point" : [recommendation objectForKey:@"point"]}];
-                                [self.closeToMeTableView reloadData];
-                            }];
-                        }
-                    }
-                }
-                [self.refreshControl endRefreshing];
-            }];
-        }
-    }];
+    [self.recommendations getRecommendations:50 withinRadius:10];
+}
+
+- (void)recommendationsLoaded:(NSArray *)recommendations
+{
+    self.recommendationsArray = recommendations;
+    [self.closeToMeTableView reloadData];
+    [self.refreshControl endRefreshing];
 }
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -105,50 +102,20 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     if ([searchText isEqualToString:@""]) {
         [self.searchBar resignFirstResponder];
-        self.recommendationsArray = self.allRecommendationsArray;
-        [self.closeToMeTableView reloadData];
+        [self getRecommendationsCloseToUser];
     } else {
-        [self performSelector:@selector(doSearchQuery:) withObject:searchText afterDelay:0.3];
+        [self performSelector:@selector(doSearchQuery:) withObject:searchText afterDelay:0.5];
     }
-}
-
-- (void)doTheQuery:(PFQuery *)query
-{
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            self.recommendationsArray = [[NSMutableArray alloc] initWithArray:objects];
-            for (PFObject *recommendation in objects) {
-                PFObject *photo = recommendation[@"parent"];
-                [photo fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                    [self.recommendationsArray addObject:@{@"photo": photo, @"point" : [recommendation objectForKey:@"point"]}];
-                    [self.allRecommendationsArray addObject:@{@"photo": photo, @"point" : [recommendation objectForKey:@"point"]}];
-                    [self.closeToMeTableView reloadData];
-                }];
-            }
-        }
-    }];
 }
 
 - (void)doSearchQuery:(NSString *)searchString
 {
-    PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
-    [query whereKey:@"title" containsString:searchString];
-    [query orderByDescending:@"createdAt"];
-    query.limit = 100;
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            self.recommendationsArray = [[NSMutableArray alloc] init];
-            for (PFObject *photo in objects) {
-                [self.recommendationsArray addObject:@{@"photo": photo}];
-            }
-            [self.closeToMeTableView reloadData];
-        }
-    }];
+    [self.recommendations getRecommendations:100 withinRadius:30 whereKey:@"title" containsString:searchString];
 }
 
 - (void)refresh:(id)sender
 {
-    [self locateUser];
+    [self getRecommendationsCloseToUser];
 }
 
 @end

@@ -30,8 +30,8 @@
         CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(point.latitude, point.longitude);
 
         annotation.coordinate = coordinate;
-        annotation.title = [[recommendation objectForKey:@"photo"] objectForKey:@"title"];
-        annotation.subtitle = [[recommendation objectForKey:@"photo"] objectForKey:@"description"];
+        annotation.title = [recommendation objectForKey:@"title"];
+        annotation.subtitle = [recommendation objectForKey:@"description"];
 
         [self.allLocationsMapView addAnnotation:annotation];
     }

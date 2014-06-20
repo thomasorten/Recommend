@@ -14,7 +14,8 @@
 		2681704D195228AE008A2692 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26E5CA121950E4BE00A64A7D /* HomeViewController.m */; };
 		269650D71950CE1500418FCE /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269650D61950CE1500418FCE /* FacebookSDK.framework */; };
 		26E5CA1D1951DEDE00A64A7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F695194F848D00289EF0 /* main.m */; };
-		4599127C1953E5080083B4EF /* Recommendation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4599127B1953E5080083B4EF /* Recommendation.m */; };
+		4599127C1953E5080083B4EF /* ParseRecommendation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4599127B1953E5080083B4EF /* ParseRecommendation.m */; };
+		4599127F1954980D0083B4EF /* Recommendation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4599127E1954980D0083B4EF /* Recommendation.m */; };
 		45D7F86E1952140C0051105A /* DetailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45D7F86D1952140C0051105A /* DetailMapViewController.m */; };
 		45D7F8711953264E0051105A /* UserTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45D7F8701953264E0051105A /* UserTableViewController.m */; };
 		45F6F68A194F848D00289EF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F689194F848D00289EF0 /* Foundation.framework */; };
@@ -66,8 +67,10 @@
 		26E5CA121950E4BE00A64A7D /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		26E5CA141950E4C800A64A7D /* LocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
 		26E5CA151950E4C800A64A7D /* LocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
-		4599127A1953E5080083B4EF /* Recommendation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recommendation.h; sourceTree = "<group>"; };
-		4599127B1953E5080083B4EF /* Recommendation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recommendation.m; sourceTree = "<group>"; };
+		4599127A1953E5080083B4EF /* ParseRecommendation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseRecommendation.h; sourceTree = "<group>"; };
+		4599127B1953E5080083B4EF /* ParseRecommendation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseRecommendation.m; sourceTree = "<group>"; };
+		4599127D1954980D0083B4EF /* Recommendation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recommendation.h; sourceTree = "<group>"; };
+		4599127E1954980D0083B4EF /* Recommendation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recommendation.m; sourceTree = "<group>"; };
 		45D7F86C1952140C0051105A /* DetailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailMapViewController.h; sourceTree = "<group>"; };
 		45D7F86D1952140C0051105A /* DetailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailMapViewController.m; sourceTree = "<group>"; };
 		45D7F86F1953264E0051105A /* UserTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTableViewController.h; sourceTree = "<group>"; };
@@ -216,8 +219,10 @@
 				45F6F699194F848D00289EF0 /* AppDelegate.m */,
 				2681704C19522878008A2692 /* HomeViewController.h */,
 				26E5CA121950E4BE00A64A7D /* HomeViewController.m */,
-				4599127A1953E5080083B4EF /* Recommendation.h */,
-				4599127B1953E5080083B4EF /* Recommendation.m */,
+				4599127A1953E5080083B4EF /* ParseRecommendation.h */,
+				4599127B1953E5080083B4EF /* ParseRecommendation.m */,
+				4599127D1954980D0083B4EF /* Recommendation.h */,
+				4599127E1954980D0083B4EF /* Recommendation.m */,
 				269650D21950CC0000418FCE /* LoginViewController.h */,
 				269650D31950CC0000418FCE /* LoginViewController.m */,
 				26E5CA141950E4C800A64A7D /* LocationViewController.h */,
@@ -357,9 +362,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4599127C1953E5080083B4EF /* Recommendation.m in Sources */,
+				4599127C1953E5080083B4EF /* ParseRecommendation.m in Sources */,
 				2681704D195228AE008A2692 /* HomeViewController.m in Sources */,
 				2681704B19520DE0008A2692 /* LoginViewController.m in Sources */,
+				4599127F1954980D0083B4EF /* Recommendation.m in Sources */,
 				260D76D51951F78300A05669 /* LocationViewController.m in Sources */,
 				26E5CA1D1951DEDE00A64A7D /* main.m in Sources */,
 				45F6F69A194F848D00289EF0 /* AppDelegate.m in Sources */,

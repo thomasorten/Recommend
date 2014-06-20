@@ -11,5 +11,5 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface MultipleRecommendationsMapViewController : UIViewController
-@property NSMutableArray *recommendationsArray;
+@property NSArray *recommendationsArray;
 @end

@@ -27,45 +27,26 @@
 {
     [super viewDidLoad];
 
-    self.titleLabel.text = [[self.recommendation objectForKey:@"photo"] objectForKey:@"title"];
-    self.descriptionLabel.text = [[self.recommendation objectForKey:@"photo"] objectForKey:@"description"];
-    [self.personButton setTitle:[[PFUser currentUser] objectForKey:@"username"] forState:UIControlStateNormal];
-    if ([[self.recommendation objectForKey:@"photo"] objectForKey:@"numLikes"]) {
-        NSNumber *numLikes = [[self.recommendation objectForKey:@"photo"] objectForKey:@"numLikes"];
+    self.titleLabel.text = [self.recommendation objectForKey:@"title"];
+    self.descriptionLabel.text = [self.recommendation objectForKey:@"description"];
+    [self.personButton setTitle: [[self.recommendation objectForKey:@"creator"] objectForKey:@"username"] forState:UIControlStateNormal];
+
+    if ([self.recommendation objectForKey:@"numLikes"]) {
+        NSNumber *numLikes = [self.recommendation objectForKey:@"numLikes"];
         self.likesLabel.text = [NSString stringWithFormat:@"%@", numLikes];
     }
 
+    if ([self.recommendation objectForKey:@"street"]) {
+        [self.addressButton setTitle:[NSString stringWithFormat:@"%@, %@", [self.recommendation objectForKey:@"street"], [self.recommendation objectForKey:@"city"]] forState:UIControlStateNormal];
+    }
+
     // Get image file
-    PFFile *userImageFile = [[self.recommendation objectForKey:@"photo"] objectForKey:@"file"];
+    PFFile *userImageFile = [self.recommendation objectForKey:@"file"];
     [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
         if (!error) {
             self.recommendationImageView.image = [UIImage imageWithData:imageData];
         }
     }];
-
-    // Get Location
-    PFQuery *locationQuery = [PFQuery queryWithClassName:@"Location"];
-    [locationQuery whereKey:@"parent" equalTo:[self.recommendation objectForKey:@"photo"]];
-    locationQuery.limit = 1;
-    [locationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            for (PFObject *location in objects) {
-                if ([location objectForKey:@"street"]) {
-                    [self.addressButton setTitle:[NSString stringWithFormat:@"%@, %@", [location objectForKey:@"street"], [location objectForKey:@"city"]] forState:UIControlStateNormal];
-                }
-            }
-        }
-    }];
-
-//    // Get Likes
-//    PFQuery *likesQuery = [PFQuery queryWithClassName:@"Like"];
-//    [likesQuery whereKey:@"photo" equalTo:[self.recommendation objectForKey:@"photo"]];
-//    [likesQuery countObjectsInBackgroundWithBlock:^(int count, NSError *error) {
-//        if (!error && count) {
-//            self.likesLabel.text = @(count).description;
-//        }
-//    }];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -82,9 +63,10 @@
 {
     // Check if user has liked
     if (self.hasLikedPhoto) {
-         NSLog(@"User already liked.");
+        NSLog(@"User already liked.");
         return;
     }
+
     PFQuery *likeQuery = [PFQuery queryWithClassName:@"Like"];
     [likeQuery whereKey:@"photo" equalTo:[self.recommendation objectForKey:@"photo"]];
     [likeQuery whereKey:@"user" equalTo:[PFUser currentUser]];
