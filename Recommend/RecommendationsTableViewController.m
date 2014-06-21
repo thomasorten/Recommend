@@ -58,17 +58,20 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MatchCell"];
-    NSDictionary *recommendation = [self.recommendationsArray objectAtIndex:indexPath.row];
-    cell.textLabel.text = [recommendation objectForKey:@"title"];
+    ParseRecommendation *recommendation = [self.recommendationsArray objectAtIndex:indexPath.row];
+    cell.textLabel.text = recommendation.title;
     cell.detailTextLabel.text = [recommendation objectForKey:@"description"];
-
-    PFFile *image = [recommendation objectForKey:@"thumbnail"];
-    [image getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
-        if (!error) {
-            cell.imageView.image = [UIImage imageWithData:imageData];
-        }
-    }];
-
+    PFFile *userImageFile = recommendation.thumbnail;
+    if (userImageFile) {
+        [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
+            if (!error) {
+                cell.imageView.image = [[UIImage alloc] initWithData:imageData];
+                [cell setNeedsLayout];
+            }
+        }];
+    } else {
+        cell.imageView.image = nil;
+    }
     return cell;
 }
 
