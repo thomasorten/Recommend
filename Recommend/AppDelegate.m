@@ -25,6 +25,7 @@
     
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     [PFFacebookUtils initializeFacebook];
+
     return YES;
 }
 - (BOOL)application:(UIApplication *)application

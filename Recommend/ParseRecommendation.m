@@ -16,6 +16,7 @@
 }
 
 @dynamic file;
+@dynamic thumbnail;
 @dynamic createdAt;
 @dynamic title;
 @dynamic description;

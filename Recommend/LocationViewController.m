@@ -93,14 +93,18 @@
 
 - (void)uploadData{
 
-    NSData *imageData = UIImageJPEGRepresentation([self.recommendation objectForKey:@"file"], 0.4);
+    NSData *imageData = [self compressImage:[self.recommendation objectForKey:@"file"] width:720 height:1280];
     PFFile *imageFile = [PFFile fileWithData:imageData];
+
+    NSData *thumbData = [self compressImage:[self.recommendation objectForKey:@"file"] width:180 height:320];
+    PFFile *thumbFile = [PFFile fileWithData:thumbData];
 
     ParseRecommendation *newRecommend = [ParseRecommendation object];
     newRecommend.creator = [PFUser currentUser];
     newRecommend.description = [self.recommendation objectForKey:@"description"];
     newRecommend.title = [self.recommendation objectForKey:@"title"];
     newRecommend.file = imageFile;
+    newRecommend.thumbnail = thumbFile;
     newRecommend.point = [self.recommendation objectForKey:@"location"];
     newRecommend.street = [self.recommendation objectForKey:@"street"];
     newRecommend.city = [self.recommendation objectForKey:@"city"];
@@ -130,6 +134,44 @@
         }
     }];
 
+}
+
+- (NSData *)compressImage:(UIImage *)image width:(float)width height:(float)height {
+    float actualHeight = image.size.height;
+    float actualWidth = image.size.width;
+    float maxHeight = height;
+    float maxWidth = width;
+    float imgRatio = actualWidth/actualHeight;
+    float maxRatio = maxWidth/maxHeight;
+    float compressionQuality = 0.4;//40 percent compression
+
+    if (actualHeight > maxHeight || actualWidth > maxWidth){
+        if(imgRatio < maxRatio){
+            //adjust width according to maxHeight
+            imgRatio = maxHeight / actualHeight;
+            actualWidth = imgRatio * actualWidth;
+            actualHeight = maxHeight;
+        }
+        else if(imgRatio > maxRatio){
+            //adjust height according to maxWidth
+            imgRatio = maxWidth / actualWidth;
+            actualHeight = imgRatio * actualHeight;
+            actualWidth = maxWidth;
+        }
+        else{
+            actualHeight = maxHeight;
+            actualWidth = maxWidth;
+        }
+    }
+
+    CGRect rect = CGRectMake(0.0, 0.0, actualWidth, actualHeight);
+    UIGraphicsBeginImageContext(rect.size);
+    [image drawInRect:rect];
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    NSData *imageData = UIImageJPEGRepresentation(img, compressionQuality);
+    UIGraphicsEndImageContext();
+
+    return imageData;
 }
 
 

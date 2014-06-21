@@ -12,4 +12,5 @@
 @property (weak, nonatomic) IBOutlet UITextField *recommendationTextField;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (weak, nonatomic) IBOutlet UIImageView *capturedImageView;
+@property (weak, nonatomic) IBOutlet UIView *videoPreviewView;
 @end

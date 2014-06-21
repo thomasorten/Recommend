@@ -14,6 +14,7 @@
 + (NSString *)parseClassName;
 
 @property PFFile *file;
+@property PFFile *thumbnail;
 @property (retain, nonatomic) NSDate *createdAt;
 @property NSString *title;
 @property NSString *description;

@@ -62,7 +62,7 @@
     cell.textLabel.text = [recommendation objectForKey:@"title"];
     cell.detailTextLabel.text = [recommendation objectForKey:@"description"];
 
-    PFFile *image = [recommendation objectForKey:@"file"];
+    PFFile *image = [recommendation objectForKey:@"thumbnail"];
     [image getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
         if (!error) {
             cell.imageView.image = [UIImage imageWithData:imageData];

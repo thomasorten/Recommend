@@ -10,6 +10,7 @@
 #import "DetailMapViewController.h"
 #import "RecommendationsTableViewController.h"
 #import "Recommendation.h"
+#import "TabBarViewController.h"
 #import <Parse/Parse.h>
 
 @interface DetailViewController () <RecommendationDelegate>
@@ -55,12 +56,12 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self setTabBarVisible:NO animated:YES];
+   [(TabBarViewController *)self.tabBarController setTabBarVisible:NO animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [self setTabBarVisible:YES animated:YES];
+    [(TabBarViewController *)self.tabBarController setTabBarVisible:YES animated:YES];
 }
 
 - (IBAction)onRecommendButtonPressed:(id)sender
@@ -94,32 +95,7 @@
         DetailMapViewController *vc = segue.destinationViewController;
         vc.recommendationsArray = @[self.recommendation];
     }
-    [self setTabBarVisible:YES animated:YES];
-}
-
-// a param to describe the state change, and an animated flag
-// optionally add a completion block which matches UIView animation
-- (void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated {
-
-    // bail if the current state matches the desired state
-    if ([self tabBarIsVisible] == visible) return;
-
-    // get a frame calculation ready
-    CGRect frame = self.tabBarController.tabBar.frame;
-    CGFloat height = frame.size.height;
-    CGFloat offsetY = (visible)? -height : height;
-
-    // zero duration means no animation
-    CGFloat duration = (animated)? 0.3 : 0.0;
-
-    [UIView animateWithDuration:duration animations:^{
-        self.tabBarController.tabBar.frame = CGRectOffset(frame, 0, offsetY);
-    }];
-}
-
-// know the current state
-- (BOOL)tabBarIsVisible {
-    return self.tabBarController.tabBar.frame.origin.y < CGRectGetMaxY(self.view.frame);
+    [(TabBarViewController *)self.tabBarController setTabBarVisible:YES animated:YES];
 }
 
 @end
