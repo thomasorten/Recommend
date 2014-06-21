@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Orten, Thomas. All rights reserved.
 //
 
-#import "CloseToMeTableViewController.h"
-#import "MultipleRecommendationsMapViewController.h"
+#import "RecommendationsTableViewController.h"
+#import "DetailMapViewController.h"
 #import "DetailViewController.h"
 #import "ParseRecommendation.h"
 #import "Recommendation.h"
 #import <Parse/Parse.h>
 
-@interface CloseToMeTableViewController () <UITableViewDelegate, UITableViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate, UISearchBarDelegate, RecommendationDelegate>
+@interface RecommendationsTableViewController () <UITableViewDelegate, UITableViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate, UISearchBarDelegate, RecommendationDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *closeToMeTableView;
 @property NSArray *recommendationsArray;
 @property NSMutableArray *allRecommendationsArray;
@@ -23,7 +23,7 @@
 @property Recommendation *recommendations;
 @end
 
-@implementation CloseToMeTableViewController
+@implementation RecommendationsTableViewController
 
 - (void)viewDidLoad
 {
@@ -32,7 +32,7 @@
     self.recommendations = [[Recommendation alloc] init];
     self.recommendations.delegate = self;
 
-    [self getRecommendationsCloseToUser];
+    [self getTableData];
 
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
@@ -80,9 +80,23 @@
         destinationController.recommendation = [self.recommendationsArray objectAtIndex:selectedRow.row];
     }
     if ([segue.identifier isEqualToString:@"TableToMapSegue"]) {
-        MultipleRecommendationsMapViewController *destinationController = segue.destinationViewController;
+        DetailMapViewController *destinationController = segue.destinationViewController;
         destinationController.recommendationsArray = self.recommendationsArray;
     }
+}
+
+- (void)getTableData
+{
+    if (self.recommendation) {
+        [self getRecommendationsOfSpecificUser];
+    } else {
+        [self getRecommendationsCloseToUser];
+    }
+}
+
+- (void)getRecommendationsOfSpecificUser
+{
+    [self.recommendations getRecommendations:-1 byUser:[self.recommendation objectForKey:@"creator"]];
 }
 
 - (void)getRecommendationsCloseToUser
@@ -102,7 +116,7 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     if ([searchText isEqualToString:@""]) {
         [self.searchBar resignFirstResponder];
-        [self getRecommendationsCloseToUser];
+        [self getTableData];
     } else {
         [self performSelector:@selector(doSearchQuery:) withObject:searchText afterDelay:0.5];
     }
@@ -110,12 +124,16 @@
 
 - (void)doSearchQuery:(NSString *)searchString
 {
-    [self.recommendations getRecommendations:100 withinRadius:30 whereKey:@"title" containsString:searchString];
+    if (self.recommendation) {
+        [self.recommendations getRecommendations:-1 byUser:[self.recommendation objectForKey:@"creator"] whereKey:@"title" containsString:searchString];
+    } else {
+        [self.recommendations getRecommendations:100 withinRadius:30 whereKey:@"title" containsString:searchString];
+    }
 }
 
 - (void)refresh:(id)sender
 {
-    [self getRecommendationsCloseToUser];
+    [self getTableData];
 }
 
 @end

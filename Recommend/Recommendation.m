@@ -30,6 +30,14 @@
     [self loadRecommendations:limit orderByDescending:nil nearPoint:nil withinKm:-1];
 }
 
+- (void)getRecommendations:(int)limit byUser:(PFUser *)user whereKey:(NSString *)key containsString:(NSString *)string
+{
+    [self setupQuery];
+    [self.query whereKey:@"creator" equalTo:user];
+    [self.query whereKey:key containsString:string];
+    [self loadRecommendations:limit orderByDescending:nil nearPoint:nil withinKm:-1];
+}
+
 - (void)getRecommendations:(int)limit orderByDescending:(NSString *)column
 {
     [self setupQuery];

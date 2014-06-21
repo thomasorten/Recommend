@@ -38,6 +38,8 @@
 
 - (void)getRecommendations:(int)limit byUser:(PFUser *)user;
 
+- (void)getRecommendations:(int)limit byUser:(PFUser *)user whereKey:(NSString *)key containsString:(NSString *)string;
+
 - (void)getRecommendations:(int)limit orderByDescending:(NSString *)column;
 
 - (void)getRecommendations:(int)limit withinRadius:(double)km;

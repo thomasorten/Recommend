@@ -8,7 +8,7 @@
 
 #import "DetailViewController.h"
 #import "DetailMapViewController.h"
-#import "UserTableViewController.h"
+#import "RecommendationsTableViewController.h"
 #import "Recommendation.h"
 #import <Parse/Parse.h>
 
@@ -88,11 +88,11 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"DetailToTableViewSegue"]) {
-        UserTableViewController *vc = segue.destinationViewController;
+        RecommendationsTableViewController *vc = segue.destinationViewController;
         vc.recommendation = self.recommendation;
     } else {
         DetailMapViewController *vc = segue.destinationViewController;
-        vc.recommendation = self.recommendation;
+        vc.recommendationsArray = @[self.recommendation];
     }
     [self setTabBarVisible:YES animated:YES];
 }
