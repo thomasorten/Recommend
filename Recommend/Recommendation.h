@@ -12,7 +12,11 @@
 
 @protocol RecommendationDelegate
 
+@optional
+
 - (void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier;
+
+- (void)recommendationLoved:(NSString *)error count:(NSNumber *)count recommendation:(PFObject *)recommendation;
 
 @end
 
@@ -24,8 +28,11 @@
 @property ParseRecommendation *recommendation;
 @property PFQuery *query;
 @property NSString *identifier;
+@property BOOL lovesPhoto;
 
 - (id)initWithIdentifier:(NSString *)identifier;
+
+- (void)love:(PFObject *)recommendation;
 
 - (void)getRecommendations:(int)limit;
 

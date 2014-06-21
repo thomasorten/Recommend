@@ -125,4 +125,42 @@
     }];
 }
 
+- (void)love:(PFObject *)recommendation
+{
+    // Check if user has liked
+    if (self.lovesPhoto) {
+        [self.delegate recommendationLoved:@"User already liked." count:0 recommendation:nil];
+        return;
+    }
+
+    PFQuery *loveQuery = [PFQuery queryWithClassName:@"Love"];
+    [loveQuery whereKey:@"recommendation" equalTo:recommendation];
+    [loveQuery whereKey:@"user" equalTo:[PFUser currentUser]];
+
+    [loveQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        if (!object) {
+            [recommendation incrementKey:@"numLikes"];
+            [recommendation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    [self.delegate recommendationLoved:nil count:recommendation[@"numLikes"] recommendation:recommendation];
+                    self.lovesPhoto = YES;
+                } else {
+                    [self.delegate recommendationLoved:@"Network error." count:0 recommendation:recommendation];
+                }
+            }];
+            // Save in likes table
+            PFObject *userLike = [PFObject objectWithClassName:@"Love"];
+            userLike[@"recommendation"] = recommendation;
+            userLike[@"user"] = [PFUser currentUser];
+            [userLike saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                self.lovesPhoto = YES;
+            }];
+        } else {
+            // The find succeeded.
+            [self.delegate recommendationLoved:@"User already liked." count:0 recommendation:nil];
+        }
+    }];
+
+}
+
 @end

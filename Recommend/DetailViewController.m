@@ -9,16 +9,17 @@
 #import "DetailViewController.h"
 #import "DetailMapViewController.h"
 #import "UserTableViewController.h"
+#import "Recommendation.h"
 #import <Parse/Parse.h>
 
-@interface DetailViewController ()
+@interface DetailViewController () <RecommendationDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *recommendationImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *likesLabel;
 @property (weak, nonatomic) IBOutlet UIButton *addressButton;
 @property (weak, nonatomic) IBOutlet UIButton *personButton;
-@property BOOL hasLikedPhoto;
+@property Recommendation *currentRecommendation;
 @end
 
 @implementation DetailViewController
@@ -26,6 +27,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.currentRecommendation = [[Recommendation alloc] init];
+    self.currentRecommendation.delegate = self;
 
     self.titleLabel.text = [self.recommendation objectForKey:@"title"];
     self.descriptionLabel.text = [self.recommendation objectForKey:@"description"];
@@ -61,38 +65,7 @@
 
 - (IBAction)onRecommendButtonPressed:(id)sender
 {
-    // Check if user has liked
-    if (self.hasLikedPhoto) {
-        NSLog(@"User already liked.");
-        return;
-    }
-
-    PFQuery *likeQuery = [PFQuery queryWithClassName:@"Like"];
-    [likeQuery whereKey:@"photo" equalTo:[self.recommendation objectForKey:@"photo"]];
-    [likeQuery whereKey:@"user" equalTo:[PFUser currentUser]];
-    [likeQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        if (!object) {
-            // Increment counter on photo object for fast retrieval
-            PFObject *photoLikes = [self.recommendation objectForKey:@"photo"];
-            [photoLikes incrementKey:@"numLikes"];
-            [photoLikes saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (succeeded) {
-                    self.likesLabel.text = [NSString stringWithFormat:@"%@", photoLikes[@"numLikes"]];
-                    self.hasLikedPhoto = YES;
-                }
-            }];
-            // Save in likes table
-            PFObject *userLike = [PFObject objectWithClassName:@"Like"];
-            userLike[@"photo"] = [self.recommendation objectForKey:@"photo"];
-            userLike[@"user"] = [PFUser currentUser];
-            [userLike saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                self.hasLikedPhoto = YES;
-            }];
-        } else {
-            // The find succeeded.
-            NSLog(@"User already liked.");
-        }
-    }];
+    [self.currentRecommendation love:self.recommendation];
 }
 
 - (IBAction)onLocationButtonPressed:(id)sender
@@ -103,6 +76,13 @@
 - (IBAction)onPersonPressed:(id)sender
 {
 
+}
+
+-(void)recommendationLoved:(NSString *)error count:(NSNumber *)count recommendation:(PFObject *)recommendation
+{
+    if (!error) {
+        self.likesLabel.text = [NSString stringWithFormat:@"%@", count];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

@@ -17,8 +17,10 @@
 @property (retain, nonatomic) NSDate *createdAt;
 @property NSString *title;
 @property NSString *description;
+@property NSString *city;
+@property NSString *street;
 @property PFObject *creator;
 @property NSNumber *numLikes;
-@property PFGeoPoint *location;
+@property PFGeoPoint *point;
 
 @end

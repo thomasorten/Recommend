@@ -10,5 +10,5 @@
 #import <Parse/Parse.h>
 
 @interface DetailViewController : UIViewController
-@property NSDictionary *recommendation;
+@property PFObject *recommendation;
 @end

@@ -19,8 +19,10 @@
 @dynamic createdAt;
 @dynamic title;
 @dynamic description;
+@dynamic city;
+@dynamic street;
 @dynamic creator;
 @dynamic numLikes;
-@dynamic location;
+@dynamic point;
 
 @end

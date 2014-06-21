@@ -7,6 +7,7 @@
 //
 
 #import "LocationViewController.h"
+#import "ParseRecommendation.h"
 
 @interface LocationViewController () <CLLocationManagerDelegate,MKMapViewDelegate>
 
@@ -95,25 +96,22 @@
     NSData *imageData = UIImageJPEGRepresentation([self.recommendation objectForKey:@"file"], 0.4);
     PFFile *imageFile = [PFFile fileWithData:imageData];
 
-    PFObject *newRecommend = [PFObject objectWithClassName:@"Photo"];
-    newRecommend[@"creator"] = [PFUser currentUser];
-    newRecommend[@"description"] = [self.recommendation objectForKey:@"description"];
-    newRecommend[@"title"] = [self.recommendation objectForKey:@"title"];
-    newRecommend[@"file"] = imageFile;
+    ParseRecommendation *newRecommend = [ParseRecommendation object];
+    newRecommend.creator = [PFUser currentUser];
+    newRecommend.description = [self.recommendation objectForKey:@"description"];
+    newRecommend.title = [self.recommendation objectForKey:@"title"];
+    newRecommend.file = imageFile;
+    newRecommend.point = [self.recommendation objectForKey:@"location"];
+    newRecommend.street = [self.recommendation objectForKey:@"street"];
+    newRecommend.city = [self.recommendation objectForKey:@"city"];
 
-    PFObject *newLocation = [PFObject objectWithClassName:@"Location"];
-    newLocation[@"point"] = [self.recommendation objectForKey:@"location"];
-    newLocation[@"parent"] = newRecommend;
-    newLocation[@"street"] = [self.recommendation objectForKey:@"street"];
-    newLocation[@"city"] = [self.recommendation objectForKey:@"city"];
-
-    [newLocation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    [newRecommend saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
 
             [self.activityIndicator stopAnimating];
             [self.activityIndicator setHidden:YES];
 
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Recomendation Added!" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Recommendation Added!" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
             [self performSegueWithIdentifier:@"BackToMain" sender:self];
 
