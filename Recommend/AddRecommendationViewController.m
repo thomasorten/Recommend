@@ -15,6 +15,8 @@
 
 #define defaultTitleString @"What do you recommend?"
 #define defaultDescriptionString @"Write a short description here."
+#define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
+#define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
 @interface AddRecommendationViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, AVCaptureVideoDataOutputSampleBufferDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;
@@ -43,12 +45,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
 
     [self setLatestImageOffAlbum];
 
@@ -61,13 +57,24 @@
                                    action:@selector(dismissKeyboard)];
 
     [self.view addGestureRecognizer:tap];
+}
 
-    [self setupCaptureSession];
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    if (!self.captureSession) {
+        [self setupCaptureSession];
+    }
+
+    [self showCameraControls];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.view setBackgroundColor: RGB(151, 205, 164)];
+    self.videoPreviewView.hidden = YES;
     [self.navigationController setNavigationBarHidden:YES];
      [(TabBarViewController *)self.tabBarController setTabBarVisible:NO animated:YES];
 }
@@ -79,7 +86,7 @@
     [(TabBarViewController *)self.tabBarController setTabBarVisible:YES animated:YES];
 }
 
-- (void)showCamera
+- (void)showCameraControls
 {
     [UIView animateWithDuration:0.2 animations:^{
         self.warningLabel.alpha = 0.0;
@@ -87,6 +94,7 @@
 
     if (self.captureSession) {
         [self.captureSession startRunning];
+        self.videoPreviewView.hidden = NO;
     }
 
     self.takePictureButton.hidden = NO;
@@ -152,7 +160,7 @@
 
 - (IBAction)onTakeAnotherPhotoPressed:(id)sender
 {
-    [self showCamera];
+    [self showCameraControls];
 }
 
 - (IBAction)onFlashPressed:(id)sender
@@ -173,7 +181,6 @@
 {
     if (self.captureSession) {
         [self.captureSession stopRunning];
-        self.captureSession = nil;
     } else {
         [self.picker dismissViewControllerAnimated:NO completion:^{
         }];
@@ -190,7 +197,6 @@
     } else {
         if (self.captureSession) {
             [self.captureSession stopRunning];
-            self.captureSession = nil;
         } else {
             [self.picker dismissViewControllerAnimated:NO completion:^{
             }];

@@ -424,7 +424,6 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MN2-aJ-xpa" userLabel="View - video preview">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LWQ-Ng-YjR">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -676,8 +675,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="EGM-8L-KJv"/>
         <segue reference="iXj-G9-Isr"/>
-        <segue reference="IRn-6p-b8F"/>
         <segue reference="eqa-xD-Jr9"/>
     </inferredMetricsTieBreakers>
 </document>
