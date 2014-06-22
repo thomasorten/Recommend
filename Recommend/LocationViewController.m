@@ -28,6 +28,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [[self.navigationController navigationBar] setTintColor:[UIColor whiteColor]];
+
     [self.activityIndicator setHidden:YES];
 
     self.setButton.layer.cornerRadius = 5;

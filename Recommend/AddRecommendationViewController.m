@@ -12,6 +12,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/ImageIO.h>
 #import <AVFoundation/AVFoundation.h>
+#import <QuartzCore/QuartzCore.h>
 
 #define defaultTitleString @"What do you recommend?"
 #define defaultDescriptionString @"Write a short description here."
@@ -35,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet UIView *topLine;
 @property (weak, nonatomic) IBOutlet UIView *lineTwo;
 @property (weak, nonatomic) IBOutlet UIView *lineThree;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UILabel *orLabel;
 @property (weak, nonatomic) IBOutlet UILabel *warningLabel;
 @property (weak, nonatomic) IBOutlet UILabel *loadingCameraLabel;
@@ -48,6 +50,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    for (UIView *subview in self.cameraScrollView.subviews) {
+        subview.layer.shadowColor = [[UIColor blackColor] CGColor];
+        subview.layer.shadowOffset = CGSizeMake(0.8f, 0.8f);
+        subview.layer.shadowOpacity = 0.6f;
+        subview.layer.shadowRadius = 0.6f;
+    }
 
     [self setLatestImageOffAlbum];
 
@@ -158,6 +167,7 @@
     } else {
         [self.picker takePicture];
     }
+    [self hideCameraControls];
 }
 
 - (IBAction)onTakeAnotherPhotoPressed:(id)sender

@@ -29,6 +29,8 @@
 {
     [super viewDidLoad];
 
+    [[self.navigationController navigationBar] setTintColor:[UIColor whiteColor]];
+
     self.currentRecommendation = [[Recommendation alloc] init];
     self.currentRecommendation.delegate = self;
 
