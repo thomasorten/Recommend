@@ -20,6 +20,8 @@
 {
     [super viewDidLoad];
 
+    [[self.navigationController navigationBar] setTintColor:[UIColor whiteColor]];
+
     self.detailMapView.delegate = self;
 
     for (PFObject *recommendation in self.recommendationsArray) {

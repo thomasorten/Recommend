@@ -37,6 +37,9 @@
 @property (weak, nonatomic) IBOutlet UIView *lineThree;
 @property (weak, nonatomic) IBOutlet UILabel *orLabel;
 @property (weak, nonatomic) IBOutlet UILabel *warningLabel;
+@property (weak, nonatomic) IBOutlet UILabel *loadingCameraLabel;
+@property (weak, nonatomic) IBOutlet UIView *continueButtonsView;
+@property (weak, nonatomic) IBOutlet UIView *cameraControlsView;
 @property (weak, nonatomic) IBOutlet UIImageView *cameraRollPreview;
 @end
 
@@ -73,15 +76,30 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.view setBackgroundColor: RGB(151, 205, 164)];
+
+    self.cameraScrollView.alpha = 0;
+
+    [self.view setBackgroundColor: RGB(2, 156, 188)];
+
+    [self.setLocationButton.layer setBorderWidth:1.0];
+    [self.setLocationButton.layer setCornerRadius:5];
+    [self.setLocationButton.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+
+    [self.takeAnotherButton.layer setBorderWidth:1.0];
+    [self.takeAnotherButton.layer setCornerRadius:5];
+    [self.takeAnotherButton.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+
+    self.loadingCameraLabel.hidden = NO;
     self.videoPreviewView.hidden = YES;
+
     [self.navigationController setNavigationBarHidden:YES];
-     [(TabBarViewController *)self.tabBarController setTabBarVisible:NO animated:YES];
+    [(TabBarViewController *)self.tabBarController setTabBarVisible:NO animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+
     [self.navigationController setNavigationBarHidden:NO];
     [(TabBarViewController *)self.tabBarController setTabBarVisible:YES animated:YES];
 }
@@ -95,42 +113,26 @@
     if (self.captureSession) {
         [self.captureSession startRunning];
         self.videoPreviewView.hidden = NO;
+        self.loadingCameraLabel.hidden = YES;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.cameraScrollView.alpha = 1;
+        }];
     }
 
-    self.takePictureButton.hidden = NO;
-    self.cameraRollButton.hidden = NO;
-    self.flashButton.hidden = NO;
-    self.cameraRollPreview.hidden = NO;
-
-    self.orLabel.hidden = YES;
     self.capturedImageView.hidden = YES;
-    self.setLocationButton.hidden = YES;
-    self.takeAnotherButton.hidden = YES;
+    self.cameraControlsView.hidden = NO;
+    self.continueButtonsView.hidden = YES;
 }
 
-- (void)hideCamera
+- (void)hideCameraControls
 {
     if (self.captureSession) {
         [self.captureSession stopRunning];
     }
 
-    [self.setLocationButton.layer setBorderWidth:1.0];
-    [self.setLocationButton.layer setCornerRadius:5];
-    [self.setLocationButton.layer setBorderColor:[[UIColor whiteColor] CGColor]];
-
-    [self.takeAnotherButton.layer setBorderWidth:1.0];
-    [self.takeAnotherButton.layer setCornerRadius:5];
-    [self.takeAnotherButton.layer setBorderColor:[[UIColor whiteColor] CGColor]];
-
-    self.takePictureButton.hidden = YES;
-    self.cameraRollButton.hidden = YES;
-    self.flashButton.hidden = YES;
-    self.cameraRollPreview.hidden = YES;
-
-    self.orLabel.hidden = NO;
     self.capturedImageView.hidden = NO;
-    self.setLocationButton.hidden = NO;
-    self.takeAnotherButton.hidden = NO;
+    self.cameraControlsView.hidden = YES;
+    self.continueButtonsView.hidden = NO;
 }
 
 - (IBAction)onAlbumPressed:(id)sender
@@ -219,7 +221,7 @@
 
     self.capturedImageView.image = image;
 
-    [self hideCamera];
+    [self hideCameraControls];
 
     if (!self.captureSession) {
         [picker dismissViewControllerAnimated:YES completion:^{
@@ -356,8 +358,7 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
             }
         }];
     } failureBlock: ^(NSError *error) {
-        // Typically you should handle an error more gracefully than this.
-        NSLog(@"No groups");
+
     }];
 }
 
@@ -411,7 +412,6 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
                                                                         error:&error];
     if (!input)
     {
-        NSLog(@"PANIC: no media input");
         [self setupImagePicker];
     }
 
@@ -471,31 +471,20 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
         if (videoConnection) { break; }
     }
 
-    NSLog(@"about to request a capture from: %@", self.stillImageOutput);
     [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection
                                                   completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error)
      {
-         CFDictionaryRef exifAttachments = CMGetAttachment( imageSampleBuffer, kCGImagePropertyExifDictionary, NULL);
-         if (exifAttachments)
-         {
-             // Do something with the attachments.
-             NSLog(@"attachements: %@", exifAttachments);
-         }
-         else
-             NSLog(@"no attachments");
-
          NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
          UIImage *image = [[UIImage alloc] initWithData:imageData];
 
          self.capturedImageView.image = image;
 
-         [self hideCamera];
+         [self.captureSession stopRunning];
      }];
 }
 
 -(void)setSession:(AVCaptureSession *)session
 {
-    NSLog(@"setting session...");
     self.captureSession=session;
 }
 

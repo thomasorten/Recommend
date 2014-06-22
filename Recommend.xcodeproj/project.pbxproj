@@ -17,6 +17,7 @@
 		4599127C1953E5080083B4EF /* ParseRecommendation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4599127B1953E5080083B4EF /* ParseRecommendation.m */; };
 		4599127F1954980D0083B4EF /* Recommendation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4599127E1954980D0083B4EF /* Recommendation.m */; };
 		459912821955E80E0083B4EF /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 459912811955E80E0083B4EF /* TabBarViewController.m */; };
+		4599128519565B5E0083B4EF /* RecommendationTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4599128419565B5E0083B4EF /* RecommendationTabBarItem.m */; };
 		45D7F86E1952140C0051105A /* DetailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45D7F86D1952140C0051105A /* DetailMapViewController.m */; };
 		45F6F68A194F848D00289EF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F689194F848D00289EF0 /* Foundation.framework */; };
 		45F6F68C194F848D00289EF0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6F68B194F848D00289EF0 /* CoreGraphics.framework */; };
@@ -72,6 +73,8 @@
 		4599127E1954980D0083B4EF /* Recommendation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recommendation.m; sourceTree = "<group>"; };
 		459912801955E80E0083B4EF /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
 		459912811955E80E0083B4EF /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
+		4599128319565B5E0083B4EF /* RecommendationTabBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendationTabBarItem.h; sourceTree = "<group>"; };
+		4599128419565B5E0083B4EF /* RecommendationTabBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendationTabBarItem.m; sourceTree = "<group>"; };
 		45D7F86C1952140C0051105A /* DetailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailMapViewController.h; sourceTree = "<group>"; };
 		45D7F86D1952140C0051105A /* DetailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailMapViewController.m; sourceTree = "<group>"; };
 		45F6F686194F848D00289EF0 /* Recommend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recommend.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -204,6 +207,8 @@
 				45F6F6EF1950EA6C00289EF0 /* RecommendationsTableViewController.h */,
 				45F6F6F01950EA6C00289EF0 /* RecommendationsTableViewController.m */,
 				45F6F69B194F848D00289EF0 /* Main.storyboard */,
+				4599128319565B5E0083B4EF /* RecommendationTabBarItem.h */,
+				4599128419565B5E0083B4EF /* RecommendationTabBarItem.m */,
 				45D7F86C1952140C0051105A /* DetailMapViewController.h */,
 				45D7F86D1952140C0051105A /* DetailMapViewController.m */,
 				45F6F6FF1951E98600289EF0 /* DetailViewController.h */,
@@ -360,6 +365,7 @@
 				4599127C1953E5080083B4EF /* ParseRecommendation.m in Sources */,
 				2681704D195228AE008A2692 /* HomeViewController.m in Sources */,
 				2681704B19520DE0008A2692 /* LoginViewController.m in Sources */,
+				4599128519565B5E0083B4EF /* RecommendationTabBarItem.m in Sources */,
 				4599127F1954980D0083B4EF /* Recommendation.m in Sources */,
 				459912821955E80E0083B4EF /* TabBarViewController.m in Sources */,
 				260D76D51951F78300A05669 /* LocationViewController.m in Sources */,
