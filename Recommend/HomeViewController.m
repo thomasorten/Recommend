@@ -18,6 +18,7 @@
 @property NSMutableArray *popularArray;
 @property NSMutableArray *recentArray;
 @property Recommendation *newestRecommendations;
+@property (weak, nonatomic) IBOutlet UIScrollView *recommendationsScrollView;
 @end
 
 @implementation HomeViewController
@@ -49,13 +50,13 @@
 
     [self reloadNew];
 
-    [popularRecommendations getRecommendations:5 orderByDescending:@"numLikes"];
+    [popularRecommendations getRecommendations:18 orderByDescending:@"numLikes"];
 }
 
 
 -(void)reloadNew{
     [self.recentArray removeAllObjects];
-    [self.newestRecommendations getRecommendations:5];
+    [self.newestRecommendations getRecommendations:18];
 }
 
 -(void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier
@@ -117,6 +118,11 @@
     }
 
     return cell;
+}
+
+- (void)viewDidLayoutSubviews {
+    self.recommendationsScrollView.contentSize = CGSizeMake((self.newestCollectionView.frame.size.width*5), 1);
+    [self.recommendationsScrollView setDirectionalLockEnabled:YES];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UICollectionViewCell *)sender{
