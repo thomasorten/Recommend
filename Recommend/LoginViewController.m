@@ -19,7 +19,7 @@
 {
     [super viewDidLoad];
 
-    NSArray *permissionsArray = @[@"user_about_me", @"user_relationships", @"user_birthday", @"user_location"];
+    NSArray *permissionsArray = @[@"public_profile"];
     [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
         if (!user) {
             NSLog(@"User cancelled the facebook login.");
@@ -30,4 +30,5 @@
         }
     }];
 }
+
 @end
