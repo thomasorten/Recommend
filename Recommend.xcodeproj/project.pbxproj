@@ -205,13 +205,15 @@
 		45F6F68F194F848D00289EF0 /* Recommend */ = {
 			isa = PBXGroup;
 			children = (
+				45F6F69B194F848D00289EF0 /* Main.storyboard */,
+				45F6F698194F848D00289EF0 /* AppDelegate.h */,
+				45F6F699194F848D00289EF0 /* AppDelegate.m */,
 				260D76D61952007A00A05669 /* AddRecommendationViewController.h */,
 				260D76D71952007A00A05669 /* AddRecommendationViewController.m */,
 				45F6F6EF1950EA6C00289EF0 /* RecommendationsTableViewController.h */,
 				45F6F6F01950EA6C00289EF0 /* RecommendationsTableViewController.m */,
 				450506DE19578BB4001D035E /* RecommendationsCollectionViewCell.h */,
 				450506DF19578BB4001D035E /* RecommendationsCollectionViewCell.m */,
-				45F6F69B194F848D00289EF0 /* Main.storyboard */,
 				4599128319565B5E0083B4EF /* RecommendationTabBarItem.h */,
 				4599128419565B5E0083B4EF /* RecommendationTabBarItem.m */,
 				45D7F86C1952140C0051105A /* DetailMapViewController.h */,
@@ -220,8 +222,6 @@
 				45F6F7001951E98600289EF0 /* DetailViewController.m */,
 				459912801955E80E0083B4EF /* TabBarViewController.h */,
 				459912811955E80E0083B4EF /* TabBarViewController.m */,
-				45F6F698194F848D00289EF0 /* AppDelegate.h */,
-				45F6F699194F848D00289EF0 /* AppDelegate.m */,
 				2681704C19522878008A2692 /* HomeViewController.h */,
 				26E5CA121950E4BE00A64A7D /* HomeViewController.m */,
 				4599127A1953E5080083B4EF /* ParseRecommendation.h */,
