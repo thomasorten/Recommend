@@ -44,6 +44,8 @@
 
 - (void)getRecommendations:(int)limit withinRadius:(double)km;
 
+- (void)getRecommendations:(int)limit withinRadius:(double)km orderByDescending:(NSString *)column;
+
 - (void)getRecommendations:(int)limit withinRadius:(double)km whereKey:(NSString *)key containsString:(NSString *)string;
 
 - (void)getRecommendations:(int)limit withinRadius:(double)km ofRecommendation:(PFObject *)recommendation;

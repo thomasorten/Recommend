@@ -55,13 +55,13 @@
 
     [self reloadNew];
 
-    [popularRecommendations getRecommendations:18 orderByDescending:@"numLikes"];
+    [popularRecommendations getRecommendations:20 withinRadius:50 orderByDescending:@"numLikes"];
 }
 
 
 -(void)reloadNew{
     [self.recentArray removeAllObjects];
-    [self.newestRecommendations getRecommendations:18];
+    [self.newestRecommendations getRecommendations:20 withinRadius:50];
 }
 
 -(void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier
