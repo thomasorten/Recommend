@@ -8,14 +8,20 @@
 
 #import "HomeViewController.h"
 #import "DetailViewController.h"
+#import "ParseRecommendation.h"
+#import "Recommendation.h"
+#import "RecommendationsCollectionViewCell.h"
+#define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
+#define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
-@interface HomeViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
+@interface HomeViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, RecommendationDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *newestCollectionView;
 @property (weak, nonatomic) IBOutlet UICollectionView *popularCollectionView;
 @property NSMutableArray *popularArray;
 @property NSMutableArray *recentArray;
-
+@property Recommendation *newestRecommendations;
+@property (weak, nonatomic) IBOutlet UIScrollView *recommendationsScrollView;
 @end
 
 @implementation HomeViewController
@@ -24,6 +30,15 @@
 
 {
     [super viewDidLoad];
+
+    [self.view setBackgroundColor:RGB(224,224,224)];
+
+    Recommendation *popularRecommendations = [[Recommendation alloc] initWithIdentifier:@"popular"];
+    popularRecommendations.delegate = self;
+
+    self.newestRecommendations = [[Recommendation alloc] initWithIdentifier:@"new"];
+    self.newestRecommendations.delegate = self;
+
     self.recentArray = [NSMutableArray new];
     self.popularArray = [NSMutableArray new];
     
@@ -40,31 +55,25 @@
 
     [self reloadNew];
 
-    PFQuery *popular = [PFQuery queryWithClassName:@"Photo"];
-    [popular orderByDescending:@"numLikes"];
-    [popular findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-
-        for (PFObject *photo in objects) {
-            [self.popularArray addObject:photo];
-        }
-        [self.popularCollectionView reloadData];
-    }];
-
+    [popularRecommendations getRecommendations:18 orderByDescending:@"numLikes"];
 }
 
 
 -(void)reloadNew{
     [self.recentArray removeAllObjects];
-    PFQuery *new = [PFQuery queryWithClassName:@"Photo"];
-    [new orderByDescending:@"createdAt"];
-    [new findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    [self.newestRecommendations getRecommendations:18];
+}
 
-        for (PFObject *photo in objects) {
-            [self.recentArray addObject:photo];
-        }
+-(void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier
+{
+    if ([identifier isEqualToString:@"new"]) {
+        [self.recentArray addObjectsFromArray:recommendations];
         [self.newestCollectionView reloadData];
-    }];
-
+    }
+    if ([identifier isEqualToString:@"popular"]) {
+        [self.popularArray addObjectsFromArray:recommendations];
+        [self.popularCollectionView reloadData];
+    }
 }
 
 #pragma mark - CollectionView Datasource/Delegate
@@ -82,38 +91,33 @@
     return count;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    UICollectionViewCell *cell = [UICollectionViewCell new];
-    cell.backgroundView = nil;
+    RecommendationsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:([collectionView isEqual:self.newestCollectionView] ? @"New" : @"Popular") forIndexPath:indexPath];
 
-    if ([collectionView isEqual:self.newestCollectionView]) {
+    PFObject *new = [([collectionView isEqual:self.newestCollectionView] ? self.recentArray : self.popularArray) objectAtIndex:indexPath.row];
+    PFFile *imageFile = new[@"file"];
 
-        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"New" forIndexPath:indexPath];
-        PFObject *new = [self.recentArray objectAtIndex:indexPath.row];
-        PFFile *imageFile = new[@"file"];
-        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+    [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if ([collectionView isEqual:self.newestCollectionView]) {
+            cell.recentImageView.image = [UIImage imageWithData:data];
+        } else {
+            cell.popularImageView.image = [UIImage imageWithData:data];
+        }
+    }];
 
-        cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:data]];
-
-        }];
-
-
-    }
-    else if([collectionView isEqual:self.popularCollectionView]){
-
-        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Popular" forIndexPath:indexPath];
-        PFObject *popular = [self.popularArray objectAtIndex:indexPath.row];
-        PFFile *imageFile = popular[@"file"];
-        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-
-        cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:data]];
-
-        }];
-
-    }
+    cell.layer.shadowColor = [UIColor grayColor].CGColor;
+    cell.layer.shadowOpacity = 0.6f;
+    cell.layer.shadowOffset = CGSizeMake(-1.0f, 1.0f);
+    cell.layer.shadowRadius = 0.6f;
+    cell.layer.masksToBounds = NO;
 
     return cell;
+}
+
+- (void)viewDidLayoutSubviews {
+    self.recommendationsScrollView.contentSize = CGSizeMake((self.newestCollectionView.frame.size.width + self.popularCollectionView.frame.size.width + 30), 1);
+    [self.recommendationsScrollView setDirectionalLockEnabled:YES];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UICollectionViewCell *)sender{
@@ -123,11 +127,11 @@
 
     if ([segue.identifier isEqualToString:@"NewestSegue"]) {
         NSIndexPath *selected = [self.newestCollectionView indexPathForCell:sender];
-        destination.recommendation = @{@"photo": [self.recentArray objectAtIndex:selected.row]};
+        destination.recommendation = [self.recentArray objectAtIndex:selected.row];
     }
     else if ([segue.identifier isEqualToString:@"PopularSegue"]){
         NSIndexPath *selected = [self.popularCollectionView indexPathForCell:sender];
-        destination.recommendation = @{@"photo":[self.popularArray objectAtIndex:selected.row]};
+        destination.recommendation = [self.popularArray objectAtIndex:selected.row];
     }
 
 }

@@ -9,11 +9,19 @@
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "ParseRecommendation.h"
+#define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
+#define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UITabBar appearance] setTintColor:RGB(2, 156, 188)];
+    [[UINavigationBar appearance] setBarTintColor: RGB(2, 156, 188)];
+
+    [ParseRecommendation registerSubclass];
     [Parse setApplicationId:@"ymMgNJ1eeZYYVWEvdjZ6K1LtfFuv797PHjOYjETj"
                   clientKey:@"twz1zFWlhnT3MSNUCLKp4wYIzIng25qp5p6qoFe1"];
 
@@ -23,6 +31,7 @@
     
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     [PFFacebookUtils initializeFacebook];
+
     return YES;
 }
 - (BOOL)application:(UIApplication *)application

@@ -20,17 +20,21 @@
 {
     [super viewDidLoad];
 
+    [[self.navigationController navigationBar] setTintColor:[UIColor whiteColor]];
+
     self.detailMapView.delegate = self;
 
-    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-    PFGeoPoint *point = [self.recommendation objectForKey:@"point"];
-    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(point.latitude, point.longitude);
+    for (PFObject *recommendation in self.recommendationsArray) {
+        MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+        PFGeoPoint *point = [recommendation objectForKey:@"point"];
+        CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(point.latitude, point.longitude);
 
-    annotation.coordinate = coordinate;
-    annotation.title = [[self.recommendation objectForKey:@"photo"] objectForKey:@"title"];
-    annotation.subtitle = [[self.recommendation objectForKey:@"photo"] objectForKey:@"description"];
+        annotation.coordinate = coordinate;
+        annotation.title = [recommendation objectForKey:@"title"];
+        annotation.subtitle = [recommendation objectForKey:@"description"];
 
-    [self.detailMapView addAnnotation:annotation];
+        [self.detailMapView addAnnotation:annotation];
+    }
 
     [self.detailMapView showAnnotations:self.detailMapView.annotations animated:YES];
 }
@@ -38,6 +42,10 @@
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
     MKAnnotationView *annView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"RecommendationPin"];
+
+    if([annotation isKindOfClass: [MKUserLocation class]]) {
+        return nil;
+    }
 
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"location"]];
 

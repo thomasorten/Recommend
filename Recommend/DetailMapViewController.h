@@ -10,5 +10,5 @@
 #import <Parse/Parse.h>
 
 @interface DetailMapViewController : UIViewController
-@property NSDictionary *recommendation;
+@property NSArray *recommendationsArray;
 @end

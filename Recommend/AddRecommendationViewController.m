@@ -8,13 +8,21 @@
 
 #import "AddRecommendationViewController.h"
 #import "LocationViewController.h"
+#import "TabBarViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <ImageIO/ImageIO.h>
+#import <AVFoundation/AVFoundation.h>
+#import <QuartzCore/QuartzCore.h>
 
 #define defaultTitleString @"What do you recommend?"
 #define defaultDescriptionString @"Write a short description here."
+#define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
+#define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
-@interface AddRecommendationViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate>
+@interface AddRecommendationViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, AVCaptureVideoDataOutputSampleBufferDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;
+@property AVCaptureSession *captureSession;
+@property AVCaptureStillImageOutput *stillImageOutput;
 @property UITextField *activeTextField;
 @property UITextView *activeTextView;
 @property UIImagePickerController *picker;
@@ -28,8 +36,12 @@
 @property (weak, nonatomic) IBOutlet UIView *topLine;
 @property (weak, nonatomic) IBOutlet UIView *lineTwo;
 @property (weak, nonatomic) IBOutlet UIView *lineThree;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UILabel *orLabel;
 @property (weak, nonatomic) IBOutlet UILabel *warningLabel;
+@property (weak, nonatomic) IBOutlet UILabel *loadingCameraLabel;
+@property (weak, nonatomic) IBOutlet UIView *continueButtonsView;
+@property (weak, nonatomic) IBOutlet UIView *cameraControlsView;
 @property (weak, nonatomic) IBOutlet UIImageView *cameraRollPreview;
 @end
 
@@ -38,12 +50,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
+    for (UIView *subview in self.cameraScrollView.subviews) {
+        subview.layer.shadowColor = [[UIColor blackColor] CGColor];
+        subview.layer.shadowOffset = CGSizeMake(0.8f, 0.8f);
+        subview.layer.shadowOpacity = 0.6f;
+        subview.layer.shadowRadius = 0.6f;
+    }
 
     [self setLatestImageOffAlbum];
 
@@ -56,58 +69,27 @@
                                    action:@selector(dismissKeyboard)];
 
     [self.view addGestureRecognizer:tap];
+}
 
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
 
-        self.picker = [[UIImagePickerController alloc] init];
-        self.picker.delegate = self;
-        self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        self.picker.showsCameraControls = NO;
-        CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, 27.0);
-        CGAffineTransform scale = CGAffineTransformScale(translate, 1.6, 1.6);
-        self.picker.cameraViewTransform = scale;
-        self.picker.cameraOverlayView = self.view;
-
-        if([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear]) {
-            self.picker.cameraDevice =  UIImagePickerControllerCameraDeviceRear;
-        } else {
-            self.picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
-        }
-
-        [self.picker setCameraCaptureMode:UIImagePickerControllerCameraCaptureModePhoto];
-        [self.picker setCameraFlashMode:UIImagePickerControllerCameraFlashModeOff];
-
-        [self presentViewController:self.picker animated:YES completion:nil];
+    if (!self.captureSession) {
+        [self setupCaptureSession];
     }
+
+    [self showCameraControls];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES];
-}
 
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO];
-}
+    self.cameraScrollView.alpha = 0;
 
-- (void)showCamera
-{
-    self.takePictureButton.hidden = NO;
-    self.cameraRollButton.hidden = NO;
-    self.flashButton.hidden = NO;
-    self.cameraRollPreview.hidden = NO;
+    [self.view setBackgroundColor: RGB(2, 156, 188)];
 
-    self.orLabel.hidden = YES;
-    self.capturedImageView.hidden = YES;
-    self.setLocationButton.hidden = YES;
-    self.takeAnotherButton.hidden = YES;
-}
-
-- (void)hideCamera
-{
     [self.setLocationButton.layer setBorderWidth:1.0];
     [self.setLocationButton.layer setCornerRadius:5];
     [self.setLocationButton.layer setBorderColor:[[UIColor whiteColor] CGColor]];
@@ -116,15 +98,50 @@
     [self.takeAnotherButton.layer setCornerRadius:5];
     [self.takeAnotherButton.layer setBorderColor:[[UIColor whiteColor] CGColor]];
 
-    self.takePictureButton.hidden = YES;
-    self.cameraRollButton.hidden = YES;
-    self.flashButton.hidden = YES;
-    self.cameraRollPreview.hidden = YES;
+    self.loadingCameraLabel.hidden = NO;
+    self.videoPreviewView.hidden = YES;
 
-    self.orLabel.hidden = NO;
+    [self.navigationController setNavigationBarHidden:YES];
+    [(TabBarViewController *)self.tabBarController setTabBarVisible:NO animated:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+
+    [self.navigationController setNavigationBarHidden:NO];
+    [(TabBarViewController *)self.tabBarController setTabBarVisible:YES animated:YES];
+}
+
+- (void)showCameraControls
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.warningLabel.alpha = 0.0;
+    }];
+
+    if (self.captureSession) {
+        [self.captureSession startRunning];
+        self.videoPreviewView.hidden = NO;
+        self.loadingCameraLabel.hidden = YES;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.cameraScrollView.alpha = 1;
+        }];
+    }
+
+    self.capturedImageView.hidden = YES;
+    self.cameraControlsView.hidden = NO;
+    self.continueButtonsView.hidden = YES;
+}
+
+- (void)hideCameraControls
+{
+    if (self.captureSession) {
+        [self.captureSession stopRunning];
+    }
+
     self.capturedImageView.hidden = NO;
-    self.setLocationButton.hidden = NO;
-    self.takeAnotherButton.hidden = NO;
+    self.cameraControlsView.hidden = YES;
+    self.continueButtonsView.hidden = NO;
 }
 
 - (IBAction)onAlbumPressed:(id)sender
@@ -145,16 +162,24 @@
 
 - (IBAction)onTakePhotoPressed:(id)sender
 {
-    [self.picker takePicture];
+    if (self.captureSession) {
+        [self captureNow];
+    } else {
+        [self.picker takePicture];
+    }
+    [self hideCameraControls];
 }
 
 - (IBAction)onTakeAnotherPhotoPressed:(id)sender
 {
-    [self showCamera];
+    [self showCameraControls];
 }
 
 - (IBAction)onFlashPressed:(id)sender
 {
+    if (self.captureSession) {
+
+    }
     if (self.currentFlashImage == [UIImage imageNamed:@"flash"]) {
         [self.flashButton setImage:[UIImage imageNamed:@"flash-off"] forState:UIControlStateNormal];
         self.currentFlashImage = [UIImage imageNamed:@"flash-off"];
@@ -166,8 +191,12 @@
 
 - (IBAction)onCloseCameraPressed:(id)sender
 {
-    [self.picker dismissViewControllerAnimated:NO completion:^{
-    }];
+    if (self.captureSession) {
+        [self.captureSession stopRunning];
+    } else {
+        [self.picker dismissViewControllerAnimated:NO completion:^{
+        }];
+    }
     [self.tabBarController setSelectedIndex:0];
 }
 
@@ -178,8 +207,12 @@
             self.warningLabel.alpha = 1.0;
         }];
     } else {
-        [self.picker dismissViewControllerAnimated:NO completion:^{
-        }];
+        if (self.captureSession) {
+            [self.captureSession stopRunning];
+        } else {
+            [self.picker dismissViewControllerAnimated:NO completion:^{
+            }];
+        }
         [self performSegueWithIdentifier:@"LocationSegue" sender:self];
     }
 }
@@ -198,10 +231,12 @@
 
     self.capturedImageView.image = image;
 
-    [self hideCamera];
+    [self hideCameraControls];
 
-    [picker dismissViewControllerAnimated:YES completion:^{
-    }];
+    if (!self.captureSession) {
+        [picker dismissViewControllerAnimated:YES completion:^{
+        }];
+    }
 }
 
 - (BOOL) textView:(UITextView *)textView
@@ -333,9 +368,134 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
             }
         }];
     } failureBlock: ^(NSError *error) {
-        // Typically you should handle an error more gracefully than this.
-        NSLog(@"No groups");
+
     }];
+}
+
+#pragma mark - image capture
+
+- (void)setupImagePicker
+{
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+
+        self.picker = [[UIImagePickerController alloc] init];
+        self.picker.delegate = self;
+        self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        self.picker.showsCameraControls = NO;
+        CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, 27.0);
+        CGAffineTransform scale = CGAffineTransformScale(translate, 1.6, 1.6);
+        self.picker.cameraViewTransform = scale;
+        self.picker.cameraOverlayView = self.view;
+
+        if([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear]) {
+            self.picker.cameraDevice =  UIImagePickerControllerCameraDeviceRear;
+        } else {
+            self.picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+        }
+
+        [self.picker setCameraCaptureMode:UIImagePickerControllerCameraCaptureModePhoto];
+        [self.picker setCameraFlashMode:UIImagePickerControllerCameraFlashModeOff];
+
+        [self presentViewController:self.picker animated:YES completion:nil];
+    }
+}
+
+// Create and configure a capture session and start it running
+- (void)setupCaptureSession
+{
+    NSError *error = nil;
+
+    // Create the session
+    AVCaptureSession *session = [[AVCaptureSession alloc] init];
+
+    // Configure the session to produce lower resolution video frames, if your
+    // processing algorithm can cope. We'll specify medium quality for the
+    // chosen device.
+    session.sessionPreset = AVCaptureSessionPreset1280x720;
+
+    // Find a suitable AVCaptureDevice
+    AVCaptureDevice *device = [AVCaptureDevice
+                               defaultDeviceWithMediaType:AVMediaTypeVideo];
+
+    // Create a device input with the device and add it to the session.
+    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device
+                                                                        error:&error];
+    if (!input)
+    {
+        [self setupImagePicker];
+    }
+
+    [session addInput:input];
+
+    // Create a VideoDataOutput and add it to the session
+    AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
+    [session addOutput:output];
+
+    // Configure your output.
+    dispatch_queue_t queue = dispatch_queue_create("myQueue", NULL);
+    [output setSampleBufferDelegate:self queue:queue];
+
+    // Specify the pixel format
+    output.videoSettings =
+    [NSDictionary dictionaryWithObject:
+    [NSNumber numberWithInt:kCVPixelFormatType_32BGRA]
+                                forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+
+    // If you wish to cap the frame rate to a known value, such as 15 fps, set
+    // minFrameDuration.
+
+    // Start the session running to start the flow of data
+    [session startRunning];
+
+    self.stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
+    NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, nil];
+    [self.stillImageOutput setOutputSettings:outputSettings];
+    [self.stillImageOutput automaticallyEnablesStillImageStabilizationWhenAvailable];
+
+    [session addOutput:self.stillImageOutput];
+
+    // Assign session to an ivar.
+    [self setSession:session];
+
+    AVCaptureVideoPreviewLayer *previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:session];
+    UIView *aView = self.videoPreviewView;
+    CGRect videoRect = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+    previewLayer.frame = videoRect; // Assume you want the preview layer to fill the view.
+    [aView.layer addSublayer:previewLayer];
+
+}
+
+-(IBAction)captureNow
+{
+    AVCaptureConnection *videoConnection = nil;
+    for (AVCaptureConnection *connection in self.stillImageOutput.connections)
+    {
+        for (AVCaptureInputPort *port in [connection inputPorts])
+        {
+            if ([[port mediaType] isEqual:AVMediaTypeVideo] )
+            {
+                videoConnection = connection;
+                break;
+            }
+        }
+        if (videoConnection) { break; }
+    }
+
+    [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection
+                                                  completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error)
+     {
+         NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
+         UIImage *image = [[UIImage alloc] initWithData:imageData];
+
+         self.capturedImageView.image = image;
+
+         [self.captureSession stopRunning];
+     }];
+}
+
+-(void)setSession:(AVCaptureSession *)session
+{
+    self.captureSession=session;
 }
 
 @end
