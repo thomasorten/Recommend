@@ -14,7 +14,7 @@
 
 @optional
 
-- (void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier;
+- (void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier userLocation:(PFGeoPoint *)location;
 
 - (void)recommendationLoved:(NSString *)error count:(NSNumber *)count recommendation:(PFObject *)recommendation;
 
@@ -43,6 +43,8 @@
 - (void)getRecommendations:(int)limit orderByDescending:(NSString *)column;
 
 - (void)getRecommendations:(int)limit withinRadius:(double)km;
+
+- (void)getRecommendations:(int)limit withinRadius:(double)km orderByDescending:(NSString *)column;
 
 - (void)getRecommendations:(int)limit withinRadius:(double)km whereKey:(NSString *)key containsString:(NSString *)string;
 

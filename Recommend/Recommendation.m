@@ -20,14 +20,14 @@
 {
     [self setupQuery];
     self.query.limit = limit;
-    [self loadRecommendations:limit orderByDescending:nil nearPoint:nil withinKm:-1];
+    [self loadRecommendations:limit orderByDescending:nil orderByDistance:NO nearPoint:nil withinKm:-1];
 }
 
 - (void)getRecommendations:(int)limit byUser:(PFUser *)user
 {
     [self setupQuery];
     [self.query whereKey:@"creator" equalTo:user];
-    [self loadRecommendations:limit orderByDescending:nil nearPoint:nil withinKm:-1];
+    [self loadRecommendations:limit orderByDescending:nil orderByDistance:NO nearPoint:nil withinKm:-1];
 }
 
 - (void)getRecommendations:(int)limit byUser:(PFUser *)user whereKey:(NSString *)key containsString:(NSString *)string
@@ -35,7 +35,7 @@
     [self setupQuery];
     [self.query whereKey:@"creator" equalTo:user];
     [self.query whereKey:key containsString:string];
-    [self loadRecommendations:limit orderByDescending:nil nearPoint:nil withinKm:-1];
+    [self loadRecommendations:limit orderByDescending:nil orderByDistance:NO nearPoint:nil withinKm:-1];
 }
 
 - (void)getRecommendations:(int)limit orderByDescending:(NSString *)column
@@ -43,7 +43,7 @@
     [self setupQuery];
     self.query.limit = limit;
     [self.query orderByDescending:column];
-    [self loadRecommendations:limit orderByDescending:column nearPoint:nil withinKm:-1];
+    [self loadRecommendations:limit orderByDescending:column orderByDistance:NO nearPoint:nil withinKm:-1];
 }
 
 - (void)getRecommendations:(int)limit withinRadius:(double)km
@@ -51,7 +51,35 @@
     [self setupQuery];
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         if (!error) {
-            [self loadRecommendations:limit orderByDescending:nil nearPoint:geoPoint withinKm:km];
+            [self loadRecommendations:limit orderByDescending:nil orderByDistance:NO nearPoint:geoPoint withinKm:km];
+        } else {
+            [self loadRecommendations:limit orderByDescending:nil orderByDistance:NO nearPoint:nil withinKm:-1];
+        }
+    }];
+}
+
+- (void)getRecommendationsByDistance:(int)limit withinRadius:(double)km
+{
+    [self setupQuery];
+    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+        if (!error) {
+            [self loadRecommendations:limit orderByDescending:nil orderByDistance:YES nearPoint:geoPoint withinKm:km];
+        } else {
+            [self loadRecommendations:limit orderByDescending:nil orderByDistance:YES nearPoint:nil withinKm:-1];
+        }
+    }];
+}
+
+- (void)getRecommendations:(int)limit withinRadius:(double)km orderByDescending:(NSString *)column
+{
+    [self setupQuery];
+    self.query.limit = limit;
+    [self.query orderByDescending:column];
+    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+        if (!error) {
+            [self loadRecommendations:limit orderByDescending:column orderByDistance:NO nearPoint:geoPoint withinKm:km];
+        } else {
+            [self loadRecommendations:limit orderByDescending:column orderByDistance:NO nearPoint:nil withinKm:-1];
         }
     }];
 }
@@ -62,7 +90,9 @@
     [self.query whereKey:key containsString:string];
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         if (!error) {
-            [self loadRecommendations:limit orderByDescending:nil nearPoint:geoPoint withinKm:km];
+            [self loadRecommendations:limit orderByDescending:nil orderByDistance:NO nearPoint:geoPoint withinKm:km];
+        } else {
+            [self loadRecommendations:limit orderByDescending:nil orderByDistance:NO nearPoint:nil withinKm:-1];
         }
     }];
 }
@@ -70,7 +100,7 @@
 - (void)getRecommendations:(int)limit withinRadius:(double)km ofRecommendation:(PFObject *)recommendation
 {
     [self setupQuery];
-    [self loadRecommendations:limit orderByDescending:nil nearPoint:(PFGeoPoint *)recommendation[@"point"] withinKm:km];
+    [self loadRecommendations:limit orderByDescending:nil orderByDistance:NO nearPoint:(PFGeoPoint *)recommendation[@"point"] withinKm:km];
 }
 
 - (BOOL)recommendationAlreadyExists:(PFObject *)recommendation
@@ -95,20 +125,24 @@
     }
 }
 
-- (void)loadRecommendations:(int)limit orderByDescending:(NSString *)column nearPoint:(PFGeoPoint *)point withinKm:(double)km
+- (void)loadRecommendations:(int)limit orderByDescending:(NSString *)orderByColumn orderByDistance:(BOOL)orderByDistance nearPoint:(PFGeoPoint *)point withinKm:(double)km
 {
     if (limit) {
-        self.query.limit = limit;
+       self.query.limit = limit;
     }
 
     if (point && km) {
         [self.query whereKey:@"point" nearGeoPoint:point withinKilometers:km];
     } else if (point) {
         [self.query whereKey:@"point" nearGeoPoint:point];
-    } else {}
+    } else {
+        point = nil;
+    }
 
-    if (column) {
-        [self.query orderByDescending:column];
+    if (orderByColumn) {
+        [self.query orderByDescending:orderByColumn];
+    } else if (orderByDistance) {
+        // Do nothing
     } else {
         [self.query orderByDescending:@"createdAt"];
     }
@@ -128,7 +162,7 @@
                 }
             }
             self.query = nil;
-            [self.delegate recommendationsLoaded:(NSArray *)self.recommendations forIdentifier:(NSString *)self.identifier];
+            [self.delegate recommendationsLoaded:(NSArray *)self.recommendations forIdentifier:(NSString *)self.identifier userLocation:(PFGeoPoint *)point];
         }
     }];
 }
