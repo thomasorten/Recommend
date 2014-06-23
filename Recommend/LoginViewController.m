@@ -9,7 +9,9 @@
 #import "LoginViewController.h"
 
 
-@interface LoginViewController ()
+@interface LoginViewController ()<FBLoginViewDelegate>
+
+
 
 @end
 
@@ -18,17 +20,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    NSArray *permissionsArray = @[@"public_profile"];
-    [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
-        if (!user) {
-            NSLog(@"User cancelled the facebook login.");
-        } else if (user.isNew) {
-            NSLog(@"Signed up and logged in through facebook");
-        } else {
-            NSLog(@"Logged in through facebook");
-        }
-    }];
+    FBLoginView *login = [[FBLoginView alloc] init];
+    login.delegate = self;
+    [login setCenter:CGPointMake(self.view.center.x, self.view.center.y)];
+    [self.view addSubview:login];
 }
+
+- (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
+                            user:(id<FBGraphUser>)user{
+
+    NSLog(@"derp");
+}
+
 
 @end
