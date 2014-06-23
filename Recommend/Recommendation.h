@@ -14,7 +14,7 @@
 
 @optional
 
-- (void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier;
+- (void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier userLocation:(PFGeoPoint *)location;
 
 - (void)recommendationLoved:(NSString *)error count:(NSNumber *)count recommendation:(PFObject *)recommendation;
 

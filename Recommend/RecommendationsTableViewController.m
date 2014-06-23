@@ -60,7 +60,11 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MatchCell"];
     ParseRecommendation *recommendation = [self.recommendationsArray objectAtIndex:indexPath.row];
     cell.textLabel.text = recommendation.title;
-    cell.detailTextLabel.text = [recommendation objectForKey:@"description"];
+    if (self.userLocation) {
+        double distanceInKm = [self.userLocation distanceInKilometersTo:recommendation.point];
+    } else {
+        cell.detailTextLabel.text = [recommendation objectForKey:@"description"];
+    }
     PFFile *userImageFile = recommendation.thumbnail;
     if (userImageFile) {
         [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
@@ -104,11 +108,12 @@
 
 - (void)getRecommendationsCloseToUser
 {
-    [self.recommendations getRecommendations:50 withinRadius:10];
+    [self.recommendations getRecommendations:50 withinRadius:50];
 }
 
-- (void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier
+- (void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier userLocation:(PFGeoPoint *)location
 {
+    self.userLocation = location;
     self.recommendationsArray = recommendations;
     [self.closeToMeTableView reloadData];
     [self.refreshControl endRefreshing];

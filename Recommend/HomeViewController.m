@@ -64,7 +64,7 @@
     [self.newestRecommendations getRecommendations:20 withinRadius:50];
 }
 
--(void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier
+-(void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier userLocation:(PFGeoPoint *)location
 {
     if ([identifier isEqualToString:@"new"]) {
         [self.recentArray addObjectsFromArray:recommendations];

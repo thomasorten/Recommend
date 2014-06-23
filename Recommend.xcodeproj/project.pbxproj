@@ -208,11 +208,9 @@
 		45F6F68F194F848D00289EF0 /* Recommend */ = {
 			isa = PBXGroup;
 			children = (
-
 				45F6F69B194F848D00289EF0 /* Main.storyboard */,
 				45F6F698194F848D00289EF0 /* AppDelegate.h */,
 				45F6F699194F848D00289EF0 /* AppDelegate.m */,
-
 				450506E419587B1A001D035E /* HeaderImage.h */,
 				450506E519587B1A001D035E /* HeaderImage.m */,
 				260D76D61952007A00A05669 /* AddRecommendationViewController.h */,
@@ -322,7 +320,7 @@
 				ORGANIZATIONNAME = "Orten, Thomas";
 				TargetAttributes = {
 					45F6F685194F848D00289EF0 = {
-						DevelopmentTeam = Y9KZH5XQDN;
+						DevelopmentTeam = 4NJCGM5C75;
 					};
 					45F6F6A6194F848D00289EF0 = {
 						TestTargetID = 45F6F685194F848D00289EF0;
