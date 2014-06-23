@@ -15,6 +15,7 @@
 		269650D71950CE1500418FCE /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269650D61950CE1500418FCE /* FacebookSDK.framework */; };
 		26E5CA1D1951DEDE00A64A7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F695194F848D00289EF0 /* main.m */; };
 		450506E019578BB4001D035E /* RecommendationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 450506DF19578BB4001D035E /* RecommendationsCollectionViewCell.m */; };
+		450506E619587B1A001D035E /* HeaderImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 450506E519587B1A001D035E /* HeaderImage.m */; };
 		4599127C1953E5080083B4EF /* ParseRecommendation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4599127B1953E5080083B4EF /* ParseRecommendation.m */; };
 		4599127F1954980D0083B4EF /* Recommendation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4599127E1954980D0083B4EF /* Recommendation.m */; };
 		459912821955E80E0083B4EF /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 459912811955E80E0083B4EF /* TabBarViewController.m */; };
@@ -70,6 +71,8 @@
 		26E5CA151950E4C800A64A7D /* LocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
 		450506DE19578BB4001D035E /* RecommendationsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendationsCollectionViewCell.h; sourceTree = SOURCE_ROOT; };
 		450506DF19578BB4001D035E /* RecommendationsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendationsCollectionViewCell.m; sourceTree = SOURCE_ROOT; };
+		450506E419587B1A001D035E /* HeaderImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeaderImage.h; path = ../HeaderImage.h; sourceTree = "<group>"; };
+		450506E519587B1A001D035E /* HeaderImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeaderImage.m; path = ../HeaderImage.m; sourceTree = "<group>"; };
 		4599127A1953E5080083B4EF /* ParseRecommendation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseRecommendation.h; sourceTree = "<group>"; };
 		4599127B1953E5080083B4EF /* ParseRecommendation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseRecommendation.m; sourceTree = "<group>"; };
 		4599127D1954980D0083B4EF /* Recommendation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recommendation.h; sourceTree = "<group>"; };
@@ -205,6 +208,8 @@
 		45F6F68F194F848D00289EF0 /* Recommend */ = {
 			isa = PBXGroup;
 			children = (
+				450506E419587B1A001D035E /* HeaderImage.h */,
+				450506E519587B1A001D035E /* HeaderImage.m */,
 				260D76D61952007A00A05669 /* AddRecommendationViewController.h */,
 				260D76D71952007A00A05669 /* AddRecommendationViewController.m */,
 				45F6F6EF1950EA6C00289EF0 /* RecommendationsTableViewController.h */,
@@ -369,6 +374,7 @@
 			files = (
 				4599127C1953E5080083B4EF /* ParseRecommendation.m in Sources */,
 				2681704D195228AE008A2692 /* HomeViewController.m in Sources */,
+				450506E619587B1A001D035E /* HeaderImage.m in Sources */,
 				2681704B19520DE0008A2692 /* LoginViewController.m in Sources */,
 				4599128519565B5E0083B4EF /* RecommendationTabBarItem.m in Sources */,
 				4599127F1954980D0083B4EF /* Recommendation.m in Sources */,

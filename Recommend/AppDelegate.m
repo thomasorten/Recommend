@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "ParseRecommendation.h"
+#import "HeaderImage.h"
 #define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 #define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
@@ -18,8 +19,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
     [[UITabBar appearance] setTintColor:RGB(2, 156, 188)];
-    [[UINavigationBar appearance] setBarTintColor: RGB(2, 156, 188)];
+    UIImage *topNav = [UIImage imageWithColor:RGBA(2, 156, 188, 0.5)];
+
+    [[UINavigationBar appearance] setBackgroundImage:topNav forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBackgroundImage:topNav forBarMetrics:UIBarMetricsLandscapePhone];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
 
     [ParseRecommendation registerSubclass];
     [Parse setApplicationId:@"ymMgNJ1eeZYYVWEvdjZ6K1LtfFuv797PHjOYjETj"
