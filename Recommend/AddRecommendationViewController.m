@@ -13,13 +13,15 @@
 #import <ImageIO/ImageIO.h>
 #import <AVFoundation/AVFoundation.h>
 #import <QuartzCore/QuartzCore.h>
+#import <FacebookSDK/FacebookSDK.h>
+#import "LoginViewController.h"
 
 #define defaultTitleString @"What do you recommend?"
 #define defaultDescriptionString @"Write a short description here."
 #define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 #define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
-@interface AddRecommendationViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, AVCaptureVideoDataOutputSampleBufferDelegate>
+@interface AddRecommendationViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, AVCaptureVideoDataOutputSampleBufferDelegate,FBLoginViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;
 @property AVCaptureSession *captureSession;
 @property AVCaptureStillImageOutput *stillImageOutput;
@@ -50,13 +52,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [FBSession openActiveSessionWithAllowLoginUI:NO];
+
+    if (FBSession.activeSession.isOpen == YES){
+
+        [FBSession openActiveSessionWithAllowLoginUI:NO];
 
     for (UIView *subview in self.cameraScrollView.subviews) {
         subview.layer.shadowColor = [[UIColor blackColor] CGColor];
         subview.layer.shadowOffset = CGSizeMake(0.8f, 0.8f);
         subview.layer.shadowOpacity = 0.6f;
         subview.layer.shadowRadius = 0.6f;
-    }
+        }
 
     [self setLatestImageOffAlbum];
 
@@ -69,6 +76,12 @@
                                    action:@selector(dismissKeyboard)];
 
     [self.view addGestureRecognizer:tap];
+
+    }
+
+    else {
+        [self performSegueWithIdentifier:@"loginSegue" sender:self];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -219,9 +232,12 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    if (![segue.identifier isEqualToString:@"loginSegue"]) {
+
     LocationViewController *vc = segue.destinationViewController;
     NSMutableDictionary *recommendation = [[NSMutableDictionary alloc] initWithObjects:@[self.recommendationTextField.text, self.descriptionTextView.text, self.capturedImageView.image] forKeys:@[@"title", @"description", @"file"]];
     vc.recommendation = recommendation;
+    }
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info

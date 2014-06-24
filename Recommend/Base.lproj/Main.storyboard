@@ -174,7 +174,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" id="D8X-v9-oEf">
-                                    <rect key="frame" x="0.0" y="0.0" width="325" height="44"/>
+                                    <rect key="frame" x="0.0" y="64" width="325" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <connections>
@@ -183,7 +183,7 @@
                                 </searchBar>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MatchCell" textLabel="TPV-N3-ItV" detailTextLabel="mTf-jK-Zt0" style="IBUITableViewCellStyleSubtitle" id="s5q-yh-4D4">
-                                        <rect key="frame" x="0.0" y="66" width="325" height="44"/>
+                                        <rect key="frame" x="0.0" y="130" width="325" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="s5q-yh-4D4" id="dSM-s8-ayU">
                                             <rect key="frame" x="0.0" y="0.0" width="292" height="43"/>
@@ -477,12 +477,27 @@
                     <view key="view" contentMode="scaleToFill" id="xpM-AT-ypd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Frt-LD-vG4">
+                                <rect key="frame" x="20" y="362" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                            </label>
+                        </subviews>
                     </view>
+                    <navigationItem key="navigationItem" id="mFK-7g-VFp"/>
+                    <connections>
+                        <outlet property="nameLabel" destination="Frt-LD-vG4" id="TAf-Pk-50r"/>
+                        <segue destination="SBR-78-eyY" kind="modal" identifier="isLoggedIn" modalTransitionStyle="crossDissolve" id="TLm-id-rnG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jK7-fa-b3j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2454" y="554"/>
+            <point key="canvasLocation" x="1210" y="1662"/>
         </scene>
         <!--Add Recommendation View Controller-->
         <scene sceneID="K2o-GF-bxi">
@@ -678,11 +693,12 @@
                         <outlet property="videoPreviewView" destination="MN2-aJ-xpa" id="mt0-RE-n1z"/>
                         <outlet property="warningLabel" destination="BjZ-68-9Gy" id="00Z-tp-pGt"/>
                         <segue destination="XyQ-Y2-tSz" kind="push" identifier="LocationSegue" id="iau-8Q-9nH"/>
+                        <segue destination="CCy-zA-3Mc" kind="modal" identifier="loginSegue" modalTransitionStyle="flipHorizontal" id="jIk-Rw-gIu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i4e-Il-k94" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1226" y="824"/>
+            <point key="canvasLocation" x="1210" y="824"/>
         </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="Tzo-Gv-GDH">
@@ -756,7 +772,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="SBR-78-eyY" kind="relationship" relationship="rootViewController" id="tne-Dx-zhc"/>
+                        <segue destination="SBR-78-eyY" kind="relationship" relationship="rootViewController" id="8VZ-WB-okm"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YTm-Vf-ggn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -783,6 +799,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="KFk-6R-Jdo"/>
+        <segue reference="TLm-id-rnG"/>
         <segue reference="IRn-6p-b8F"/>
         <segue reference="eqa-xD-Jr9"/>
     </inferredMetricsTieBreakers>

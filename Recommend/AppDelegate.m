@@ -18,6 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [FBProfilePictureView class];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
     [[UITabBar appearance] setTintColor:RGB(2, 156, 188)];
@@ -31,10 +32,9 @@
     [ParseRecommendation registerSubclass];
     [Parse setApplicationId:@"ymMgNJ1eeZYYVWEvdjZ6K1LtfFuv797PHjOYjETj"
                   clientKey:@"twz1zFWlhnT3MSNUCLKp4wYIzIng25qp5p6qoFe1"];
-
-    [[PFUser currentUser] incrementKey:@"RunCount"];
-    [[PFUser currentUser] saveInBackground];
-    
+//
+//    [[PFUser currentUser] incrementKey:@"RunCount"];
+//    [[PFUser currentUser] saveInBackground];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 
     return YES;
