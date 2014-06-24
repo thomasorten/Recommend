@@ -49,15 +49,6 @@
 
     [self reloadNew];
     [self reloadPopular];
-
-    [PFAnonymousUtils logInWithBlock:^(PFUser *user, NSError *error) {
-        if (!error) {
-            NSLog(@"Using Recommend as Anonymous");
-        }
-        else{
-            NSLog(@"error logging in");
-        }
-    }];
 }
 
 
@@ -120,6 +111,13 @@
     } else {
         ParseRecommendation *new = [arrayToUse objectAtIndex:indexPath.row];
         PFFile *imageFile = new.file;
+//        if ([collectionView isEqual:self.newestCollectionView]) {
+//            PFImageView *imageView = [[PFImageView alloc] initWithFrame:CGRectMake(cell.recentCollectionViewCellView.bounds.origin.x, cell.recentCollectionViewCellView.bounds.origin.y, cell.recentCollectionViewCellView.bounds.size.width, cell.recentCollectionViewCellView.bounds.size.height)];
+//            imageView.file = (PFFile *)new.file;
+//            [imageView loadInBackground];
+//            [cell.recentCollectionViewCellView addSubview:imageView];
+//        }
+
         [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
             if ([collectionView isEqual:self.newestCollectionView]) {
                     cell.recentImageView.image = [UIImage imageWithData:data];
@@ -159,6 +157,9 @@
 
 }
 
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
 
+}
 
 @end
