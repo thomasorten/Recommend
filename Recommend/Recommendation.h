@@ -29,6 +29,9 @@
 @property PFQuery *query;
 @property NSString *identifier;
 @property BOOL lovesPhoto;
+@property BOOL lastLoaded;
+@property PFGeoPoint *userLocation;
+@property NSInteger recommendationsLoaded;
 
 - (id)initWithIdentifier:(NSString *)identifier;
 
@@ -44,7 +47,11 @@
 
 - (void)getRecommendations:(int)limit withinRadius:(double)km;
 
+- (void)getRecommendationsByDistance:(int)limit withinRadius:(double)km;
+
 - (void)getRecommendations:(int)limit withinRadius:(double)km orderByDescending:(NSString *)column;
+
+-(void)getRecommendationsByDistance:(int)limit withinRadius:(double)km orderByDescending:(NSString *)column;
 
 - (void)getRecommendations:(int)limit withinRadius:(double)km whereKey:(NSString *)key containsString:(NSString *)string;
 

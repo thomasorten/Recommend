@@ -20,7 +20,10 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *popularCollectionView;
 @property NSMutableArray *popularArray;
 @property NSMutableArray *recentArray;
+@property NSInteger recentArrayCount;
+@property NSInteger popularArrayCount;
 @property Recommendation *newestRecommendations;
+@property Recommendation *popularRecommendations;
 @property (weak, nonatomic) IBOutlet UIScrollView *recommendationsScrollView;
 @end
 
@@ -33,8 +36,8 @@
 
     [self.view setBackgroundColor:RGB(224,224,224)];
 
-    Recommendation *popularRecommendations = [[Recommendation alloc] initWithIdentifier:@"popular"];
-    popularRecommendations.delegate = self;
+    self.popularRecommendations = [[Recommendation alloc] initWithIdentifier:@"popular"];
+    self.popularRecommendations.delegate = self;
 
     self.newestRecommendations = [[Recommendation alloc] initWithIdentifier:@"new"];
     self.newestRecommendations.delegate = self;
@@ -43,6 +46,7 @@
     self.popularArray = [NSMutableArray new];
     
     self.automaticallyAdjustsScrollViewInsets = YES;
+
 //
 //    [PFAnonymousUtils logInWithBlock:^(PFUser *user, NSError *error) {
 //        if (!error) {
@@ -53,24 +57,30 @@
 //        }
 //    }];
 
+
     [self reloadNew];
-
-    [popularRecommendations getRecommendations:20 withinRadius:50 orderByDescending:@"numLikes"];
+    [self reloadPopular];
 }
 
 
--(void)reloadNew{
-    [self.recentArray removeAllObjects];
-    [self.newestRecommendations getRecommendations:20 withinRadius:50];
+-(void)reloadNew {
+    [self.newestRecommendations getRecommendations:100 withinRadius:50];
 }
+
+-(void)reloadPopular {
+    [self.popularRecommendations getRecommendations:100 withinRadius:50 orderByDescending:@"numLikes"];
+}
+
 
 -(void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier userLocation:(PFGeoPoint *)location
 {
     if ([identifier isEqualToString:@"new"]) {
+        self.recentArrayCount = recommendations.count;
         [self.recentArray addObjectsFromArray:recommendations];
         [self.newestCollectionView reloadData];
     }
     if ([identifier isEqualToString:@"popular"]) {
+        self.popularArrayCount = recommendations.count;
         [self.popularArray addObjectsFromArray:recommendations];
         [self.popularCollectionView reloadData];
     }
@@ -83,11 +93,12 @@
     long count;
 
     if ([collectionView isEqual:self.popularCollectionView]) {
-        count = self.popularArray.count;
+        count = self.popularArrayCount < 10 ? self.popularArray.count : self.popularArray.count+1;
     }
     else if ([collectionView isEqual:self.newestCollectionView]){
-        count = self.recentArray.count;
+        count = self.recentArrayCount < 10 ? self.recentArray.count : self.recentArray.count+1;
     }
+
     return count;
 }
 
@@ -95,16 +106,37 @@
 
     RecommendationsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:([collectionView isEqual:self.newestCollectionView] ? @"New" : @"Popular") forIndexPath:indexPath];
 
-    PFObject *new = [([collectionView isEqual:self.newestCollectionView] ? self.recentArray : self.popularArray) objectAtIndex:indexPath.row];
-    PFFile *imageFile = new[@"file"];
+    NSMutableArray *arrayToUse = [collectionView isEqual:self.newestCollectionView] ? self.recentArray : self.popularArray;
 
-    [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+    if(indexPath.row > arrayToUse.count) {
+        return nil;
+    }
+
+    if(indexPath.row == arrayToUse.count)
+    {
         if ([collectionView isEqual:self.newestCollectionView]) {
-            cell.recentImageView.image = [UIImage imageWithData:data];
+            [self performSelector:@selector(reloadNew) withObject:nil afterDelay:0.1];
         } else {
-            cell.popularImageView.image = [UIImage imageWithData:data];
+            [self performSelector:@selector(reloadPopular) withObject:nil afterDelay:0.1];
         }
-    }];
+    } else {
+        ParseRecommendation *new = [arrayToUse objectAtIndex:indexPath.row];
+        PFFile *imageFile = new.file;
+//        if ([collectionView isEqual:self.newestCollectionView]) {
+//            PFImageView *imageView = [[PFImageView alloc] initWithFrame:CGRectMake(cell.recentCollectionViewCellView.bounds.origin.x, cell.recentCollectionViewCellView.bounds.origin.y, cell.recentCollectionViewCellView.bounds.size.width, cell.recentCollectionViewCellView.bounds.size.height)];
+//            imageView.file = (PFFile *)new.file;
+//            [imageView loadInBackground];
+//            [cell.recentCollectionViewCellView addSubview:imageView];
+//        }
+
+        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if ([collectionView isEqual:self.newestCollectionView]) {
+                    cell.recentImageView.image = [UIImage imageWithData:data];
+            } else {
+                    cell.popularImageView.image = [UIImage imageWithData:data];
+            }
+        }];
+    }
 
     cell.layer.shadowColor = [UIColor grayColor].CGColor;
     cell.layer.shadowOpacity = 0.6f;
@@ -136,6 +168,9 @@
 
 }
 
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
 
+}
 
 @end
