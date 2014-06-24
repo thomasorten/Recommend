@@ -43,15 +43,15 @@
     self.popularArray = [NSMutableArray new];
     
     self.automaticallyAdjustsScrollViewInsets = YES;
-
-    [PFAnonymousUtils logInWithBlock:^(PFUser *user, NSError *error) {
-        if (!error) {
-            NSLog(@"Using Recommend as Anonymous");
-        }
-        else{
-            NSLog(@"error logging in");
-        }
-    }];
+//
+//    [PFAnonymousUtils logInWithBlock:^(PFUser *user, NSError *error) {
+//        if (!error) {
+//            NSLog(@"Using Recommend as Anonymous");
+//        }
+//        else{
+//            NSLog(@"error logging in");
+//        }
+//    }];
 
     [self reloadNew];
 

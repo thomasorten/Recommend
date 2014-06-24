@@ -17,8 +17,21 @@
 
 @implementation LoginViewController
 
-- (void)viewDidLoad
-{
+-(void)viewDidLoad{
+    [super viewDidLoad];
+    [PFFacebookUtils initializeFacebook];
+    NSArray *permissions = @[@"public_profile"];
+
+    [PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error) {
+        if (!user) {
+            NSLog(@"Uh oh. The user cancelled the Facebook login.");
+        } else if (user.isNew) {
+            NSLog(@"User signed up and logged in through Facebook!");
+        } else {
+            NSLog(@"User logged in through Facebook!");
+        }
+    }];
+
     [super viewDidLoad];
     self.nameLabel.layer.cornerRadius = 3;
     UIImageView *background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"skyline"]];
@@ -26,26 +39,7 @@
     [self.view insertSubview:background atIndex:0];
 
 
-    FBLoginView *login = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile"]];
-    self.profilePic = [[FBProfilePictureView alloc] init];
-    self.profilePic.frame = CGRectMake(self.view.center.x - 40, self.view.center.y, 80, 80);
-    self.profilePic.center = CGPointMake(self.view.center.x, self.view.center.y);
-    self.profilePic.backgroundColor = [UIColor blackColor];
-    self.profilePic.layer.cornerRadius = 40;
-    [self.view addSubview:self.profilePic];
-    [self.profilePic setHidden:YES];
-    login.delegate = self;
-    [login setCenter:CGPointMake(self.view.center.x, self.view.frame.size.height * .85)];
-    [self.view addSubview:login];
-}
-
-- (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
-                            user:(id<FBGraphUser>)user{
-    [self.profilePic setHidden:NO];
-    [self.nameLabel setHidden:NO];
-    self.profilePic.profileID = [user objectID];
-    self.nameLabel.text = user.name;
-   // [self performSelector:@selector(segue) withObject:nil afterDelay:2];
+   [self performSelector:@selector(segue) withObject:nil afterDelay:2];
 }
 
 - (void)segue{
@@ -53,10 +47,6 @@
     [self performSegueWithIdentifier:@"isLoggedIn" sender:self];
 }
 
-- (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView{
-    [self.profilePic setHidden:YES];
-    [self.nameLabel setHidden:YES];
-}
 
 
 

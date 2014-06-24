@@ -32,9 +32,7 @@
     [ParseRecommendation registerSubclass];
     [Parse setApplicationId:@"ymMgNJ1eeZYYVWEvdjZ6K1LtfFuv797PHjOYjETj"
                   clientKey:@"twz1zFWlhnT3MSNUCLKp4wYIzIng25qp5p6qoFe1"];
-//
-//    [[PFUser currentUser] incrementKey:@"RunCount"];
-//    [[PFUser currentUser] saveInBackground];
+
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 
     return YES;
