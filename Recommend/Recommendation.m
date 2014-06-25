@@ -15,19 +15,23 @@
 @synthesize userLocation;
 @synthesize recommendationsLoaded;
 
-+ (void)reverseGeocode:(PFGeoPoint *)locationCord onComplete:(void(^)(NSMutableDictionary *location))completion {
+- (void)reverseGeocode:(PFGeoPoint *)locationCord onComplete:(void(^)(NSMutableDictionary *location))completion {
 
     CLGeocoder *geo = [[CLGeocoder alloc] init];
     CLLocation *location = [[CLLocation alloc] initWithLatitude:locationCord.latitude longitude:locationCord.longitude];
 
     [geo reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-        CLPlacemark *addressPlacmark = [placemarks firstObject];
-        NSString *street = [NSString stringWithFormat:@"%@ %@",addressPlacmark.subThoroughfare, addressPlacmark.thoroughfare];
-        NSString *city = [NSString stringWithFormat:@"%@",addressPlacmark.locality];
+        if (!error) {
+            CLPlacemark *addressPlacmark = [placemarks firstObject];
+            NSString *street = [NSString stringWithFormat:@"%@ %@",addressPlacmark.subThoroughfare, addressPlacmark.thoroughfare];
+            NSString *city = [NSString stringWithFormat:@"%@",addressPlacmark.locality];
 
-        NSMutableDictionary *addressDictionary = [[NSMutableDictionary alloc] initWithObjects:@[street, city] forKeys:@[@"street", @"city"]];
+            NSMutableDictionary *addressDictionary = [[NSMutableDictionary alloc] initWithObjects:@[street, city] forKeys:@[@"street", @"city"]];
 
-        completion(addressDictionary);
+            completion(addressDictionary);
+        } else {
+            completion(nil);
+        }
     }];
 }
 
@@ -131,6 +135,9 @@
 
 - (void)setupQuery
 {
+    if (self.lastLoaded && self.userLocation) {
+        [self.delegate recommendationsLoaded:nil forIdentifier:nil userLocation:self.userLocation];
+    }
     if (self.lastLoaded) {
         [self.delegate recommendationsLoaded:nil forIdentifier:nil userLocation:nil];
     }
@@ -147,9 +154,11 @@
     if (!self.userLocation && findUser) {
         [self geoLocateUser:^(PFGeoPoint *geoPoint) {
             if (geoPoint) {
+                [self.delegate userLocationUnknown:NO];
                 [self loadRecommendations:limit orderByDescending:orderByColumn orderByDistance:orderByDistance nearUser:findUser withinKm:km nearPoint:geoPoint];
             } else {
-                [self loadRecommendations:limit orderByDescending:orderByColumn orderByDistance:orderByDistance nearUser:nil withinKm:-1 nearPoint:nil];
+                [self.delegate userLocationUnknown:YES];
+                //[self loadRecommendations:limit orderByDescending:orderByColumn orderByDistance:orderByDistance nearUser:nil withinKm:-1 nearPoint:nil];
             }
         }];
         return;
@@ -181,13 +190,16 @@
 
     [self.query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
-            if (objects.count < self.recommendations.count) {
-                [self.recommendations removeAllObjects];
-                [self.recommendations addObjectsFromArray:objects];
-            } else {
-                for (PFObject *recommendation in objects) {
-                    if (![self recommendationAlreadyExists:recommendation]) {
-                        [self.recommendations addObject:recommendation];
+            if (objects) {
+                [self.delegate onNoRecommendations:NO];
+                if (objects.count < self.recommendations.count) {
+                    [self.recommendations removeAllObjects];
+                    [self.recommendations addObjectsFromArray:objects];
+                } else {
+                    for (PFObject *recommendation in objects) {
+                        if (![self recommendationAlreadyExists:recommendation]) {
+                            [self.recommendations addObject:recommendation];
+                        }
                     }
                 }
             }
@@ -197,6 +209,9 @@
             }
             self.recommendationsLoaded += objects.count;
             self.query = nil;
+            if (!objects && self.recommendationsLoaded == 0) {
+                [self.delegate onNoRecommendations:YES];
+            }
             [self.delegate recommendationsLoaded:(NSArray *)self.recommendations forIdentifier:(NSString *)self.identifier userLocation:(PFGeoPoint *)point];
         }
     }];

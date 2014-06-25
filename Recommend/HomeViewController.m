@@ -15,8 +15,7 @@
 #define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
 @interface HomeViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, RecommendationDelegate>
-
-@property (weak, nonatomic) IBOutlet UILabel *placeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *placeButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *newestCollectionView;
 @property (weak, nonatomic) IBOutlet UICollectionView *popularCollectionView;
 @property NSMutableArray *popularArray;
@@ -28,6 +27,9 @@
 @property UIRefreshControl *recentRefreshControl;
 @property UIRefreshControl *popularRefreshControl;
 @property (weak, nonatomic) IBOutlet UIScrollView *recommendationsScrollView;
+@property (weak, nonatomic) IBOutlet UIView *errorView;
+@property (weak, nonatomic) IBOutlet UILabel *locationNotFoundLabel;
+@property (weak, nonatomic) IBOutlet UILabel *noRecommendationsLabel;
 @end
 
 @implementation HomeViewController
@@ -71,16 +73,43 @@
     [self reloadPopular];
 }
 
--(void)reloadNew {
+- (void)reloadNew {
     [self.newestRecommendations getRecommendations:100 withinRadius:50];
 }
 
--(void)reloadPopular {
+- (void)reloadPopular {
     [self.popularRecommendations getRecommendations:100 withinRadius:50 orderByDescending:@"numLikes"];
 }
 
+- (IBAction)onPlaceButtonPressed:(id)sender
+{
 
--(void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier userLocation:(PFGeoPoint *)location
+}
+
+- (void)userLocationUnknown:(bool)unknown
+{
+    if (unknown) {
+        [self.placeButton setTitle:@"Choose location" forState:UIControlStateNormal];
+        self.locationNotFoundLabel.hidden = NO;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.errorView.alpha = 1;
+        }];
+    } else {
+        self.locationNotFoundLabel.hidden = NO;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.errorView.alpha = 0;
+        }];
+    }
+}
+
+- (void)onNoRecommendations:(bool)noRecommendations
+{
+    if (noRecommendations) {
+        //
+    }
+}
+
+- (void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier userLocation:(PFGeoPoint *)location
 {
     if (!recommendations) {
         [self.recentRefreshControl endRefreshing];
@@ -99,9 +128,13 @@
         [self.popularCollectionView reloadData];
         [self.popularRefreshControl endRefreshing];
     }
-    [Recommendation reverseGeocode:location onComplete:^(NSMutableDictionary *address) {
-        self.placeLabel.text = [NSString stringWithFormat:@"%@, %@", [address objectForKey:@"street"], [address objectForKey:@"city"]];
-    }];
+    if (location) {
+        [self.newestRecommendations reverseGeocode:location onComplete:^(NSMutableDictionary *address) {
+            if (address) {
+                [self.placeButton setTitle:[NSString stringWithFormat:@"%@, %@", [address objectForKey:@"street"], [address objectForKey:@"city"]] forState:UIControlStateNormal];
+            }
+        }];
+    }
 }
 
 #pragma mark - CollectionView Datasource/Delegate

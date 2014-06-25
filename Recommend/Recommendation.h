@@ -14,9 +14,13 @@
 
 @optional
 
+- (void)recommendationLoved:(NSString *)error count:(NSNumber *)count recommendation:(PFObject *)recommendation;
+
 - (void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier userLocation:(PFGeoPoint *)location;
 
-- (void)recommendationLoved:(NSString *)error count:(NSNumber *)count recommendation:(PFObject *)recommendation;
+- (void)userLocationUnknown:(bool)unknown;
+
+- (void)onNoRecommendations:(bool)noRecommendations;
 
 @end
 
@@ -33,7 +37,7 @@
 @property PFGeoPoint *userLocation;
 @property NSInteger recommendationsLoaded;
 
-+ (void)reverseGeocode:(PFGeoPoint *)locationCord onComplete:(void(^)(NSMutableDictionary *location))completion;
+- (void)reverseGeocode:(PFGeoPoint *)locationCord onComplete:(void(^)(NSMutableDictionary *location))completion;
 
 - (id)initWithIdentifier:(NSString *)identifier;
 
