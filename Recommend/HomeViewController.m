@@ -85,18 +85,25 @@
 
 }
 
-- (void)userLocationUnknown:(bool)unknown
+- (void)userLocationFound:(PFGeoPoint *)geoPoint
 {
-    if (unknown) {
-        [self.placeButton setTitle:@"Choose location" forState:UIControlStateNormal];
-        self.locationNotFoundLabel.hidden = NO;
-        [UIView animateWithDuration:0.5 animations:^{
-            self.errorView.alpha = 1;
-        }];
-    } else {
-        self.locationNotFoundLabel.hidden = NO;
+    if (geoPoint) {
+        self.locationNotFoundLabel.hidden = YES;
+        self.noRecommendationsLabel.hidden = YES;
         [UIView animateWithDuration:0.5 animations:^{
             self.errorView.alpha = 0;
+        }];
+        [self.newestRecommendations reverseGeocode:geoPoint onComplete:^(NSMutableDictionary *address) {
+                if (address) {
+                    [self.placeButton setTitle:[NSString stringWithFormat:@"%@, %@", [address objectForKey:@"street"], [address objectForKey:@"city"]] forState:UIControlStateNormal];
+                }
+        }];
+    } else {
+        [self.placeButton setTitle:@"Choose location" forState:UIControlStateNormal];
+        self.locationNotFoundLabel.hidden = NO;
+        self.noRecommendationsLabel.hidden = YES;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.errorView.alpha = 0.6;
         }];
     }
 }
@@ -104,7 +111,17 @@
 - (void)onNoRecommendations:(bool)noRecommendations
 {
     if (noRecommendations) {
-        //
+        self.locationNotFoundLabel.hidden = YES;
+        self.noRecommendationsLabel.hidden = NO;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.errorView.alpha = 0.6;
+        }];
+    } else {
+        self.locationNotFoundLabel.hidden = YES;
+        self.noRecommendationsLabel.hidden = YES;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.errorView.alpha = 0;
+        }];
     }
 }
 
@@ -126,13 +143,6 @@
         [self.popularArray addObjectsFromArray:recommendations];
         [self.popularCollectionView reloadData];
         [self.popularRefreshControl endRefreshing];
-    }
-    if (location) {
-        [self.newestRecommendations reverseGeocode:location onComplete:^(NSMutableDictionary *address) {
-            if (address) {
-                [self.placeButton setTitle:[NSString stringWithFormat:@"%@, %@", [address objectForKey:@"street"], [address objectForKey:@"city"]] forState:UIControlStateNormal];
-            }
-        }];
     }
 }
 

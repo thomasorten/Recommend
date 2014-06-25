@@ -154,10 +154,10 @@
     if (!self.userLocation && findUser) {
         [self geoLocateUser:^(PFGeoPoint *geoPoint) {
             if (geoPoint) {
-                [self.delegate userLocationUnknown:NO];
+                [self.delegate userLocationFound:geoPoint];
                 [self loadRecommendations:limit orderByDescending:orderByColumn orderByDistance:orderByDistance nearUser:findUser withinKm:km nearPoint:geoPoint];
             } else {
-                [self.delegate userLocationUnknown:YES];
+                [self.delegate userLocationFound:nil];
                 //[self loadRecommendations:limit orderByDescending:orderByColumn orderByDistance:orderByDistance nearUser:nil withinKm:-1 nearPoint:nil];
             }
         }];

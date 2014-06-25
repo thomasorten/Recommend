@@ -134,7 +134,7 @@
     [self.recommendations getRecommendationsByDistance:self.initialNumberOfRecommendations withinRadius:50];
 }
 
-- (void)userLocationUnknown:(bool)unknown
+- (void)userLocationFound:(PFGeoPoint *)geoPoint
 {
     //
 }

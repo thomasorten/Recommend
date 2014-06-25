@@ -18,7 +18,7 @@
 
 - (void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier userLocation:(PFGeoPoint *)location;
 
-- (void)userLocationUnknown:(bool)unknown;
+- (void)userLocationFound:(PFGeoPoint *)geoPoint;
 
 - (void)onNoRecommendations:(bool)noRecommendations;
 

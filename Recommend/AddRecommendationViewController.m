@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;
 @property AVCaptureSession *captureSession;
 @property AVCaptureStillImageOutput *stillImageOutput;
+@property AVCaptureDevice *device;
+@property AVCaptureFlashMode flashMode;
 @property UITextField *activeTextField;
 @property UITextView *activeTextView;
 @property UIImagePickerController *picker;
@@ -177,13 +179,12 @@
 
 - (IBAction)onFlashPressed:(id)sender
 {
-    if (self.captureSession) {
-
-    }
     if (self.currentFlashImage == [UIImage imageNamed:@"flash"]) {
+        self.flashMode = AVCaptureFlashModeOff;
         [self.flashButton setImage:[UIImage imageNamed:@"flash-off"] forState:UIControlStateNormal];
         self.currentFlashImage = [UIImage imageNamed:@"flash-off"];
     } else {
+        self.flashMode = AVCaptureFlashModeOn;
         [self.flashButton setImage:[UIImage imageNamed:@"flash"] forState:UIControlStateNormal];
         self.currentFlashImage = [UIImage imageNamed:@"flash"];
     }
@@ -414,11 +415,13 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
     session.sessionPreset = AVCaptureSessionPreset1280x720;
 
     // Find a suitable AVCaptureDevice
-    AVCaptureDevice *device = [AVCaptureDevice
+    self.device = [AVCaptureDevice
                                defaultDeviceWithMediaType:AVMediaTypeVideo];
 
+    [self setFlashMode:AVCaptureFlashModeOff forDevice:self.device];
+
     // Create a device input with the device and add it to the session.
-    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device
+    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:self.device
                                                                         error:&error];
     if (!input)
     {
@@ -481,6 +484,13 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
         if (videoConnection) { break; }
     }
 
+    // Set flash mode
+    if (self.flashMode == AVCaptureFlashModeOff) {
+        [self setFlashMode:AVCaptureFlashModeOff forDevice:self.device];
+    } else {
+        [self setFlashMode:AVCaptureFlashModeOn forDevice:self.device];
+    }
+
     [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection
                                                   completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error)
      {
@@ -490,12 +500,32 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
          self.capturedImageView.image = image;
 
          [self.captureSession stopRunning];
+
+         [self setFlashMode:AVCaptureFlashModeOff forDevice:self.device];
      }];
 }
 
 -(void)setSession:(AVCaptureSession *)session
 {
     self.captureSession=session;
+}
+
+- (void)setFlashMode:(AVCaptureFlashMode)flashMode forDevice:(AVCaptureDevice *)device
+{
+    if ([device hasFlash] && [device isFlashModeSupported:flashMode])
+    {
+        NSError *error = nil;
+        if ([device lockForConfiguration:&error])
+        {
+            [device setFlashMode:flashMode];
+            [device unlockForConfiguration];
+        }
+        else
+        {
+            self.flashButton.hidden = YES;
+            NSLog(@"%@", error);
+        }
+    }
 }
 
 @end
