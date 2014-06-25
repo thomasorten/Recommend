@@ -65,6 +65,7 @@
     self.automaticallyAdjustsScrollViewInsets = YES;
 }
 
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
