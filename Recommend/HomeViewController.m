@@ -63,23 +63,10 @@
     self.automaticallyAdjustsScrollViewInsets = YES;
 }
 
-<<<<<<< HEAD
-//
-//    [PFAnonymousUtils logInWithBlock:^(PFUser *user, NSError *error) {
-//        if (!error) {
-//            NSLog(@"Using Recommend as Anonymous");
-//        }
-//        else{
-//            NSLog(@"error logging in");
-//        }
-//    }];
 
-
-=======
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
->>>>>>> bf3dd62a6f86019a3fcf5c4048d7412e7e463148
     [self reloadNew];
     [self reloadPopular];
 }
