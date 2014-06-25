@@ -12,16 +12,22 @@
 @interface LoginViewController ()<FBLoginViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *fbImageView;
+@property (strong, nonatomic) IBOutlet UIButton *loginButton;
 @property UIImage *profilePic;
 @end
 
 @implementation LoginViewController
+- (IBAction)onloginPressed:(id)sender {
+}
 
 -(void)viewDidLoad{
     [super viewDidLoad];
     [PFFacebookUtils initializeFacebook];
-    self.nameLabel.layer.cornerRadius = 3;
 
+    self.fbImageView.layer.cornerRadius = 40;
+    self.fbImageView.layer.masksToBounds = YES;
+    self.nameLabel.layer.cornerRadius = 4;
 
     UIImageView *background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"skyline"]];
     background.frame = self.view.frame;
@@ -44,14 +50,12 @@
                     NSString *facebookID = userData[@"id"];
                     NSString *name = userData[@"name"];
 //                    NSString *location = userData[@"location"][@"name"];
-//                    NSString *gender = userData[@"gender"];
-//                    NSString *birthday = userData[@"birthday"];
-//                    NSString *relationship = userData[@"relationship_status"];
-                    NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=square&return_ssl_resources=1", facebookID]];
+                    NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
 
                     NSURLRequest *profilePicRequest = [NSURLRequest requestWithURL:pictureURL];
                     [NSURLConnection sendAsynchronousRequest:profilePicRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                         self.profilePic = [[UIImage alloc] initWithData:data];
+                        self.fbImageView.image = self.profilePic;
                         self.nameLabel.text = name;
                     }];
                 }

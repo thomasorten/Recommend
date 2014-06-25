@@ -509,18 +509,35 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Frt-LD-vG4">
-                                <rect key="frame" x="20" y="362" width="280" height="30"/>
+                                <rect key="frame" x="20" y="269" width="280" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YRc-7n-anf">
+                                <rect key="frame" x="60" y="466" width="200" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" backgroundImage="login">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onloginPressed:" destination="CCy-zA-3Mc" eventType="touchUpInside" id="7hU-7B-rR7"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SAd-6F-p0y">
+                                <rect key="frame" x="120" y="166" width="80" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                     </view>
                     <navigationItem key="navigationItem" id="mFK-7g-VFp"/>
                     <connections>
+                        <outlet property="fbImageView" destination="SAd-6F-p0y" id="A3M-p0-WB9"/>
+                        <outlet property="loginButton" destination="YRc-7n-anf" id="h9w-cY-fVm"/>
                         <outlet property="nameLabel" destination="Frt-LD-vG4" id="TAf-Pk-50r"/>
                         <segue destination="SBR-78-eyY" kind="modal" identifier="isLoggedIn" modalTransitionStyle="crossDissolve" id="TLm-id-rnG"/>
                     </connections>
@@ -819,6 +836,7 @@
         <image name="heart" width="32" height="32"/>
         <image name="home" width="32" height="32"/>
         <image name="location_white" width="32" height="32"/>
+        <image name="login" width="400" height="100"/>
         <image name="plus" width="32" height="32"/>
         <image name="snap" width="83" height="83"/>
         <image name="user" width="32" height="32"/>
@@ -829,9 +847,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="KFk-6R-Jdo"/>
         <segue reference="TLm-id-rnG"/>
-        <segue reference="eqa-xD-Jr9"/>
         <segue reference="iXj-G9-Isr"/>
         <segue reference="IRn-6p-b8F"/>
         <segue reference="eqa-xD-Jr9"/>
