@@ -33,6 +33,8 @@
 @property PFGeoPoint *userLocation;
 @property NSInteger recommendationsLoaded;
 
++ (void)reverseGeocode:(PFGeoPoint *)locationCord onComplete:(void(^)(NSMutableDictionary *location))completion;
+
 - (id)initWithIdentifier:(NSString *)identifier;
 
 - (void)love:(PFObject *)recommendation;

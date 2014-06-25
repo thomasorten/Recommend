@@ -24,18 +24,16 @@
                                         <rect key="frame" x="0.0" y="0.0" width="640" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="New" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8D-cH-51q">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="NEW" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8D-cH-51q">
                                                 <rect key="frame" x="20" y="0.0" width="177" height="37"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Popular" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="edG-gG-I3i">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="POPULAR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="edG-gG-I3i">
                                                 <rect key="frame" x="305" y="0.0" width="177" height="35"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -46,7 +44,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kE8-lO-ACz">
-                                            <size key="itemSize" width="120" height="126"/>
+                                            <size key="itemSize" width="126" height="126"/>
                                             <size key="headerReferenceSize" width="0.0" height="100"/>
                                             <size key="footerReferenceSize" width="0.0" height="10"/>
                                             <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
@@ -62,12 +60,6 @@
                                                         <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fzt-rW-9KP">
                                                             <rect key="frame" x="0.0" y="0.0" width="126" height="126"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jcz-fx-M4i" customClass="PFImageView">
-                                                                    <rect key="frame" x="10" y="10" width="106" height="106"/>
-                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                                </imageView>
-                                                            </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                         </view>
                                                     </subviews>
@@ -75,8 +67,6 @@
                                                 </view>
                                                 <size key="customSize" width="126" height="136"/>
                                                 <connections>
-                                                    <outlet property="recentCollectionViewCellView" destination="jcz-fx-M4i" id="aXq-Rb-iar"/>
-                                                    <outlet property="recentImageView" destination="jcz-fx-M4i" id="6uE-mV-4OM"/>
                                                     <segue destination="JqG-Us-2wi" kind="push" identifier="NewestSegue" id="KFk-6R-Jdo"/>
                                                 </connections>
                                             </collectionViewCell>
@@ -106,31 +96,24 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Popular" id="FCN-OH-Ei3" customClass="RecommendationsCollectionViewCell">
-                                                <rect key="frame" x="15" y="110" width="126" height="136"/>
+                                                <rect key="frame" x="15" y="110" width="126" height="126"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="126" height="136"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="126" height="126"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cbZ-fS-ngC">
                                                             <rect key="frame" x="0.0" y="0.0" width="126" height="126"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PRJ-7M-gpi">
-                                                                    <rect key="frame" x="10" y="10" width="106" height="106"/>
-                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                                </imageView>
-                                                            </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                         </view>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <size key="customSize" width="126" height="136"/>
+                                                <size key="customSize" width="126" height="126"/>
                                                 <connections>
                                                     <outlet property="popularCollectionViewCellView" destination="cbZ-fS-ngC" id="N4W-Fe-Fny"/>
-                                                    <outlet property="popularImageView" destination="PRJ-7M-gpi" id="Dq7-kH-WYA"/>
                                                     <segue destination="JqG-Us-2wi" kind="push" identifier="PopularSegue" id="iXj-G9-Isr"/>
                                                 </connections>
                                             </collectionViewCell>
@@ -140,7 +123,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionReusableView>
                                         <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="t2q-hO-eCt">
-                                            <rect key="frame" x="0.0" y="256" width="294" height="10"/>
+                                            <rect key="frame" x="0.0" y="246" width="294" height="10"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionReusableView>
                                         <connections>
@@ -153,12 +136,20 @@
                                     <outlet property="delegate" destination="UYi-uD-mqO" id="NJg-WF-8gN"/>
                                 </connections>
                             </scrollView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Finding location..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CiE-Mj-HA9">
+                                <rect key="frame" x="72" y="72" width="450" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="2xT-d7-T3f"/>
                     <connections>
                         <outlet property="newestCollectionView" destination="ifW-az-Tk0" id="d05-yU-MeU"/>
+                        <outlet property="placeLabel" destination="CiE-Mj-HA9" id="SBT-qc-sW9"/>
                         <outlet property="popularCollectionView" destination="V5m-yM-tDQ" id="0pW-WC-dJ9"/>
                         <outlet property="recommendationsScrollView" destination="paG-nL-yBj" id="DXs-VU-nhs"/>
                     </connections>

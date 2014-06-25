@@ -23,7 +23,7 @@
 @property Recommendation *recommendations;
 @property NSNumberFormatter *distanceFormatter;
 @property NSInteger loadedRecommendations;
-@property NSInteger initialNumberOfRecommendations;
+@property int initialNumberOfRecommendations;
 @end
 
 @implementation RecommendationsTableViewController
