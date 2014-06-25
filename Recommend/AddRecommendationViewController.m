@@ -150,10 +150,6 @@
 
 - (void)hideCameraControls
 {
-    if (self.captureSession) {
-        [self.captureSession stopRunning];
-    }
-
     self.capturedImageView.hidden = NO;
     self.cameraControlsView.hidden = YES;
     self.continueButtonsView.hidden = NO;
@@ -507,8 +503,24 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
         [self setFlashMode:AVCaptureFlashModeOn forDevice:self.device];
     }
 
+    // Flash the screen white and fade it out to give UI feedback that a still image was taken
+    UIView *flashView = [[UIView alloc] initWithFrame:self.videoPreviewView.window.bounds];
+    flashView.backgroundColor = [UIColor whiteColor];
+    [self.videoPreviewView.window addSubview:flashView];
+
+    float flashDuration = self.flashMode == AVCaptureFlashModeOff ? 0.6f : 1.0f;
+
+    [UIView animateWithDuration:flashDuration
+                     animations:^{
+                         flashView.alpha = 0.f;
+                     }
+                     completion:^(BOOL finished){
+                         [flashView removeFromSuperview];
+                     }
+     ];
+
     [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection
-                                                  completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error)
+                                                       completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error)
      {
          NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
          UIImage *image = [[UIImage alloc] initWithData:imageData];
