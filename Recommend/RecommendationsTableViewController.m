@@ -134,6 +134,16 @@
     [self.recommendations getRecommendationsByDistance:self.initialNumberOfRecommendations withinRadius:50];
 }
 
+- (void)userLocationUnknown:(bool)unknown
+{
+    //
+}
+
+- (void)onNoRecommendations:(bool)noRecommendations
+{
+    //
+}
+
 - (void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier userLocation:(PFGeoPoint *)location
 {
     self.userLocation = location;
