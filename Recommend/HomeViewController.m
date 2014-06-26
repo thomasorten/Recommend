@@ -232,7 +232,7 @@
         [cell.contentView addSubview:pfImageView];
     }
 
-    pfImageView.file = (PFFile *)new.file;
+    pfImageView.file = (PFFile *)new.thumbnail;
     [pfImageView loadInBackground];
 
     UIBezierPath *path  = [UIBezierPath bezierPathWithRect:cell.bounds];

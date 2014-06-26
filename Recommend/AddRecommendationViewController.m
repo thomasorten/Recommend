@@ -21,14 +21,13 @@
 #define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 #define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
-@interface AddRecommendationViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, AVCaptureVideoDataOutputSampleBufferDelegate,FBLoginViewDelegate>
+@interface AddRecommendationViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, AVCaptureVideoDataOutputSampleBufferDelegate,FBLoginViewDelegate, NSLayoutManagerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;
 @property AVCaptureSession *captureSession;
 @property AVCaptureStillImageOutput *stillImageOutput;
 @property AVCaptureDevice *device;
 @property AVCaptureFlashMode flashMode;
-@property UITextField *activeTextField;
-@property UITextView *activeTextView;
+
 @property UIImagePickerController *picker;
 @property UIImagePickerController *imageRollPicker;
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
@@ -300,17 +299,15 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
     self.cameraScrollView.contentInset = contentInsets;
     self.cameraScrollView.scrollIndicatorInsets = contentInsets;
 
-    CGRect fieldFrame = self.activeTextField ? self.activeTextField.frame : self.activeTextView.frame;
-    // If active text field is hidden by keyboard, scroll it so it's visible
-    // Your app might not need or want this behavior.
-    CGRect aRect = self.view.frame;
-    aRect.size.height -= kbSize.height;
-    CGPoint origin = fieldFrame.origin;
-    origin.y -= (self.cameraScrollView.contentOffset.y-150);
-    if (!CGRectContainsPoint(aRect, origin) ) {
-        CGPoint scrollPoint = CGPointMake(0.0, (fieldFrame.origin.y+150)-(aRect.size.height));
-        [self.cameraScrollView setContentOffset:scrollPoint animated:YES];
-    }
+//    CGRect fieldFrame = self.activeTextField ? self.activeTextField.frame : self.activeTextView.frame;
+//    CGRect aRect = self.view.frame;
+//    aRect.size.height -= kbSize.height;
+//    CGPoint origin = fieldFrame.origin;
+//    origin.y -= (self.cameraScrollView.contentOffset.y-150);
+//    if (!CGRectContainsPoint(aRect, origin) ) {
+//        CGPoint scrollPoint = CGPointMake(0.0, (fieldFrame.origin.y+150)-(aRect.size.height));
+//        [self.cameraScrollView setContentOffset:scrollPoint animated:YES];
+//    }
 }
 
 // Called when the UIKeyboardWillHideNotification is sent
@@ -329,7 +326,6 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
             self.warningLabel.alpha = 0.0;
         }];
     }
-    self.activeTextField = textField;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
@@ -337,7 +333,6 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
     if ([textField.text isEqual:@""]) {
         textField.text = defaultTitleString;
     }
-    self.activeTextField = nil;
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
@@ -348,7 +343,6 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
             self.warningLabel.alpha = 0.0;
         }];
     }
-    self.activeTextView = textView;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView
@@ -356,7 +350,11 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
     if ([textView.text isEqual:@""]) {
         textView.text = defaultDescriptionString;
     }
-    self.activeTextView = nil;
+}
+
+- (CGFloat)layoutManager:(NSLayoutManager *)layoutManager lineSpacingAfterGlyphAtIndex:(NSUInteger)glyphIndex withProposedLineFragmentRect:(CGRect)rect
+{
+    return 17;
 }
 
 - (void)setLatestImageOffAlbum

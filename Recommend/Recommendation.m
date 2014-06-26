@@ -219,6 +219,8 @@
         point = nil;
     }
 
+    [query whereKey:@"thumbnail" notEqualTo:[NSNull null]];
+
     if (!orderByDistance && !orderByColumn) {
         [query orderByDescending:@"createdAt"];
     }
