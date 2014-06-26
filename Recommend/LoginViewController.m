@@ -15,7 +15,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *fbImageView;
 @property (strong, nonatomic) IBOutlet UIButton *loginButton;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatior;
+
 @property UIImage *profilePic;
+
 @end
 
 @implementation LoginViewController
@@ -24,6 +27,7 @@
     [super viewDidLoad];
     [PFFacebookUtils initializeFacebook];
     [self.loggedIn setHidden:YES];
+    [self.activityIndicatior setHidden:YES];
     [self.fbImageView setHidden:YES];
     [self.nameLabel setHidden:YES];
     self.loginButton.layer.cornerRadius = 5;
@@ -46,6 +50,8 @@
 
 - (IBAction)onloginPressed:(UIButton *)sender {
     NSArray *permissions = @[@"public_profile"];
+    [self.activityIndicatior setHidden:NO];
+    [self.activityIndicatior startAnimating];
     [PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error) {
         if (!user) {
             NSLog(@"Uh oh. The user cancelled the Facebook login.");
@@ -61,13 +67,16 @@
 
                     NSString *facebookID = userData[@"id"];
                     NSString *name = userData[@"name"];
-                    //                    NSString *location = userData[@"location"][@"name"];
+                    user[@"username"] = name;
+                    [user saveInBackground];
                     NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
 
                     NSURLRequest *profilePicRequest = [NSURLRequest requestWithURL:pictureURL];
                     [NSURLConnection sendAsynchronousRequest:profilePicRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                         self.profilePic = [[UIImage alloc] initWithData:data];
                         self.fbImageView.image = self.profilePic;
+                        [self.activityIndicatior setHidden:YES];
+                        [self.activityIndicatior stopAnimating];
                         [self.fbImageView setHidden:NO];
                         self.nameLabel.text = name;
                         [self.nameLabel setHidden:NO];

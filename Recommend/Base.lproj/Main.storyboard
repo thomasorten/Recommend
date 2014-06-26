@@ -568,21 +568,27 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logged" translatesAutoresizingMaskIntoConstraints="NO" id="ZT0-lH-PCJ">
                                 <rect key="frame" x="91" y="314" width="138" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="gZX-c4-J44">
+                                <rect key="frame" x="142" y="187" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                     </view>
                     <navigationItem key="navigationItem" id="mFK-7g-VFp"/>
                     <connections>
+                        <outlet property="activityIndicatior" destination="gZX-c4-J44" id="Njn-UX-vVS"/>
                         <outlet property="fbImageView" destination="SAd-6F-p0y" id="A3M-p0-WB9"/>
                         <outlet property="loggedIn" destination="ZT0-lH-PCJ" id="zNY-Vv-9D0"/>
                         <outlet property="loginButton" destination="YRc-7n-anf" id="h9w-cY-fVm"/>
                         <outlet property="nameLabel" destination="Frt-LD-vG4" id="TAf-Pk-50r"/>
-                        <segue destination="SBR-78-eyY" kind="modal" identifier="isLoggedIn" modalTransitionStyle="crossDissolve" id="TLm-id-rnG"/>
+                        <segue destination="sbN-Nt-I61" kind="modal" identifier="isLoggedIn" id="h0z-9Q-0M3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jK7-fa-b3j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1210" y="1662"/>
+            <point key="canvasLocation" x="1201" y="1728"/>
         </scene>
         <!--Add Recommendation View Controller-->
         <scene sceneID="K2o-GF-bxi">
@@ -926,10 +932,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="hHy-05-Hr6"/>
         <segue reference="EGM-8L-KJv"/>
         <segue reference="Wrn-aG-h7S"/>
+        <segue reference="hHy-05-Hr6"/>
         <segue reference="Msd-ei-NpX"/>
-        <segue reference="TLm-id-rnG"/>
+        <segue reference="h0z-9Q-0M3"/>
     </inferredMetricsTieBreakers>
 </document>
