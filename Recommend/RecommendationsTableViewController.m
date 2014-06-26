@@ -137,9 +137,9 @@
     [self.recommendations getRecommendationsByDistance:self.initialNumberOfRecommendations withinRadius:50];
 }
 
-- (void)userLocationUnknown:(bool)unknown
+- (void)userLocationFound:(PFGeoPoint *)geoPoint
 {
-    //
+    self.userLocation = geoPoint;
 }
 
 - (void)onNoRecommendations:(bool)noRecommendations
@@ -149,7 +149,6 @@
 
 - (void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier userLocation:(PFGeoPoint *)location
 {
-    self.userLocation = location;
     self.loadedRecommendations = recommendations.count;
     [self.recommendationsArray addObjectsFromArray:recommendations];
     [self.closeToMeTableView reloadData];
@@ -161,18 +160,22 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     if ([searchText isEqualToString:@""]) {
         [self.searchBar resignFirstResponder];
+        self.recommendationsArray = [[NSMutableArray alloc] init];
         [self getTableData];
-    } else {
+    }
+    if ([searchText length] > 1) {
         [self performSelector:@selector(doSearchQuery:) withObject:searchText afterDelay:0.5];
     }
 }
 
 - (void)doSearchQuery:(NSString *)searchString
 {
+     self.recommendationsArray = [[NSMutableArray alloc] init];
+    [self.recommendations reset];
     if (self.recommendation) {
-        [self.recommendations getRecommendations:-1 byUser:[self.recommendation objectForKey:@"creator"] whereKey:@"title" containsString:searchString];
+        [self.recommendations getRecommendations:0 byUser:[self.recommendation objectForKey:@"creator"] whereKey:@"title" containsString:searchString];
     } else {
-        [self.recommendations getRecommendations:100 withinRadius:30 whereKey:@"title" containsString:searchString];
+        [self.recommendations getRecommendations:0 whereKey:@"title" containsString:searchString];
     }
 }
 

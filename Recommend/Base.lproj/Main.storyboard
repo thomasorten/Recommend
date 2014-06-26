@@ -159,7 +159,7 @@
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1xq-hD-j1H">
-                                <rect key="frame" x="81" y="73" width="210" height="21"/>
+                                <rect key="frame" x="72" y="73" width="210" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <state key="normal" title="Finding location...">
@@ -169,6 +169,31 @@
                                     <action selector="onPlaceButtonPressed:" destination="UYi-uD-mqO" eventType="touchUpInside" id="rLG-uJ-tWV"/>
                                 </connections>
                             </button>
+                            <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UJ9-iQ-sRx">
+                                <rect key="frame" x="0.0" y="320" width="320" height="250"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ljy-gG-wWy">
+                                        <rect key="frame" x="0.0" y="9" width="320" height="162"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="UYi-uD-mqO" id="U41-Iq-sBN"/>
+                                            <outlet property="delegate" destination="UYi-uD-mqO" id="1e8-XH-4WK"/>
+                                        </connections>
+                                    </pickerView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iZq-qf-4FE">
+                                        <rect key="frame" x="254" y="0.0" width="46" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Close">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onClosePlacePressed:" destination="UYi-uD-mqO" eventType="touchUpInside" id="x7L-9B-TDQ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -176,11 +201,14 @@
                         <barButtonItem key="leftBarButtonItem" title="Item" id="AWS-rh-uPX"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="closePickerButton" destination="iZq-qf-4FE" id="bls-B4-pnO"/>
                         <outlet property="errorView" destination="mc6-Rp-Cw3" id="xCQ-2H-L49"/>
                         <outlet property="locationNotFoundLabel" destination="pUr-3e-48D" id="1ML-EJ-bOh"/>
                         <outlet property="newestCollectionView" destination="ifW-az-Tk0" id="d05-yU-MeU"/>
                         <outlet property="noRecommendationsLabel" destination="WX5-gq-kty" id="2kV-Ia-3uy"/>
                         <outlet property="placeButton" destination="1xq-hD-j1H" id="BUC-r8-acP"/>
+                        <outlet property="placePickerView" destination="Ljy-gG-wWy" id="eg9-ur-Dl1"/>
+                        <outlet property="placeView" destination="UJ9-iQ-sRx" id="uRT-g0-Bc7"/>
                         <outlet property="popularCollectionView" destination="V5m-yM-tDQ" id="0pW-WC-dJ9"/>
                         <outlet property="recommendationsScrollView" destination="paG-nL-yBj" id="DXs-VU-nhs"/>
                         <outlet property="sidebarButton" destination="AWS-rh-uPX" id="bQN-WI-pEC"/>
@@ -703,7 +731,7 @@
                                                 <rect key="frame" x="232" y="51" width="44" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <size key="titleShadowOffset" width="-1" height="1"/>
-                                                <state key="normal" image="flash">
+                                                <state key="normal" image="flash-off">
                                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
@@ -882,7 +910,7 @@
         <image name="close" width="32" height="32"/>
         <image name="crosshair" width="32" height="32"/>
         <image name="face-frown" width="128" height="128"/>
-        <image name="flash" width="32" height="32"/>
+        <image name="flash-off" width="32" height="32"/>
         <image name="heart" width="32" height="32"/>
         <image name="home" width="32" height="32"/>
         <image name="location_white" width="32" height="32"/>
