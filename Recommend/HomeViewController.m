@@ -48,16 +48,23 @@
     [self.placeView setBackgroundColor:RGBA(255, 255, 255, 0.6)];
 
     self.recentRefreshControl = [[UIRefreshControl alloc] init];
-    self.recentRefreshControl.tintColor = [UIColor grayColor];
+    self.recentRefreshControl.tintColor = [UIColor lightGrayColor];
     [self.recentRefreshControl addTarget:self action:@selector(reloadNew) forControlEvents:UIControlEventValueChanged];
     [self.newestCollectionView addSubview:self.recentRefreshControl];
     self.newestCollectionView.alwaysBounceVertical = YES;
 
+    [self.recentRefreshControl setAutoresizingMask:(UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleLeftMargin)];
+    [[self.recentRefreshControl.subviews objectAtIndex:0] setFrame:CGRectMake(65, 55, 30, 30)];
+
+
     self.popularRefreshControl = [[UIRefreshControl alloc] init];
-    self.recentRefreshControl.tintColor = [UIColor grayColor];
+    self.recentRefreshControl.tintColor = [UIColor lightGrayColor];
     [self.popularRefreshControl addTarget:self action:@selector(reloadPopular) forControlEvents:UIControlEventValueChanged];
     [self.popularCollectionView addSubview:self.popularRefreshControl];
     self.popularCollectionView.alwaysBounceVertical = YES;
+
+    [self.popularRefreshControl setAutoresizingMask:(UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleLeftMargin)];
+    [[self.popularRefreshControl.subviews objectAtIndex:0] setFrame:CGRectMake(65, 55, 30, 30)];
 
     self.popularRecommendations = [[Recommendation alloc] initWithIdentifier:@"popular"];
     self.popularRecommendations.delegate = self;
