@@ -21,14 +21,12 @@
 #define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 #define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
-@interface AddRecommendationViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, AVCaptureVideoDataOutputSampleBufferDelegate,FBLoginViewDelegate>
+@interface AddRecommendationViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, AVCaptureVideoDataOutputSampleBufferDelegate,FBLoginViewDelegate, NSLayoutManagerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;
 @property AVCaptureSession *captureSession;
 @property AVCaptureStillImageOutput *stillImageOutput;
 @property AVCaptureDevice *device;
 @property AVCaptureFlashMode flashMode;
-@property UITextField *activeTextField;
-@property UITextView *activeTextView;
 @property UIImagePickerController *picker;
 @property UIImagePickerController *imageRollPicker;
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
@@ -54,6 +52,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.descriptionTextView.layoutManager.delegate = self;
+
     [FBSession openActiveSessionWithAllowLoginUI:NO];
 
     if (FBSession.activeSession.isOpen == YES){
@@ -201,13 +202,12 @@
 
 - (IBAction)onCloseCameraPressed:(id)sender
 {
-    if (self.captureSession) {
-        [self.captureSession stopRunning];
-    } else {
+    if (self.picker) {
         [self.picker dismissViewControllerAnimated:NO completion:^{
         }];
     }
     [self.tabBarController setSelectedIndex:0];
+    [self.captureSession stopRunning];
 }
 
 - (IBAction)onSetLocationPressed:(id)sender
@@ -252,26 +252,6 @@
     }
 }
 
-- (BOOL) textView:(UITextView *)textView
-shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    static const NSUInteger MAX_NUMBER_OF_LINES_ALLOWED = 3;
-
-    NSMutableString *t = [NSMutableString stringWithString:
-                          self.descriptionTextView.text];
-    [t replaceCharactersInRange: range withString: text];
-
-    NSUInteger numberOfLines = 0;
-    for (NSUInteger i = 0; i < t.length; i++) {
-        if ([[NSCharacterSet newlineCharacterSet]
-             characterIsMember: [t characterAtIndex: i]]) {
-            numberOfLines++;
-        }
-    }
-
-    return (numberOfLines < MAX_NUMBER_OF_LINES_ALLOWED);
-}
-
 - (void)dismissKeyboard
 {
     [self.view endEditing:YES];
@@ -300,9 +280,7 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
     self.cameraScrollView.contentInset = contentInsets;
     self.cameraScrollView.scrollIndicatorInsets = contentInsets;
 
-    CGRect fieldFrame = self.activeTextField ? self.activeTextField.frame : self.activeTextView.frame;
-    // If active text field is hidden by keyboard, scroll it so it's visible
-    // Your app might not need or want this behavior.
+    CGRect fieldFrame = self.descriptionTextView.frame;
     CGRect aRect = self.view.frame;
     aRect.size.height -= kbSize.height;
     CGPoint origin = fieldFrame.origin;
@@ -321,6 +299,15 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
     self.cameraScrollView.scrollIndicatorInsets = contentInsets;
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *text = textField.text;
+    text = [text stringByReplacingCharactersInRange:range withString:string];
+    CGSize textSize = [text sizeWithAttributes:@{NSFontAttributeName:textField.font}];
+
+    return ((textSize.width+5) < textField.bounds.size.width) ? YES : NO;
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     if ([textField.text isEqual:defaultTitleString]) {
@@ -329,7 +316,6 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
             self.warningLabel.alpha = 0.0;
         }];
     }
-    self.activeTextField = textField;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
@@ -337,7 +323,6 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
     if ([textField.text isEqual:@""]) {
         textField.text = defaultTitleString;
     }
-    self.activeTextField = nil;
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
@@ -348,7 +333,14 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
             self.warningLabel.alpha = 0.0;
         }];
     }
-    self.activeTextView = textView;
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    if (textView.contentSize.height > 100)
+    {
+        textView.text = [textView.text substringToIndex:textView.text.length - 1];
+    }
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView
@@ -356,7 +348,11 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
     if ([textView.text isEqual:@""]) {
         textView.text = defaultDescriptionString;
     }
-    self.activeTextView = nil;
+}
+
+- (CGFloat)layoutManager:(NSLayoutManager *)layoutManager lineSpacingAfterGlyphAtIndex:(NSUInteger)glyphIndex withProposedLineFragmentRect:(CGRect)rect
+{
+    return 14;
 }
 
 - (void)setLatestImageOffAlbum

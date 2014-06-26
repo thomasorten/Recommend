@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *likesLabel;
 @property (weak, nonatomic) IBOutlet UIButton *addressButton;
 @property (weak, nonatomic) IBOutlet UIButton *personButton;
+@property (weak, nonatomic) IBOutlet UILabel *errorMessageLabel;
 @property Recommendation *currentRecommendation;
 @end
 
@@ -81,10 +82,37 @@
 
 }
 
+-(void)fadeinError
+{
+    self.errorMessageLabel.alpha = 0;
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    //don't forget to add delegate.....
+    [UIView setAnimationDelegate:self];
+
+    [UIView setAnimationDuration:1];
+    self.errorMessageLabel.alpha = 1;
+
+    //also call this before commit animations......
+    [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];
+    [UIView commitAnimations];
+}
+
+-(void)animationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:2];
+    self.errorMessageLabel.alpha = 0;
+    [UIView commitAnimations];
+}
+
 -(void)recommendationLoved:(NSString *)error count:(NSNumber *)count recommendation:(PFObject *)recommendation
 {
     if (!error) {
         self.likesLabel.text = [NSString stringWithFormat:@"%@", count];
+    } else {
+        self.errorMessageLabel.text = error;
+        [self fadeinError];
     }
 }
 

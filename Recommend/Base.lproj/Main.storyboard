@@ -389,7 +389,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Veg-R9-QER" userLabel="Button - heart">
-                                <rect key="frame" x="256" y="468" width="44" height="44"/>
+                                <rect key="frame" x="256" y="480" width="44" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="heart">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -399,11 +399,20 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XrP-Xy-dhy">
-                                <rect key="frame" x="265" y="512" width="27" height="21"/>
+                                <rect key="frame" x="265" y="524" width="27" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="166" translatesAutoresizingMaskIntoConstraints="NO" id="ETr-7h-1uJ">
+                                <rect key="frame" x="78" y="169" width="166" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="shadowOffset" width="-1" height="1"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -412,6 +421,7 @@
                     <connections>
                         <outlet property="addressButton" destination="2ql-Mo-bB0" id="f6c-tO-s7i"/>
                         <outlet property="descriptionLabel" destination="87W-a3-qyL" id="sR4-ZA-b7h"/>
+                        <outlet property="errorMessageLabel" destination="ETr-7h-1uJ" id="4gh-mY-yWc"/>
                         <outlet property="likesLabel" destination="XrP-Xy-dhy" id="N0E-t7-m4o"/>
                         <outlet property="personButton" destination="nFO-Su-aTR" id="9tt-n2-TPb"/>
                         <outlet property="recommendationImageView" destination="Z29-k6-bKQ" id="oft-7A-Ubx"/>
@@ -661,7 +671,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Write a short description here." translatesAutoresizingMaskIntoConstraints="NO" id="K8x-Kl-G27">
-                                        <rect key="frame" x="23" y="353" width="281" height="99"/>
+                                        <rect key="frame" x="23" y="356" width="281" height="96"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
@@ -774,7 +784,7 @@
                         <outlet property="cancelButton" destination="WyJ-mD-LOd" id="pso-o2-Srr"/>
                         <outlet property="capturedImageView" destination="LWQ-Ng-YjR" id="9NI-jK-sRG"/>
                         <outlet property="continueButtonsView" destination="FOd-xs-OCQ" id="EyB-WI-nd8"/>
-                        <outlet property="descriptionTextView" destination="K8x-Kl-G27" id="0Ey-Vb-9iJ"/>
+                        <outlet property="descriptionTextView" destination="K8x-Kl-G27" id="bxr-Br-m2m"/>
                         <outlet property="flashButton" destination="J4w-xb-dbt" id="qZf-18-exu"/>
                         <outlet property="lineThree" destination="jrZ-ih-EdD" id="wAl-Pa-BDW"/>
                         <outlet property="lineTwo" destination="lyj-cX-3Qz" id="PiG-Ly-nm7"/>
@@ -988,5 +998,9 @@
         <segue reference="Msd-ei-NpX"/>
         <segue reference="iXj-G9-Isr"/>
         <segue reference="h0z-9Q-0M3"/>
+        <segue reference="eqa-xD-Jr9"/>
+        <segue reference="iXj-G9-Isr"/>
+        <segue reference="Wrn-aG-h7S"/>
+        <segue reference="IRn-6p-b8F"/>
     </inferredMetricsTieBreakers>
 </document>

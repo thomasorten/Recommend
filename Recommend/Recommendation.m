@@ -219,6 +219,8 @@
         point = nil;
     }
 
+    [query whereKey:@"thumbnail" notEqualTo:[NSNull null]];
+
     if (!orderByDistance && !orderByColumn) {
         [query orderByDescending:@"createdAt"];
     }
@@ -261,7 +263,13 @@
 {
     // Check if user has liked
     if (self.lovesPhoto) {
-        [self.delegate recommendationLoved:@"User already liked." count:0 recommendation:nil];
+        [self.delegate recommendationLoved:@"You have already liked this recommendation." count:0 recommendation:recommendation];
+        return;
+    }
+
+    if (![PFUser currentUser]) {
+        // The find succeeded.
+        [self.delegate recommendationLoved:@"You have to log in to like a recommendation." count:0 recommendation:nil];
         return;
     }
 
@@ -289,7 +297,7 @@
             }];
         } else {
             // The find succeeded.
-            [self.delegate recommendationLoved:@"User already liked." count:0 recommendation:nil];
+            [self.delegate recommendationLoved:@"You have already liked this recommendation." count:0 recommendation:recommendation];
         }
     }];
 
