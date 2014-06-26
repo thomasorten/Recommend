@@ -36,6 +36,13 @@
 @property BOOL lastLoaded;
 @property PFGeoPoint *userLocation;
 @property NSInteger recommendationsLoaded;
+@property NSSortDescriptor *sortDescriptor;
+
++ (void)getLocations:(void (^)(NSArray *locations))onComplete;
+
++ (void)saveLocation:(NSString *)city;
+
+- (void)reset;
 
 - (void)reverseGeocode:(PFGeoPoint *)locationCord onComplete:(void(^)(NSMutableDictionary *location))completion;
 
@@ -44,6 +51,10 @@
 - (void)love:(PFObject *)recommendation;
 
 - (void)getRecommendations:(int)limit;
+
+- (void)getRecommendations:(int)limit whereKey:(NSString *)key equalTo:(NSString *)string;
+
+- (void)getRecommendations:(int)limit whereKey:(NSString *)key equalTo:(NSString *)string orderByDescending:(NSString *)column;
 
 - (void)getRecommendations:(int)limit byUser:(PFUser *)user;
 
@@ -59,7 +70,8 @@
 
 -(void)getRecommendationsByDistance:(int)limit withinRadius:(double)km orderByDescending:(NSString *)column;
 
-- (void)getRecommendations:(int)limit withinRadius:(double)km whereKey:(NSString *)key containsString:(NSString *)string;
+- (void)getRecommendations:(int)limit whereKey:(NSString *)key containsString:(NSString *)string;
 
 - (void)getRecommendations:(int)limit withinRadius:(double)km ofRecommendation:(PFObject *)recommendation;
+
 @end

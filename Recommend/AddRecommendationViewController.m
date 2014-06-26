@@ -508,7 +508,7 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
     flashView.backgroundColor = [UIColor whiteColor];
     [self.videoPreviewView.window addSubview:flashView];
 
-    float flashDuration = self.flashMode == AVCaptureFlashModeOff ? 0.6f : 1.0f;
+    float flashDuration = self.flashMode == AVCaptureFlashModeOff ? 0.6f : 1.5f;
 
     [UIView animateWithDuration:flashDuration
                      animations:^{

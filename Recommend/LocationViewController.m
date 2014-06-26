@@ -7,6 +7,7 @@
 //
 
 #import "LocationViewController.h"
+#import "Recommendation.h"
 #import "ParseRecommendation.h"
 
 @interface LocationViewController () <CLLocationManagerDelegate,MKMapViewDelegate>
@@ -114,6 +115,8 @@
 
     [newRecommend saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
+
+            [Recommendation saveLocation:newRecommend.city];
 
             [self.activityIndicator stopAnimating];
             [self.activityIndicator setHidden:YES];

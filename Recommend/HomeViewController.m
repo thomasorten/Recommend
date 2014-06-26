@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Orten, Thomas. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "HomeViewController.h"
 #import "DetailViewController.h"
 #import "ParseRecommendation.h"
@@ -14,10 +15,14 @@
 #define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 #define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
-@interface HomeViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, RecommendationDelegate>
+@interface HomeViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, RecommendationDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *placeButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *newestCollectionView;
 @property (weak, nonatomic) IBOutlet UICollectionView *popularCollectionView;
+@property (weak, nonatomic) IBOutlet UIButton *closePickerButton;
+@property (weak, nonatomic) IBOutlet UIPickerView *placePickerView;
+@property NSMutableArray *pickerPlacesArray;
+@property (weak, nonatomic) IBOutlet UIView *placeView;
 @property NSMutableArray *popularArray;
 @property NSMutableArray *recentArray;
 @property NSInteger recentArrayCount;
@@ -40,6 +45,7 @@
     [super viewDidLoad];
 
     [self.view setBackgroundColor:RGB(224,224,224)];
+    [self.placeView setBackgroundColor:RGBA(255, 255, 255, 0.6)];
 
     self.recentRefreshControl = [[UIRefreshControl alloc] init];
     self.recentRefreshControl.tintColor = [UIColor grayColor];
@@ -65,6 +71,33 @@
     self.automaticallyAdjustsScrollViewInsets = YES;
 }
 
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)thePickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)thePickerView numberOfRowsInComponent:(NSInteger)component {
+    return self.pickerPlacesArray.count;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [self.pickerPlacesArray objectAtIndex:row];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    [self.newestRecommendations reset];
+    [self.popularRecommendations reset];
+    [self.newestRecommendations getRecommendations:100 whereKey:@"city" equalTo:[self.pickerPlacesArray objectAtIndex:row]];
+    [self.popularRecommendations getRecommendations:100 whereKey:@"city" equalTo:[self.pickerPlacesArray objectAtIndex:row] orderByDescending:@"numLikes"];
+}
+
+- (IBAction)onClosePlacePressed:(id)sender
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.placeView.alpha = 0;
+    }];
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -83,7 +116,13 @@
 
 - (IBAction)onPlaceButtonPressed:(id)sender
 {
-
+    [Recommendation getLocations:^(NSArray *locations) {
+        self.pickerPlacesArray = [[NSMutableArray alloc] initWithArray:locations];
+        [self.placePickerView reloadAllComponents];
+        [UIView animateWithDuration:0.2 animations:^{
+            self.placeView.alpha = 1;
+        }];
+    }];
 }
 
 - (void)userLocationFound:(PFGeoPoint *)geoPoint
