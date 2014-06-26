@@ -202,13 +202,12 @@
 
 - (IBAction)onCloseCameraPressed:(id)sender
 {
-    if (self.captureSession) {
-        [self.captureSession stopRunning];
-    } else {
+    if (self.picker) {
         [self.picker dismissViewControllerAnimated:NO completion:^{
         }];
     }
     [self.tabBarController setSelectedIndex:0];
+    [self.captureSession stopRunning];
 }
 
 - (IBAction)onSetLocationPressed:(id)sender
