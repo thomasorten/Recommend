@@ -11,6 +11,7 @@
 #import "ParseRecommendation.h"
 #import "Recommendation.h"
 #import "RecommendationsCollectionViewCell.h"
+#import "SWRevealViewController.h"
 #define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 #define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
@@ -38,6 +39,10 @@
 
 {
     [super viewDidLoad];
+
+    // Set the side bar button action. When it's tapped, it'll show up the sidebar.
+    _sidebarButton.target = self.revealViewController;
+    _sidebarButton.action = @selector(revealToggle:);
 
     [self.view setBackgroundColor:RGB(224,224,224)];
 

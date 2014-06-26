@@ -12,5 +12,6 @@
 #import <Parse/Parse.h>
 
 @interface RecommendationsTableViewController : UIViewController
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 @property PFObject *recommendation;
 @end
