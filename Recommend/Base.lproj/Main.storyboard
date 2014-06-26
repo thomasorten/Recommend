@@ -657,7 +657,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Write a short description here." translatesAutoresizingMaskIntoConstraints="NO" id="K8x-Kl-G27">
-                                        <rect key="frame" x="23" y="353" width="281" height="99"/>
+                                        <rect key="frame" x="23" y="356" width="281" height="96"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
@@ -770,7 +770,7 @@
                         <outlet property="cancelButton" destination="WyJ-mD-LOd" id="pso-o2-Srr"/>
                         <outlet property="capturedImageView" destination="LWQ-Ng-YjR" id="9NI-jK-sRG"/>
                         <outlet property="continueButtonsView" destination="FOd-xs-OCQ" id="EyB-WI-nd8"/>
-                        <outlet property="descriptionTextView" destination="K8x-Kl-G27" id="0Ey-Vb-9iJ"/>
+                        <outlet property="descriptionTextView" destination="K8x-Kl-G27" id="bxr-Br-m2m"/>
                         <outlet property="flashButton" destination="J4w-xb-dbt" id="qZf-18-exu"/>
                         <outlet property="lineThree" destination="jrZ-ih-EdD" id="wAl-Pa-BDW"/>
                         <outlet property="lineTwo" destination="lyj-cX-3Qz" id="PiG-Ly-nm7"/>
@@ -932,10 +932,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="Msd-ei-NpX"/>
         <segue reference="EGM-8L-KJv"/>
         <segue reference="Wrn-aG-h7S"/>
-        <segue reference="hHy-05-Hr6"/>
-        <segue reference="Msd-ei-NpX"/>
+        <segue reference="iXj-G9-Isr"/>
         <segue reference="h0z-9Q-0M3"/>
     </inferredMetricsTieBreakers>
 </document>

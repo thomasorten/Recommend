@@ -27,7 +27,6 @@
 @property AVCaptureStillImageOutput *stillImageOutput;
 @property AVCaptureDevice *device;
 @property AVCaptureFlashMode flashMode;
-
 @property UIImagePickerController *picker;
 @property UIImagePickerController *imageRollPicker;
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
@@ -53,6 +52,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.descriptionTextView.layoutManager.delegate = self;
+
     [FBSession openActiveSessionWithAllowLoginUI:NO];
 
     if (FBSession.activeSession.isOpen == YES){
@@ -251,26 +253,6 @@
     }
 }
 
-- (BOOL) textView:(UITextView *)textView
-shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    static const NSUInteger MAX_NUMBER_OF_LINES_ALLOWED = 3;
-
-    NSMutableString *t = [NSMutableString stringWithString:
-                          self.descriptionTextView.text];
-    [t replaceCharactersInRange: range withString: text];
-
-    NSUInteger numberOfLines = 0;
-    for (NSUInteger i = 0; i < t.length; i++) {
-        if ([[NSCharacterSet newlineCharacterSet]
-             characterIsMember: [t characterAtIndex: i]]) {
-            numberOfLines++;
-        }
-    }
-
-    return (numberOfLines < MAX_NUMBER_OF_LINES_ALLOWED);
-}
-
 - (void)dismissKeyboard
 {
     [self.view endEditing:YES];
@@ -299,15 +281,15 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
     self.cameraScrollView.contentInset = contentInsets;
     self.cameraScrollView.scrollIndicatorInsets = contentInsets;
 
-//    CGRect fieldFrame = self.activeTextField ? self.activeTextField.frame : self.activeTextView.frame;
-//    CGRect aRect = self.view.frame;
-//    aRect.size.height -= kbSize.height;
-//    CGPoint origin = fieldFrame.origin;
-//    origin.y -= (self.cameraScrollView.contentOffset.y-150);
-//    if (!CGRectContainsPoint(aRect, origin) ) {
-//        CGPoint scrollPoint = CGPointMake(0.0, (fieldFrame.origin.y+150)-(aRect.size.height));
-//        [self.cameraScrollView setContentOffset:scrollPoint animated:YES];
-//    }
+    CGRect fieldFrame = self.descriptionTextView.frame;
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+    CGPoint origin = fieldFrame.origin;
+    origin.y -= (self.cameraScrollView.contentOffset.y-150);
+    if (!CGRectContainsPoint(aRect, origin) ) {
+        CGPoint scrollPoint = CGPointMake(0.0, (fieldFrame.origin.y+150)-(aRect.size.height));
+        [self.cameraScrollView setContentOffset:scrollPoint animated:YES];
+    }
 }
 
 // Called when the UIKeyboardWillHideNotification is sent
@@ -316,6 +298,15 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     self.cameraScrollView.contentInset = contentInsets;
     self.cameraScrollView.scrollIndicatorInsets = contentInsets;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *text = textField.text;
+    text = [text stringByReplacingCharactersInRange:range withString:string];
+    CGSize textSize = [text sizeWithAttributes:@{NSFontAttributeName:textField.font}];
+
+    return ((textSize.width+5) < textField.bounds.size.width) ? YES : NO;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -345,6 +336,14 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
     }
 }
 
+- (void)textViewDidChange:(UITextView *)textView
+{
+    if (textView.contentSize.height > 100)
+    {
+        textView.text = [textView.text substringToIndex:textView.text.length - 1];
+    }
+}
+
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
     if ([textView.text isEqual:@""]) {
@@ -354,7 +353,7 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 
 - (CGFloat)layoutManager:(NSLayoutManager *)layoutManager lineSpacingAfterGlyphAtIndex:(NSUInteger)glyphIndex withProposedLineFragmentRect:(CGRect)rect
 {
-    return 17;
+    return 14;
 }
 
 - (void)setLatestImageOffAlbum
