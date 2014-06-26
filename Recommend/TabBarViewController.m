@@ -7,6 +7,7 @@
 //
 
 #import "TabBarViewController.h"
+#import "SWRevealViewController.h"
 
 @interface TabBarViewController ()
 
@@ -26,7 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+   
 }
 
 // a param to describe the state change, and an animated flag

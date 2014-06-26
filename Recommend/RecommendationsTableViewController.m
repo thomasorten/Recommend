@@ -12,6 +12,7 @@
 #import "ParseRecommendation.h"
 #import "Recommendation.h"
 #import <Parse/Parse.h>
+#import "SWRevealViewController.h"
 
 @interface RecommendationsTableViewController () <UITableViewDelegate, UITableViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate, UISearchBarDelegate, RecommendationDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *closeToMeTableView;
@@ -31,6 +32,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _sidebarButton.target = self.revealViewController;
+    _sidebarButton.action = @selector(revealToggle:);
 
     self.initialNumberOfRecommendations = 12;
 

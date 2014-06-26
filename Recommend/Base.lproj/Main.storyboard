@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="IPV-IT-zWL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="AjR-Vo-myp">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -197,7 +197,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="2xT-d7-T3f"/>
+                    <navigationItem key="navigationItem" id="2xT-d7-T3f">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="AWS-rh-uPX"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="closePickerButton" destination="iZq-qf-4FE" id="bls-B4-pnO"/>
                         <outlet property="errorView" destination="mc6-Rp-Cw3" id="xCQ-2H-L49"/>
@@ -209,6 +211,7 @@
                         <outlet property="placeView" destination="UJ9-iQ-sRx" id="uRT-g0-Bc7"/>
                         <outlet property="popularCollectionView" destination="V5m-yM-tDQ" id="0pW-WC-dJ9"/>
                         <outlet property="recommendationsScrollView" destination="paG-nL-yBj" id="DXs-VU-nhs"/>
+                        <outlet property="sidebarButton" destination="AWS-rh-uPX" id="bQN-WI-pEC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jBa-M0-v4d" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -277,6 +280,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="j8W-Uy-fkQ">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="cwa-aE-iqf"/>
                         <barButtonItem key="rightBarButtonItem" title="View as map" id="9zr-Sg-Sso">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -287,6 +291,7 @@
                     <connections>
                         <outlet property="closeToMeTableView" destination="DHk-P9-I0T" id="BxZ-Jb-HTi"/>
                         <outlet property="searchBar" destination="D8X-v9-oEf" id="8GP-4x-eeZ"/>
+                        <outlet property="sidebarButton" destination="cwa-aE-iqf" id="rTi-Fd-pmA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -563,21 +568,27 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logged" translatesAutoresizingMaskIntoConstraints="NO" id="ZT0-lH-PCJ">
                                 <rect key="frame" x="91" y="314" width="138" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="gZX-c4-J44">
+                                <rect key="frame" x="142" y="187" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                     </view>
                     <navigationItem key="navigationItem" id="mFK-7g-VFp"/>
                     <connections>
+                        <outlet property="activityIndicatior" destination="gZX-c4-J44" id="Njn-UX-vVS"/>
                         <outlet property="fbImageView" destination="SAd-6F-p0y" id="A3M-p0-WB9"/>
                         <outlet property="loggedIn" destination="ZT0-lH-PCJ" id="zNY-Vv-9D0"/>
                         <outlet property="loginButton" destination="YRc-7n-anf" id="h9w-cY-fVm"/>
                         <outlet property="nameLabel" destination="Frt-LD-vG4" id="TAf-Pk-50r"/>
-                        <segue destination="SBR-78-eyY" kind="modal" identifier="isLoggedIn" modalTransitionStyle="crossDissolve" id="TLm-id-rnG"/>
+                        <segue destination="sbN-Nt-I61" kind="modal" identifier="isLoggedIn" id="h0z-9Q-0M3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jK7-fa-b3j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1210" y="1662"/>
+            <point key="canvasLocation" x="1201" y="1728"/>
         </scene>
         <!--Add Recommendation View Controller-->
         <scene sceneID="K2o-GF-bxi">
@@ -780,6 +791,46 @@
             </objects>
             <point key="canvasLocation" x="1210" y="824"/>
         </scene>
+        <!--Sidebar View Controller-->
+        <scene sceneID="lhL-fU-8yX">
+            <objects>
+                <viewController id="hac-dB-f2I" customClass="SidebarViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Cp1-hg-kmg"/>
+                        <viewControllerLayoutGuide type="bottom" id="qvl-qM-k2R"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Tts-wz-jKt">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bb7-4W-lfx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-173" y="-557"/>
+        </scene>
+        <!--Reveal View Controller-->
+        <scene sceneID="Ywy-OI-hYr">
+            <objects>
+                <viewController id="AjR-Vo-myp" customClass="SWRevealViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ovd-7W-Nfl"/>
+                        <viewControllerLayoutGuide type="bottom" id="dLn-2z-UNb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="r28-On-XaW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="IPV-IT-zWL" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegue" id="Wrn-aG-h7S"/>
+                        <segue destination="hac-dB-f2I" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegue" id="WdP-OX-iyP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KFL-gN-9vD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-740" y="131"/>
+        </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="Tzo-Gv-GDH">
             <objects>
@@ -881,9 +932,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="TLm-id-rnG"/>
-        <segue reference="iXj-G9-Isr"/>
-        <segue reference="IRn-6p-b8F"/>
-        <segue reference="eqa-xD-Jr9"/>
+        <segue reference="EGM-8L-KJv"/>
+        <segue reference="Wrn-aG-h7S"/>
+        <segue reference="hHy-05-Hr6"/>
+        <segue reference="Msd-ei-NpX"/>
+        <segue reference="h0z-9Q-0M3"/>
     </inferredMetricsTieBreakers>
 </document>

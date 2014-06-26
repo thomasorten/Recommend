@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		260D76D51951F78300A05669 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26E5CA151950E4C800A64A7D /* LocationViewController.m */; };
 		260D76D81952007A00A05669 /* AddRecommendationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 260D76D71952007A00A05669 /* AddRecommendationViewController.m */; };
+		261BFCAE195B43B3002B04B9 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 261BFCAD195B43B3002B04B9 /* SWRevealViewController.m */; };
+		261BFCB1195B59B3002B04B9 /* SideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 261BFCB0195B59B3002B04B9 /* SideBarViewController.m */; };
 		2678FC2E1950847400270B7F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2678FC2D1950847400270B7F /* MapKit.framework */; };
 		2681704B19520DE0008A2692 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269650D31950CC0000418FCE /* LoginViewController.m */; };
 		2681704D195228AE008A2692 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26E5CA121950E4BE00A64A7D /* HomeViewController.m */; };
@@ -61,6 +63,10 @@
 /* Begin PBXFileReference section */
 		260D76D61952007A00A05669 /* AddRecommendationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddRecommendationViewController.h; sourceTree = "<group>"; };
 		260D76D71952007A00A05669 /* AddRecommendationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddRecommendationViewController.m; sourceTree = "<group>"; };
+		261BFCAC195B43B3002B04B9 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		261BFCAD195B43B3002B04B9 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		261BFCAF195B59B3002B04B9 /* SideBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideBarViewController.h; sourceTree = "<group>"; };
+		261BFCB0195B59B3002B04B9 /* SideBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideBarViewController.m; sourceTree = "<group>"; };
 		2678FC2D1950847400270B7F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2681704C19522878008A2692 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		269650D21950CC0000418FCE /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -237,6 +243,10 @@
 				269650D31950CC0000418FCE /* LoginViewController.m */,
 				26E5CA141950E4C800A64A7D /* LocationViewController.h */,
 				26E5CA151950E4C800A64A7D /* LocationViewController.m */,
+				261BFCAF195B59B3002B04B9 /* SideBarViewController.h */,
+				261BFCB0195B59B3002B04B9 /* SideBarViewController.m */,
+				261BFCAC195B43B3002B04B9 /* SWRevealViewController.h */,
+				261BFCAD195B43B3002B04B9 /* SWRevealViewController.m */,
 				45F6F6A1194F848D00289EF0 /* Images.xcassets */,
 				45F6F690194F848D00289EF0 /* Supporting Files */,
 			);
@@ -320,7 +330,7 @@
 				ORGANIZATIONNAME = "Orten, Thomas";
 				TargetAttributes = {
 					45F6F685194F848D00289EF0 = {
-						DevelopmentTeam = 4NJCGM5C75;
+						DevelopmentTeam = Y9KZH5XQDN;
 					};
 					45F6F6A6194F848D00289EF0 = {
 						TestTargetID = 45F6F685194F848D00289EF0;
@@ -379,10 +389,12 @@
 				4599128519565B5E0083B4EF /* RecommendationTabBarItem.m in Sources */,
 				4599127F1954980D0083B4EF /* Recommendation.m in Sources */,
 				459912821955E80E0083B4EF /* TabBarViewController.m in Sources */,
+				261BFCB1195B59B3002B04B9 /* SideBarViewController.m in Sources */,
 				260D76D51951F78300A05669 /* LocationViewController.m in Sources */,
 				450506E019578BB4001D035E /* RecommendationsCollectionViewCell.m in Sources */,
 				26E5CA1D1951DEDE00A64A7D /* main.m in Sources */,
 				45F6F69A194F848D00289EF0 /* AppDelegate.m in Sources */,
+				261BFCAE195B43B3002B04B9 /* SWRevealViewController.m in Sources */,
 				260D76D81952007A00A05669 /* AddRecommendationViewController.m in Sources */,
 				45F6F7011951E98600289EF0 /* DetailViewController.m in Sources */,
 				45D7F86E1952140C0051105A /* DetailMapViewController.m in Sources */,

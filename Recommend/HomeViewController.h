@@ -10,5 +10,6 @@
 #import <Parse/Parse.h>
 
 @interface HomeViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
 @end
