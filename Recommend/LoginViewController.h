@@ -14,4 +14,7 @@
 
 @interface LoginViewController : UIViewController
 
+@property UIImage *profilePic;
+@property NSString *name;
+
 @end

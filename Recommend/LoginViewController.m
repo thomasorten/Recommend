@@ -17,8 +17,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *loginButton;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatior;
 
-@property UIImage *profilePic;
-
 @end
 
 @implementation LoginViewController
@@ -66,8 +64,8 @@
                     NSDictionary *userData = (NSDictionary *)result;
 
                     NSString *facebookID = userData[@"id"];
-                    NSString *name = userData[@"name"];
-                    user[@"username"] = name;
+                    self.name = userData[@"name"];
+                    user[@"username"] = self.name;
                     [user saveInBackground];
                     NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
 
@@ -78,11 +76,11 @@
                         [self.activityIndicatior setHidden:YES];
                         [self.activityIndicatior stopAnimating];
                         [self.fbImageView setHidden:NO];
-                        self.nameLabel.text = name;
+                        self.nameLabel.text = self.name;
                         [self.nameLabel setHidden:NO];
                         [self.loginButton setHidden:YES];
                         [self.loggedIn setHidden:NO];
-                        [self performSelector:@selector(segue) withObject:nil afterDelay:1];
+                        [self performSelector:@selector(segue) withObject:nil afterDelay:1.5];
                     }];
                 }
             }];
