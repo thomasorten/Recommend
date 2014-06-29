@@ -7,20 +7,27 @@
 //
 
 #import "LocationViewController.h"
+#import "TabBarViewController.h"
 #import "Recommendation.h"
 #import "ParseRecommendation.h"
 
-@interface LocationViewController () <CLLocationManagerDelegate,MKMapViewDelegate>
+#define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
+#define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
+@interface LocationViewController () <CLLocationManagerDelegate,MKMapViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 @property CLLocationManager *locationManager;
-
+@property (weak, nonatomic) IBOutlet UIButton *categoryButton;
+@property (weak, nonatomic) IBOutlet UIView *categoryPickerView;
+@property (weak, nonatomic) IBOutlet UIPickerView *categoryPicker;
 @property (weak, nonatomic) IBOutlet UIButton *setButton;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-
+@property NSMutableDictionary *categoriesDictionary;
+@property NSMutableArray *categoriesArray;
+@property NSString *chosenCategory;
 @end
 
 @implementation LocationViewController
@@ -46,12 +53,45 @@
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
     self.mapView.delegate = self;
+
+    [self.categoryPickerView setBackgroundColor:RGBA(255, 255, 255, 0.6)];
 }
 
+- (void)setupCategories
+{
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[self dataFilePath]]) {
+        // Existst locally
+        self.categoriesArray = [[NSMutableArray alloc] initWithContentsOfFile:[self dataFilePath]];
+        [self.categoryPicker reloadAllComponents];
+        [self attemptToAutoFillCategory];
+    } else {
+        [self fetchCategories];
+    }
+}
 
-- (void)viewWillAppear:(BOOL)animated{
+- (IBAction)onCategoryChoosePressed:(id)sender
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.categoryPickerView.alpha = 1;
+    }];
+}
 
+- (IBAction)onCategoryPickerDonePressed:(id)sender
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.categoryPickerView.alpha = 0;
+    }];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [(TabBarViewController *)self.tabBarController setTabBarVisible:NO animated:NO];
     [self.locationManager startUpdatingLocation];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [(TabBarViewController *)self.tabBarController setTabBarVisible:YES animated:NO];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
@@ -60,6 +100,7 @@
         if (current.horizontalAccuracy < 150 && current.verticalAccuracy < 150) {
             [self.locationManager stopUpdatingLocation];
             [self setMapViewRegion];
+            [self setupCategories];
             break;
         }
     }
@@ -112,6 +153,7 @@
     newRecommend.point = [self.recommendation objectForKey:@"location"];
     newRecommend.street = [self.recommendation objectForKey:@"street"];
     newRecommend.city = [self.recommendation objectForKey:@"city"];
+    newRecommend.category = self.chosenCategory;
 
     [newRecommend saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
@@ -125,7 +167,7 @@
             [alert show];
             [self performSegueWithIdentifier:@"BackToMain" sender:self];
 
-            NSLog(@"Sucess!");
+            NSLog(@"Success!");
 
         }
         else{
@@ -135,8 +177,8 @@
             [self.activityIndicator stopAnimating];
             [self.activityIndicator setHidden:YES];
             [self.setButton setHidden:NO];
-            
-            NSLog(@"Fuck");
+
+            NSLog(@"Error");
         }
     }];
 
@@ -197,6 +239,111 @@
         [self uploadData];
         NSLog(@"%@",self.recommendation);
     }];
+}
+
+- (void)addToCategory:(NSArray *)subCategory mainCategory:(NSString *)mainCategory
+{
+    for (NSDictionary *category in subCategory) {
+        [[self.categoriesDictionary objectForKey:mainCategory] addObject:[category objectForKey:@"name"]];
+        if ([category objectForKey:@"categories"]) {
+            [self addToCategory:[category objectForKey:@"categories"] mainCategory:mainCategory];
+        }
+    }
+}
+
+- (void)fetchCategories
+{
+    NSURL *url = [NSURL URLWithString:@"https://api.foursquare.com/v2/venues/categories?client_id=YXWW5WMSINQCQLEMUYZSEPUC3OQWC4BSG3KA1CWJYHS4EOQW&client_secret=5ARBMRWGIW03LEFFT3TFFQMDWH0XMNQQZUHMZNYXZPQP35H1&v=20140729"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSDictionary *categoryResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&connectionError];
+        NSArray *categories = [[categoryResponse objectForKey:@"response"] objectForKey:@"categories"];
+        self.categoriesDictionary = [[NSMutableDictionary alloc] init];
+        for (NSDictionary *mainCategory in categories) {
+            NSString *mainCategoryName = [mainCategory objectForKey:@"name"];
+            NSMutableArray *subArray = [[NSMutableArray alloc] init];
+            [self.categoriesDictionary setObject:subArray forKey:mainCategoryName];
+            [self addToCategory:[mainCategory objectForKey:@"categories"] mainCategory:mainCategoryName];
+        }
+        NSMutableArray *categoriesArray = [[NSMutableArray alloc] init];
+        for (id key in self.categoriesDictionary)
+        {
+            id value = [self.categoriesDictionary objectForKey:key];
+            NSDictionary *category = [[NSMutableDictionary alloc] initWithObjects:@[key, value] forKeys:@[@"name", @"categories"]];
+            [categoriesArray addObject:category];
+        }
+        [categoriesArray writeToFile:[self dataFilePath] atomically:YES];
+        self.categoriesArray = categoriesArray;
+        [self.categoryPicker reloadAllComponents];
+        // Set default
+        NSInteger row = 0;
+        for (NSDictionary *category in self.categoriesArray) {
+            if ([[category objectForKey:@"name"] isEqualToString:@"Residences"]) {
+                break;
+            }
+            row ++;
+        }
+        [self.categoryPicker selectRow:row inComponent:0 animated:NO];
+        [self attemptToAutoFillCategory];
+    }];
+}
+
+- (void)attemptToAutoFillCategory
+{
+    NSString *urlString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&client_id=YXWW5WMSINQCQLEMUYZSEPUC3OQWC4BSG3KA1CWJYHS4EOQW&client_secret=5ARBMRWGIW03LEFFT3TFFQMDWH0XMNQQZUHMZNYXZPQP35H1&v=20140729", self.locationManager.location.coordinate.latitude, self.locationManager.location.coordinate.longitude];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSDictionary *locationResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&connectionError];
+        NSArray *venues = [[locationResponse objectForKey:@"response"] objectForKey:@"venues"];
+        NSString *closestCategory;
+        if (venues.count) {
+            NSArray *categories = [[venues objectAtIndex:0] objectForKey:@"categories"];
+            if (categories.count) {
+                NSString *closestMatchSubCategory = [[categories objectAtIndex:0] objectForKey:@"name"];
+                // Find match in array
+                NSInteger row = 0;
+                for (NSDictionary *category in self.categoriesArray) {
+                    for (NSString *matchToCategory in [category objectForKey:@"categories"]) {
+                        if ([closestMatchSubCategory isEqualToString:matchToCategory])
+                        {
+                            closestCategory = [category objectForKey:@"name"];
+                            [self.categoryPicker selectRow:row inComponent:0 animated:NO];
+                            [self.categoryButton setTitle:closestCategory forState:UIControlStateNormal];
+                        }
+                    }
+                    row ++;
+                }
+            }
+        }
+    }];
+}
+
+- (NSString *)dataFilePath {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    return [documentsDirectory stringByAppendingPathComponent:@"fsCat"];
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)thePickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)thePickerView numberOfRowsInComponent:(NSInteger)component {
+    return self.categoriesArray.count;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [[self.categoriesArray objectAtIndex:row] objectForKey:@"name"];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    NSString *category = [[self.categoriesArray objectAtIndex:row] objectForKey:@"name"];
+    self.chosenCategory = category;
+    [self.categoryButton setTitle:category forState:UIControlStateNormal];
 }
 
 @end

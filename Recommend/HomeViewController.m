@@ -36,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet UIView *errorView;
 @property (weak, nonatomic) IBOutlet UILabel *locationNotFoundLabel;
 @property (weak, nonatomic) IBOutlet UILabel *noRecommendationsLabel;
+@property NSMutableDictionary *categoriesDictionary;
 @end
 
 @implementation HomeViewController

@@ -23,5 +23,6 @@
 @property PFObject *creator;
 @property NSNumber *numLikes;
 @property PFGeoPoint *point;
+@property NSString *category;
 
 @end

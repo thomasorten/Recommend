@@ -102,6 +102,8 @@
 {
     [super viewWillAppear:animated];
 
+
+    self.capturedImageView.image = nil;
     self.cameraScrollView.alpha = 0;
 
     [self.view setBackgroundColor: RGB(2, 156, 188)];
@@ -184,6 +186,7 @@
 
 - (IBAction)onTakeAnotherPhotoPressed:(id)sender
 {
+    self.capturedImageView.image = nil;
     [self showCameraControls];
 }
 
