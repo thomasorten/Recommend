@@ -13,6 +13,8 @@
 #import "Recommendation.h"
 #import "RecommendationsCollectionViewCell.h"
 #import "SWRevealViewController.h"
+#import "NSDate+TimeAgo.h"
+
 #define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 #define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
@@ -240,6 +242,8 @@
 
     pfImageView.file = (PFFile *)new.file;
     [pfImageView loadInBackground];
+
+    cell.timeLabel.text = [new.createdAt timeAgo];
 
     UIBezierPath *path  = [UIBezierPath bezierPathWithRect:cell.bounds];
     cell.layer.shadowPath = [path CGPath];
