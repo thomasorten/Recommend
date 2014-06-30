@@ -77,6 +77,7 @@
     {
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.textLabel.text = @"Loading...";
+        cell.imageView.image = nil;
         cell.detailTextLabel.text = nil;
        [self performSelector:@selector(getTableData) withObject:nil afterDelay:0.1];
     } else {
@@ -104,6 +105,11 @@
     }
 
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 103.0f;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -156,13 +162,18 @@
     [self.refreshControl endRefreshing];
 }
 
+- (void)resetSearch
+{
+    [self.searchBar resignFirstResponder];
+    self.recommendationsArray = [[NSMutableArray alloc] init];
+    [self getTableData];
+}
+
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     if ([searchText isEqualToString:@""]) {
-        [self.searchBar resignFirstResponder];
-        self.recommendationsArray = [[NSMutableArray alloc] init];
-        [self getTableData];
+        [self resetSearch];
     }
     if ([searchText length] > 1) {
         [self performSelector:@selector(doSearchQuery:) withObject:searchText afterDelay:0.5];

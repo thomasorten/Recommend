@@ -22,9 +22,12 @@
     [FBProfilePictureView class];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
+    UIImage *tabBar = [UIImage imageWithColor:RGBA(255, 255, 255, 0.8)];
     [[UITabBar appearance] setTintColor:RGB(2, 156, 188)];
-    UIImage *topNav = [UIImage imageWithColor:RGBA(2, 156, 188, 0.8)];
+    //[[UITabBar appearance] setShadowImage:[[UIImage alloc] init]];
+    [[UITabBar appearance] setBackgroundImage:tabBar];
 
+    UIImage *topNav = [UIImage imageWithColor:RGBA(2, 156, 188, 0.8)];
     [[UINavigationBar appearance] setBackgroundImage:topNav forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setBackgroundImage:topNav forBarMetrics:UIBarMetricsLandscapePhone];
     [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];

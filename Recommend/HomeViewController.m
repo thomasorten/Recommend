@@ -18,10 +18,8 @@
 #define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 #define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
-@interface HomeViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, RecommendationDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface HomeViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, RecommendationDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITabBarControllerDelegate, UITabBarDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *placeButton;
-@property (weak, nonatomic) IBOutlet UICollectionView *newestCollectionView;
-@property (weak, nonatomic) IBOutlet UICollectionView *popularCollectionView;
 @property (weak, nonatomic) IBOutlet UIButton *closePickerButton;
 @property (weak, nonatomic) IBOutlet UIPickerView *placePickerView;
 @property NSMutableArray *pickerPlacesArray;
@@ -34,7 +32,6 @@
 @property Recommendation *popularRecommendations;
 @property UIRefreshControl *recentRefreshControl;
 @property UIRefreshControl *popularRefreshControl;
-@property (weak, nonatomic) IBOutlet UIScrollView *recommendationsScrollView;
 @property (weak, nonatomic) IBOutlet UIView *errorView;
 @property (weak, nonatomic) IBOutlet UILabel *locationNotFoundLabel;
 @property (weak, nonatomic) IBOutlet UILabel *noRecommendationsLabel;
@@ -85,7 +82,8 @@
     self.automaticallyAdjustsScrollViewInsets = YES;
 
     [self.navigationItem.rightBarButtonItem setTitleTextAttributes:nil forState:UIControlStateDisabled];
-
+    [self reloadNew];
+    [self reloadPopular];
 }
 
 
@@ -124,7 +122,6 @@
     [super viewWillAppear:animated];
     [self reloadNew];
     [self reloadPopular];
-
 }
 
 - (void)reloadNew {
@@ -156,7 +153,7 @@
         }];
         [self.newestRecommendations reverseGeocode:geoPoint onComplete:^(NSMutableDictionary *address) {
                 if (address) {
-                    [self.placeButton setTitle:[NSString stringWithFormat:@"%@, %@", [address objectForKey:@"street"], [address objectForKey:@"city"]] forState:UIControlStateNormal];
+                    [self.placeButton setTitle:[NSString stringWithFormat:@"Close to you in %@", [address objectForKey:@"city"]] forState:UIControlStateNormal];
                 }
         }];
     } else {
@@ -242,25 +239,48 @@
     }
     if (pfImageView == nil)
     {
-        pfImageView = [[PFImageView alloc] initWithFrame:CGRectMake(5, 5, cell.contentView.frame.size.width-10, cell.frame.size.height-10)];
+        pfImageView = [[PFImageView alloc] initWithFrame:CGRectMake(0, 0, cell.contentView.frame.size.width, cell.frame.size.width)];
         [cell.contentView insertSubview:pfImageView belowSubview:cell.timeView];
     }
+
+    pfImageView.contentMode = UIViewContentModeScaleAspectFill;
+    pfImageView.clipsToBounds = YES;
 
     pfImageView.file = (PFFile *)new.file;
     [pfImageView loadInBackground];
 
     cell.timeLabel.text = [new.createdAt timeAgo];
+    cell.titleLabel.text = new.title;
+    cell.lovesLabel.text = new.numLikes > 0 ? (new.numLikes).description : @"0";
 
     UIBezierPath *path  = [UIBezierPath bezierPathWithRect:cell.bounds];
     cell.layer.shadowPath = [path CGPath];
 
     cell.layer.shadowColor = [UIColor grayColor].CGColor;
     cell.layer.shadowOpacity = 0.6f;
-    cell.layer.shadowOffset = CGSizeMake(-1.0f, 1.0f);
+    cell.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
     cell.layer.shadowRadius = 0.6f;
     cell.layer.masksToBounds = NO;
 
+    cell.alpha = 0.0f;
+
+    [UIView transitionWithView:cell.contentView
+                      duration:0.5f
+                       options:UIViewAnimationOptionCurveEaseIn
+                    animations:^{
+
+                        //any animatable attribute here.
+                        cell.alpha = 1.0f;
+
+                    } completion:^(BOOL finished) {
+                    }];
+
     return cell;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    self.scrollOffset = scrollView.contentOffset.y;
 }
 
 - (void)viewDidLayoutSubviews {

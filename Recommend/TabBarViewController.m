@@ -9,8 +9,13 @@
 #import "TabBarViewController.h"
 #import "SWRevealViewController.h"
 #import "LocationViewController.h"
+#import "HeaderImage.h"
+#import "HomeViewController.h"
 
-@interface TabBarViewController ()
+#define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
+#define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+
+@interface TabBarViewController () <UITabBarDelegate, UITabBarControllerDelegate>
 
 @end
 
@@ -20,7 +25,7 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        // Custom initialization
+        self.delegate = self;
     }
     return self;
 }
@@ -28,7 +33,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-   
 }
 
 // a param to describe the state change, and an animated flag
@@ -54,6 +58,18 @@
 // know the current state
 - (BOOL)tabBarIsVisible {
     return self.tabBar.frame.origin.y < CGRectGetMaxY(self.view.frame);
+}
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+{
+    if ([item.title isEqualToString:@"Home"]) {
+        UINavigationController *navVC = (UINavigationController *) self.selectedViewController;
+        HomeViewController *vc = (HomeViewController *) navVC.visibleViewController;
+        if (vc.scrollOffset > 0) {
+            [vc.newestCollectionView setContentOffset:CGPointZero animated:YES];
+            [vc.popularCollectionView setContentOffset:CGPointZero animated:YES];
+        }
+    }
 }
 
 @end

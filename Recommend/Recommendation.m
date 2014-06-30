@@ -199,7 +199,7 @@
         for (id key in whereContainsString)
         {
             id value = [whereContainsString objectForKey:key];
-            [query whereKey:key containsString:value];
+            [query whereKey:key matchesRegex:value modifiers:@"i"];
         }
     }
 

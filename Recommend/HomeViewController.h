@@ -10,6 +10,9 @@
 #import <Parse/Parse.h>
 
 @interface HomeViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UICollectionView *newestCollectionView;
+@property (weak, nonatomic) IBOutlet UICollectionView *popularCollectionView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
-
+@property (weak, nonatomic) IBOutlet UIScrollView *recommendationsScrollView;
+@property float scrollOffset;
 @end
