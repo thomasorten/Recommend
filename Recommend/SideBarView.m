@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UITableView *tableViewoutlet;
 @property UIColor *backgroundColor;
+@property NSArray *options;
 
 @end
 
@@ -22,6 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.options = @[@"", @"", @"", @"Log out"];
     [FBSession openActiveSessionWithAllowLoginUI:NO];
     self.profilePic.layer.cornerRadius = self.profilePic.frame.size.height/2;
     self.profilePic.layer.masksToBounds = YES;
@@ -75,8 +77,19 @@
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     cell.backgroundColor = [UIColor clearColor];
+    cell.textLabel.text = [self.options objectAtIndex:indexPath.row];
 
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    if (indexPath.row == 3) {
+
+        [FBSession.activeSession closeAndClearTokenInformation];
+        self.profilePic.image = nil;
+        self.nameLabel.text = @"";
+    }
 }
 
 @end

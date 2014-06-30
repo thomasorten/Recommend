@@ -9,9 +9,14 @@
 #import "DetailMapViewController.h"
 #import <MapKit/MapKit.h>
 #import <Parse/Parse.h>
+#import "Recommendation.h"
 
-@interface DetailMapViewController () <MKMapViewDelegate>
+@interface DetailMapViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
+
 @property (weak, nonatomic) IBOutlet MKMapView *detailMapView;
+
+@property CLLocationManager *locationManager;
+
 @end
 
 @implementation DetailMapViewController
@@ -19,10 +24,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
     [[self.navigationController navigationBar] setTintColor:[UIColor whiteColor]];
 
     self.detailMapView.delegate = self;
+    [self.detailMapView setShowsUserLocation:YES];
 
     for (PFObject *recommendation in self.recommendationsArray) {
         MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
@@ -38,6 +45,30 @@
 
     [self.detailMapView showAnnotations:self.detailMapView.annotations animated:YES];
 }
+
+- (void)viewWillAppear:(BOOL)animated{
+
+    [self.locationManager startUpdatingLocation];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+
+    for (CLLocation *current in locations) {
+        if (current.horizontalAccuracy < 150 && current.verticalAccuracy < 150) {
+            [self.locationManager stopUpdatingLocation];
+            [self setMapRegion];
+            break;
+        }
+    }
+}
+
+- (void)setMapRegion{
+    CLLocationCoordinate2D zoomCenter = self.locationManager.location.coordinate;
+    
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomCenter, 500, 500);
+    [self.detailMapView setRegion:viewRegion animated:YES];
+}
+
 
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
