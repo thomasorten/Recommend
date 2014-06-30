@@ -9,9 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface RecommendationsCollectionViewCell : UICollectionViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *recentImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *popularImageView;
-@property (weak, nonatomic) IBOutlet UIView *recentCollectionViewCellView;
-@property (weak, nonatomic) IBOutlet UIView *popularCollectionViewCellView;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UIView *timeView;
 
 @end

@@ -18,6 +18,8 @@
 		26E5CA1D1951DEDE00A64A7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F695194F848D00289EF0 /* main.m */; };
 		450506E019578BB4001D035E /* RecommendationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 450506DF19578BB4001D035E /* RecommendationsCollectionViewCell.m */; };
 		450506E619587B1A001D035E /* HeaderImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 450506E519587B1A001D035E /* HeaderImage.m */; };
+		4507C07119610487000532F2 /* NSDate+TimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4507C06F19610487000532F2 /* NSDate+TimeAgo.m */; };
+		4507C07219610487000532F2 /* NSDateTimeAgo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4507C07019610487000532F2 /* NSDateTimeAgo.bundle */; };
 		4599127C1953E5080083B4EF /* ParseRecommendation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4599127B1953E5080083B4EF /* ParseRecommendation.m */; };
 		4599127F1954980D0083B4EF /* Recommendation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4599127E1954980D0083B4EF /* Recommendation.m */; };
 		459912821955E80E0083B4EF /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 459912811955E80E0083B4EF /* TabBarViewController.m */; };
@@ -79,6 +81,9 @@
 		450506DF19578BB4001D035E /* RecommendationsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendationsCollectionViewCell.m; sourceTree = SOURCE_ROOT; };
 		450506E419587B1A001D035E /* HeaderImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeaderImage.h; path = ../HeaderImage.h; sourceTree = "<group>"; };
 		450506E519587B1A001D035E /* HeaderImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeaderImage.m; path = ../HeaderImage.m; sourceTree = "<group>"; };
+		4507C06E19610487000532F2 /* NSDate+TimeAgo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TimeAgo.h"; sourceTree = "<group>"; };
+		4507C06F19610487000532F2 /* NSDate+TimeAgo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TimeAgo.m"; sourceTree = "<group>"; };
+		4507C07019610487000532F2 /* NSDateTimeAgo.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = NSDateTimeAgo.bundle; sourceTree = "<group>"; };
 		4599127A1953E5080083B4EF /* ParseRecommendation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseRecommendation.h; sourceTree = "<group>"; };
 		4599127B1953E5080083B4EF /* ParseRecommendation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseRecommendation.m; sourceTree = "<group>"; };
 		4599127D1954980D0083B4EF /* Recommendation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recommendation.h; sourceTree = "<group>"; };
@@ -214,6 +219,9 @@
 		45F6F68F194F848D00289EF0 /* Recommend */ = {
 			isa = PBXGroup;
 			children = (
+				4507C06E19610487000532F2 /* NSDate+TimeAgo.h */,
+				4507C06F19610487000532F2 /* NSDate+TimeAgo.m */,
+				4507C07019610487000532F2 /* NSDateTimeAgo.bundle */,
 				45F6F69B194F848D00289EF0 /* Main.storyboard */,
 				45F6F698194F848D00289EF0 /* AppDelegate.h */,
 				45F6F699194F848D00289EF0 /* AppDelegate.m */,
@@ -362,6 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45F6F6A2194F848D00289EF0 /* Images.xcassets in Resources */,
+				4507C07219610487000532F2 /* NSDateTimeAgo.bundle in Resources */,
 				45F6F694194F848D00289EF0 /* InfoPlist.strings in Resources */,
 				45F6F69D194F848D00289EF0 /* Main.storyboard in Resources */,
 			);
@@ -387,6 +396,7 @@
 				450506E619587B1A001D035E /* HeaderImage.m in Sources */,
 				2681704B19520DE0008A2692 /* LoginViewController.m in Sources */,
 				4599128519565B5E0083B4EF /* RecommendationTabBarItem.m in Sources */,
+				4507C07119610487000532F2 /* NSDate+TimeAgo.m in Sources */,
 				4599127F1954980D0083B4EF /* Recommendation.m in Sources */,
 				269C11BD195C8ADC0053CF33 /* SideBarView.m in Sources */,
 				459912821955E80E0083B4EF /* TabBarViewController.m in Sources */,

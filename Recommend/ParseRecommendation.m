@@ -25,5 +25,6 @@
 @dynamic creator;
 @dynamic numLikes;
 @dynamic point;
+@dynamic category;
 
 @end

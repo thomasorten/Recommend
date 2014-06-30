@@ -13,6 +13,8 @@
 #import "Recommendation.h"
 #import "RecommendationsCollectionViewCell.h"
 #import "SWRevealViewController.h"
+#import "NSDate+TimeAgo.h"
+
 #define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 #define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
@@ -36,6 +38,7 @@
 @property (weak, nonatomic) IBOutlet UIView *errorView;
 @property (weak, nonatomic) IBOutlet UILabel *locationNotFoundLabel;
 @property (weak, nonatomic) IBOutlet UILabel *noRecommendationsLabel;
+@property NSMutableDictionary *categoriesDictionary;
 @end
 
 @implementation HomeViewController
@@ -234,11 +237,13 @@
     if (pfImageView == nil)
     {
         pfImageView = [[PFImageView alloc] initWithFrame:CGRectMake(5, 5, cell.contentView.frame.size.width-10, cell.frame.size.height-10)];
-        [cell.contentView addSubview:pfImageView];
+        [cell.contentView insertSubview:pfImageView belowSubview:cell.timeView];
     }
 
     pfImageView.file = (PFFile *)new.file;
     [pfImageView loadInBackground];
+
+    cell.timeLabel.text = [new.createdAt timeAgo];
 
     UIBezierPath *path  = [UIBezierPath bezierPathWithRect:cell.bounds];
     cell.layer.shadowPath = [path CGPath];
