@@ -26,11 +26,25 @@
     [super viewDidLoad];
     self.options = @[@"My Recomends", @"Likes"];
     self.logOut = @[@"Log Out"];
-
-    [FBSession openActiveSessionWithAllowLoginUI:NO];
     self.profilePic.layer.cornerRadius = self.profilePic.frame.size.height/2;
     self.profilePic.layer.masksToBounds = YES;
 
+    //remember to convert RGB values to < 1
+    float red = 0.2549;
+    float green = 0.3019;
+    float blue = 0.3686;
+    self.backgroundColor = [[UIColor alloc] initWithRed:red
+                                                  green:green
+                                                   blue:blue
+                                                  alpha:1];
+    
+    self.view.backgroundColor = self.backgroundColor;
+    self.tableViewoutlet.backgroundColor = self.backgroundColor;
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [FBSession openActiveSessionWithAllowLoginUI:NO];
 
     if (FBSession.activeSession.isOpen == YES) {
 
@@ -47,24 +61,12 @@
                 NSURLRequest *profilePicRequest = [NSURLRequest requestWithURL:pictureURL];
                 [NSURLConnection sendAsynchronousRequest:profilePicRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                     self.profilePic.image = [[UIImage alloc] initWithData:data];
-
+                    
                 }];
             }
         }];
-
+        
     }
-
-    //remember to convert RGB values to < 1
-    float red = 0.2549;
-    float green = 0.3019;
-    float blue = 0.3686;
-    self.backgroundColor = [[UIColor alloc] initWithRed:red
-                                                  green:green
-                                                   blue:blue
-                                                  alpha:1];
-    
-    self.view.backgroundColor = self.backgroundColor;
-    self.tableViewoutlet.backgroundColor = self.backgroundColor;
 }
 
 

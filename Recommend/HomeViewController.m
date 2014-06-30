@@ -47,7 +47,7 @@
 
 {
     [super viewDidLoad];
-    // Set the side bar button action. When it's tapped, it'll show up the sidebar.
+
     _sidebarButton.target = self.revealViewController;
     _sidebarButton.action = @selector(revealToggle:);
 
@@ -83,7 +83,12 @@
     self.popularArray = [NSMutableArray new];
     
     self.automaticallyAdjustsScrollViewInsets = YES;
+
+    [self.navigationItem.rightBarButtonItem setTitleTextAttributes:nil forState:UIControlStateDisabled];
+
 }
+
+
 
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)thePickerView {
@@ -114,15 +119,12 @@
     }];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
-    
+    [super viewWillAppear:animated];
     [self reloadNew];
     [self reloadPopular];
-    // Set the side bar button action. When it's tapped, it'll show up the sidebar.
-    _sidebarButton.target = self.revealViewController;
-    _sidebarButton.action = @selector(revealToggle:);
+
 }
 
 - (void)reloadNew {

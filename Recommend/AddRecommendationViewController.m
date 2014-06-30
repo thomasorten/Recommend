@@ -52,9 +52,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [FBSession openActiveSessionWithAllowLoginUI:NO];
-
-    if (FBSession.activeSession.isOpen == YES) {
 
     self.descriptionTextView.layoutManager.delegate = self;
 
@@ -77,18 +74,14 @@
 
     [self.view addGestureRecognizer:tap];
 
-    }
-    else{
-        
-        [self performSegueWithIdentifier:@"loginSegue" sender:self];
-    }
+
  }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    if (FBSession.activeSession.isOpen == YES){
-
-        [FBSession openActiveSessionWithAllowLoginUI:NO];
+//    if (FBSession.activeSession.isOpen == YES){
+//
+//        [FBSession openActiveSessionWithAllowLoginUI:NO];
 
     [super viewDidAppear:animated];
 
@@ -97,13 +90,16 @@
     }
 
     [self showCameraControls];
-    }
 
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    [FBSession openActiveSessionWithAllowLoginUI:NO];
+
+    if (FBSession.activeSession.isOpen == YES) {
 
 
     self.capturedImageView.image = nil;
@@ -124,6 +120,12 @@
 
     [self.navigationController setNavigationBarHidden:YES];
     [(TabBarViewController *)self.tabBarController setTabBarVisible:NO animated:YES];
+    }
+    else{
+
+        [self performSegueWithIdentifier:@"loginSegue" sender:self];
+
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -556,6 +558,10 @@
             NSLog(@"%@", error);
         }
     }
+}
+
+- (IBAction)unwindFromLogin:(UIStoryboardSegue *)sender{
+    [self.tabBarController setSelectedIndex:0];
 }
 
 

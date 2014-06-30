@@ -11,6 +11,9 @@
 
 @interface LoginViewController ()<FBLoginViewDelegate>
 
+@property (strong, nonatomic) IBOutlet UIButton *homeButton;
+@property (strong, nonatomic) IBOutlet UILabel *homeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *orLable;
 @property (strong, nonatomic) IBOutlet UIImageView *loggedIn;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *fbImageView;
@@ -30,14 +33,16 @@
     [self.nameLabel setHidden:YES];
     self.loginButton.layer.cornerRadius = 5;
     self.loginButton.layer.masksToBounds = YES;
-
     self.fbImageView.layer.cornerRadius = 40;
     self.fbImageView.layer.masksToBounds = YES;
     self.nameLabel.layer.cornerRadius = 5;
     self.nameLabel.layer.masksToBounds = YES;
-
     self.loggedIn.layer.cornerRadius = 5;
     self.loggedIn.layer.masksToBounds = YES;
+    self.homeLabel.layer.cornerRadius = 5;
+    self.homeLabel.layer.masksToBounds = YES;
+    self.orLable.layer.cornerRadius = 5;
+    self.orLable.layer.masksToBounds = YES;
 
 
     UIImageView *background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"skyline"]];
@@ -45,6 +50,10 @@
     [self.view insertSubview:background atIndex:0];
 
    }
+- (IBAction)homeButton:(id)sender {
+   [self performSelector:@selector(dismissModalViewControllerAnimated:) withObject:nil afterDelay:0.0];
+
+}
 
 - (IBAction)onloginPressed:(UIButton *)sender {
     NSArray *permissions = @[@"public_profile"];
@@ -71,6 +80,10 @@
 
                     NSURLRequest *profilePicRequest = [NSURLRequest requestWithURL:pictureURL];
                     [NSURLConnection sendAsynchronousRequest:profilePicRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                        [self.homeButton setHidden:YES];
+                        [self.orLable setHidden:YES];
+                        [self.homeLabel setHidden:YES];
+                        
                         self.profilePic = [[UIImage alloc] initWithData:data];
                         self.fbImageView.image = self.profilePic;
                         [self.activityIndicatior setHidden:YES];
@@ -80,7 +93,7 @@
                         [self.nameLabel setHidden:NO];
                         [self.loginButton setHidden:YES];
                         [self.loggedIn setHidden:NO];
-                        [self performSelector:@selector(dismissModalViewControllerAnimated:) withObject:nil afterDelay:1.5];
+                        [self performSelector:@selector(dismissModalViewControllerAnimated:) withObject:nil afterDelay:1.0];
                     }];
                 }
             }];
@@ -88,14 +101,6 @@
     }];
     
 }
-
-//- (void)segue{
-//
-//    [self performSegueWithIdentifier:@"isLoggedIn" sender:self];
-//}
-
-
-
 
 
 @end
