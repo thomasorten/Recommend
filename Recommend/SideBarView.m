@@ -10,12 +10,14 @@
 #import "LoginViewController.h"
 
 @interface SideBarView () <UITableViewDelegate, UITableViewDataSource>
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *logoutActivity;
 @property (strong, nonatomic) IBOutlet UIImageView *profilePic;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UITableView *tableViewoutlet;
 @property UIColor *backgroundColor;
 @property NSArray *options;
 @property NSArray *logOut;
+@property NSMutableArray *images;
 
 @end
 
@@ -24,8 +26,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.options = @[@"My Recomends", @"Likes"];
-    self.logOut = @[@"Log Out"];
+    self.images = [NSMutableArray new];
+    [self.logoutActivity setHidden:YES];
+    self.options = @[@""];
+    self.logOut = @[@""];
     self.profilePic.layer.cornerRadius = self.profilePic.frame.size.height/2;
     self.profilePic.layer.masksToBounds = YES;
 
@@ -47,6 +51,10 @@
     [FBSession openActiveSessionWithAllowLoginUI:NO];
 
     if (FBSession.activeSession.isOpen == YES) {
+        self.options = @[@"My Recomends", @"Likes"];
+        self.logOut = @[@"Log Out"];
+        [self.images addObjectsFromArray:@[[UIImage imageNamed:@"slr"], [UIImage imageNamed:@"heart64"]]];
+        [self.tableViewoutlet reloadData];
 
         FBRequest *request = [FBRequest requestForMe];
         [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
@@ -110,6 +118,7 @@
 
     if (indexPath.section == 0) {
     cell.textLabel.text = [self.options objectAtIndex:indexPath.row];
+    cell.imageView.image = [self.images objectAtIndex:indexPath.row];
     }
 
     else if (indexPath.section == 1){
@@ -118,16 +127,30 @@
     return cell;
 }
 
+- (void)logedOut{
+    self.nameLabel.text = @"";
+    self.options = @[@""];
+    self.logOut = @[@""];
+    [self.images removeAllObjects];
+    [self.logoutActivity stopAnimating];
+    [self.logoutActivity setHidden:YES];
+    [self.tableViewoutlet reloadData];
+
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
     if (indexPath.section == 1) {
 
         [FBSession.activeSession closeAndClearTokenInformation];
         [PFUser logOut];
+        [self.logoutActivity setHidden:NO];
+        [self.logoutActivity startAnimating];
         self.profilePic.image = nil;
-        self.nameLabel.text = @"";
-
-    }
+        [self performSelector:@selector(logedOut) withObject:nil afterDelay:.5];
+       }
 }
+
+
 
 @end

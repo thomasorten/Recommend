@@ -93,7 +93,7 @@
                         [self.nameLabel setHidden:NO];
                         [self.loginButton setHidden:YES];
                         [self.loggedIn setHidden:NO];
-                        [self performSelector:@selector(dismissModalViewControllerAnimated:) withObject:nil afterDelay:1.0];
+                        [self performSelector:@selector(dismissModalViewControllerAnimated:) withObject:nil afterDelay:0.0];
                     }];
                 }
             }];

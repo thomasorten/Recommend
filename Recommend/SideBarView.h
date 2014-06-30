@@ -12,4 +12,6 @@
 
 @interface SideBarView : UIViewController
 
+//- (void)logedOut;
+
 @end
