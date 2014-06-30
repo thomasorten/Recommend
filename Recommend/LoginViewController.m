@@ -80,7 +80,7 @@
                         [self.nameLabel setHidden:NO];
                         [self.loginButton setHidden:YES];
                         [self.loggedIn setHidden:NO];
-                        [self performSelector:@selector(segue) withObject:nil afterDelay:1.5];
+                        [self performSelector:@selector(dismissModalViewControllerAnimated:) withObject:nil afterDelay:1.5];
                     }];
                 }
             }];
@@ -89,10 +89,10 @@
     
 }
 
-- (void)segue{
-
-    [self performSegueWithIdentifier:@"isLoggedIn" sender:self];
-}
+//- (void)segue{
+//
+//    [self performSegueWithIdentifier:@"isLoggedIn" sender:self];
+//}
 
 
 

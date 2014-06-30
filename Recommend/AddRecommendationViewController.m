@@ -52,14 +52,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.descriptionTextView.layoutManager.delegate = self;
-
     [FBSession openActiveSessionWithAllowLoginUI:NO];
 
-    if (FBSession.activeSession.isOpen == YES){
+    if (FBSession.activeSession.isOpen == YES) {
 
-        [FBSession openActiveSessionWithAllowLoginUI:NO];
+    self.descriptionTextView.layoutManager.delegate = self;
 
     for (UIView *subview in self.cameraScrollView.subviews) {
         subview.layer.shadowColor = [[UIColor blackColor] CGColor];
@@ -81,14 +78,18 @@
     [self.view addGestureRecognizer:tap];
 
     }
-
-    else {
+    else{
+        
         [self performSegueWithIdentifier:@"loginSegue" sender:self];
     }
-}
+ }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    if (FBSession.activeSession.isOpen == YES){
+
+        [FBSession openActiveSessionWithAllowLoginUI:NO];
+
     [super viewDidAppear:animated];
 
     if (!self.captureSession) {
@@ -96,6 +97,8 @@
     }
 
     [self showCameraControls];
+    }
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -203,7 +206,7 @@
     }
 }
 
-- (IBAction)onCloseCameraPressed:(id)sender
+- (IBAction)onCloseCameraPressed:(UIButton *)sender
 {
     if (self.picker) {
         [self.picker dismissViewControllerAnimated:NO completion:^{
@@ -554,5 +557,6 @@
         }
     }
 }
+
 
 @end

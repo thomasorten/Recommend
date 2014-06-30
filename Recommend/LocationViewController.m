@@ -14,7 +14,7 @@
 #define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 #define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
-@interface LocationViewController () <CLLocationManagerDelegate,MKMapViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface LocationViewController () <CLLocationManagerDelegate,MKMapViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIAlertViewDelegate>
 @property CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UIButton *categoryButton;
 @property (weak, nonatomic) IBOutlet UIView *categoryPickerView;
@@ -165,15 +165,13 @@
 
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Recommendation Added!" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
-            [self performSegueWithIdentifier:@"BackToMain" sender:self];
-
-            NSLog(@"Success!");
 
         }
+        
         else{
 
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"OOPS Something Went Wrong" message:nil delegate:self cancelButtonTitle:@"Try Again" otherButtonTitles:nil];
-            [alert show];
+            UIAlertView *alertError = [[UIAlertView alloc] initWithTitle:@"OOPS Something Went Wrong" message:nil delegate:self cancelButtonTitle:@"Try Again" otherButtonTitles:nil];
+            [alertError show];
             [self.activityIndicator stopAnimating];
             [self.activityIndicator setHidden:YES];
             [self.setButton setHidden:NO];
@@ -182,6 +180,13 @@
         }
     }];
 
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+
+    if ([alertView.title isEqualToString:@"Recommendation Added!"] && buttonIndex == 0) {
+        [self.tabBarController setSelectedIndex:0];
+    }
 }
 
 - (NSData *)compressImage:(UIImage *)image width:(float)width height:(float)height {

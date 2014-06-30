@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableViewoutlet;
 @property UIColor *backgroundColor;
 @property NSArray *options;
+@property NSArray *logOut;
 
 @end
 
@@ -23,7 +24,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.options = @[@"", @"", @"", @"Log out"];
+    self.options = @[@"My Recomends", @"Likes"];
+    self.logOut = @[@"Log Out"];
+
     [FBSession openActiveSessionWithAllowLoginUI:NO];
     self.profilePic.layer.cornerRadius = self.profilePic.frame.size.height/2;
     self.profilePic.layer.masksToBounds = YES;
@@ -62,33 +65,66 @@
     
     self.view.backgroundColor = self.backgroundColor;
     self.tableViewoutlet.backgroundColor = self.backgroundColor;
-
 }
 
 
 #pragma mark Tableview Datasource/Delegate
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+
+    return 55;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+
+    UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 55)];
+
+    footer.backgroundColor = self.backgroundColor;
+
+    return footer;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+
+    return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
-    return 4;
+    if (section == 0) {
+
+    return self.options.count;
+    }
+
+    else
+        return self.logOut.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    cell.backgroundColor = [UIColor clearColor];
-    cell.textLabel.text = [self.options objectAtIndex:indexPath.row];
 
+    cell.backgroundColor = [UIColor clearColor];
+
+    if (indexPath.section == 0) {
+    cell.textLabel.text = [self.options objectAtIndex:indexPath.row];
+    }
+
+    else if (indexPath.section == 1){
+        cell.textLabel.text = [self.logOut objectAtIndex:indexPath.row];
+    }
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    if (indexPath.row == 3) {
+    if (indexPath.section == 1) {
 
         [FBSession.activeSession closeAndClearTokenInformation];
+        [PFUser logOut];
         self.profilePic.image = nil;
         self.nameLabel.text = @"";
+
     }
 }
 
