@@ -96,17 +96,18 @@
     }
 
     [self showCameraControls];
+
+    [(TabBarViewController *)self.tabBarController setTabBarVisible:NO animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 
+    [self.view setBackgroundColor: RGB(2, 156, 188)];
 
     self.capturedImageView.image = nil;
     self.cameraScrollView.alpha = 0;
-
-    [self.view setBackgroundColor: RGB(2, 156, 188)];
 
     [self.setLocationButton.layer setBorderWidth:1.0];
     [self.setLocationButton.layer setCornerRadius:5];
@@ -120,7 +121,6 @@
     self.videoPreviewView.hidden = YES;
 
     [self.navigationController setNavigationBarHidden:YES];
-    [(TabBarViewController *)self.tabBarController setTabBarVisible:NO animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -215,7 +215,7 @@
 
 - (IBAction)onSetLocationPressed:(id)sender
 {
-    if ([self.recommendationTextField.text isEqualToString:defaultTitleString] || [self.recommendationTextField.text isEqualToString:defaultDescriptionString]) {
+    if ([self.recommendationTextField.text isEqualToString:defaultTitleString] || [self.descriptionTextView.text isEqualToString:defaultDescriptionString]) {
         [UIView animateWithDuration:1.0 animations:^{
             self.warningLabel.alpha = 1.0;
         }];

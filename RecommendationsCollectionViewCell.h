@@ -11,5 +11,7 @@
 @interface RecommendationsCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIView *timeView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lovesLabel;
 
 @end
