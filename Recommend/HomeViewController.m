@@ -235,7 +235,7 @@
     if (pfImageView == nil)
     {
         pfImageView = [[PFImageView alloc] initWithFrame:CGRectMake(5, 5, cell.contentView.frame.size.width-10, cell.frame.size.height-10)];
-        [cell.contentView addSubview:pfImageView];
+        [cell.contentView insertSubview:pfImageView belowSubview:cell.timeView];
     }
 
     pfImageView.file = (PFFile *)new.file;
