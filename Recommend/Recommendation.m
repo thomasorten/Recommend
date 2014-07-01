@@ -26,6 +26,7 @@
     self = [super init];
     if( !self ) return nil;
     self.identifier = identifier;
+    self.lastLoaded = nil;
     self.recommendationsLoaded = 0;
     return self;
 }
@@ -235,26 +236,26 @@
         if (!error) {
             if (objects.count) {
                 [self.delegate onNoRecommendations:NO];
-                if (objects.count < self.recommendations.count) {
-                    [self.recommendations removeAllObjects];
-                    [self.recommendations addObjectsFromArray:objects];
-                } else {
-                    for (PFObject *recommendation in objects) {
-                        if (![self recommendationAlreadyExists:recommendation]) {
-                            [self.recommendations addObject:recommendation];
-                        }
-                    }
+//                if (objects.count < self.recommendations.count) {
+//                    [self.recommendations removeAllObjects];
+//                    [self.recommendations addObjectsFromArray:objects];
+//                } else {
+//                    for (PFObject *recommendation in objects) {
+//                        if (![self recommendationAlreadyExists:recommendation]) {
+//                            [self.recommendations addObject:recommendation];
+//                        }
+//                    }
+//                }
+                self.recommendations = (NSMutableArray *) objects;
+                if (objects.count < limit) {
+                    self.lastLoaded = YES;
                 }
+                self.recommendationsLoaded += objects.count;
+                [self.delegate recommendationsLoaded:(NSArray *)self.recommendations forIdentifier:(NSString *)self.identifier userLocation:(PFGeoPoint *)point];
             }
-            self.recommendations = (NSMutableArray *) objects;
-            if (objects.count < limit) {
-                self.lastLoaded = YES;
-            }
-            self.recommendationsLoaded += objects.count;
             if (!objects && self.recommendationsLoaded == 0) {
                 [self.delegate onNoRecommendations:YES];
             }
-            [self.delegate recommendationsLoaded:(NSArray *)self.recommendations forIdentifier:(NSString *)self.identifier userLocation:(PFGeoPoint *)point];
         }
     }];
 }

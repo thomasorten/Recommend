@@ -49,7 +49,7 @@
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="5" id="kE8-lO-ACz">
                                             <size key="itemSize" width="92" height="126"/>
                                             <size key="headerReferenceSize" width="0.0" height="100"/>
-                                            <size key="footerReferenceSize" width="0.0" height="10"/>
+                                            <size key="footerReferenceSize" width="0.0" height="50"/>
                                             <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                                         </collectionViewFlowLayout>
                                         <cells>
@@ -116,7 +116,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionReusableView>
                                         <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="H3C-2d-teR">
-                                            <rect key="frame" x="0.0" y="246" width="306" height="10"/>
+                                            <rect key="frame" x="0.0" y="246" width="306" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionReusableView>
                                         <connections>
@@ -131,7 +131,7 @@
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="5" id="hGT-Lq-STY">
                                             <size key="itemSize" width="92" height="126"/>
                                             <size key="headerReferenceSize" width="0.0" height="100"/>
-                                            <size key="footerReferenceSize" width="0.0" height="10"/>
+                                            <size key="footerReferenceSize" width="0.0" height="50"/>
                                             <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                                         </collectionViewFlowLayout>
                                         <cells>
@@ -197,7 +197,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionReusableView>
                                         <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="t2q-hO-eCt">
-                                            <rect key="frame" x="0.0" y="246" width="306" height="10"/>
+                                            <rect key="frame" x="0.0" y="246" width="306" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionReusableView>
                                         <connections>
@@ -414,8 +414,8 @@
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="shadowOffset" width="-1" height="1"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h4j-Iu-JLQ" userLabel="Button - Location">
-                                <rect key="frame" x="20" y="459" width="33" height="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h4j-Iu-JLQ" userLabel="Button - Location">
+                                <rect key="frame" x="9" y="459" width="44" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="location_white">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -426,16 +426,16 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Around" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w3v-p4-rgq">
-                                <rect key="frame" x="55" y="462" width="43" height="21"/>
+                                <rect key="frame" x="55" y="463" width="43" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ql-Mo-bB0">
-                                <rect key="frame" x="54" y="476" width="203" height="30"/>
+                                <rect key="frame" x="54" y="475" width="203" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                 <state key="normal" title="Street, City">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -445,17 +445,22 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Recommended by" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CVB-N5-3jX">
-                                <rect key="frame" x="52" y="510" width="141" height="21"/>
+                                <rect key="frame" x="54" y="510" width="141" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nFO-Su-aTR">
-                                <rect key="frame" x="21" y="501" width="236" height="44"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user" translatesAutoresizingMaskIntoConstraints="NO" id="m0l-iN-XiC">
+                                <rect key="frame" x="14" y="511" width="35" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
-                                <state key="normal" title="Person" image="user"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nFO-Su-aTR">
+                                <rect key="frame" x="23" y="499" width="240" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                <inset key="contentEdgeInsets" minX="31" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="Person"/>
                                 <connections>
                                     <action selector="onPersonPressed:" destination="JqG-Us-2wi" eventType="touchUpInside" id="xBx-hz-sw6"/>
                                     <segue destination="vXZ-lx-hvc" kind="push" identifier="DetailToTableViewSegue" id="IRn-6p-b8F"/>
@@ -499,6 +504,7 @@
                         <outlet property="personButton" destination="nFO-Su-aTR" id="9tt-n2-TPb"/>
                         <outlet property="recommendationImageView" destination="Z29-k6-bKQ" id="oft-7A-Ubx"/>
                         <outlet property="titleLabel" destination="Guk-mk-FQM" id="J0b-qO-YuC"/>
+                        <outlet property="userProfileImageView" destination="m0l-iN-XiC" id="KmL-xH-QoP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3JQ-yQ-9gC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1176,8 +1182,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="IRn-6p-b8F"/>
         <segue reference="iXj-G9-Isr"/>
-        <segue reference="Msd-ei-NpX"/>
+        <segue reference="eqa-xD-Jr9"/>
+        <segue reference="IRn-6p-b8F"/>
     </inferredMetricsTieBreakers>
 </document>

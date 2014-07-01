@@ -82,8 +82,6 @@
     self.automaticallyAdjustsScrollViewInsets = YES;
 
     [self.navigationItem.rightBarButtonItem setTitleTextAttributes:nil forState:UIControlStateDisabled];
-    [self reloadNew];
-    [self reloadPopular];
 }
 
 
