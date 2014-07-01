@@ -113,14 +113,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    cell.imageView.image = nil;
 
     cell.backgroundColor = [UIColor clearColor];
 
     if (indexPath.section == 0) {
     cell.textLabel.text = [self.options objectAtIndex:indexPath.row];
+        if (self.images.count == 2) {
     cell.imageView.image = [self.images objectAtIndex:indexPath.row];
     }
-
+    }
     else if (indexPath.section == 1){
         cell.textLabel.text = [self.logOut objectAtIndex:indexPath.row];
     }
