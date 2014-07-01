@@ -106,6 +106,7 @@
     [self.popularRecommendations reset];
     [self.newestRecommendations getRecommendations:100 whereKey:@"city" equalTo:[self.pickerPlacesArray objectAtIndex:row]];
     [self.popularRecommendations getRecommendations:100 whereKey:@"city" equalTo:[self.pickerPlacesArray objectAtIndex:row] orderByDescending:@"numLikes"];
+    [self.placeButton setTitle:[NSString stringWithFormat:@"In %@", [self.pickerPlacesArray objectAtIndex:row]] forState:UIControlStateNormal];
 }
 
 - (IBAction)onClosePlacePressed:(id)sender
@@ -245,7 +246,7 @@
     pfImageView.contentMode = UIViewContentModeScaleAspectFill;
     pfImageView.clipsToBounds = YES;
 
-    pfImageView.file = (PFFile *)new.file;
+    pfImageView.file = (PFFile *)new.thumbnail;
     [pfImageView loadInBackground];
 
     cell.timeLabel.text = [new.createdAt timeAgo];

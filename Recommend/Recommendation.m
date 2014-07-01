@@ -262,17 +262,17 @@
                         }
                     }
                 }
-                self.recommendations = (NSMutableArray *) objects;
-                if (objects.count < limit) {
-                    self.lastLoaded = YES;
-                }
-                self.recommendationsLoaded += objects.count;
-                [self.delegate recommendationsLoaded:(NSArray *)self.recommendations forIdentifier:(NSString *)self.identifier userLocation:(PFGeoPoint *)point];
             }
-            if (!objects && self.recommendationsLoaded == 0) {
+            self.recommendations = (NSMutableArray *) objects;
+            if (objects.count < limit) {
+                self.lastLoaded = YES;
+            }
+            self.recommendationsLoaded += objects.count;
+            [self.delegate recommendationsLoaded:(NSArray *)self.recommendations forIdentifier:(NSString *)self.identifier userLocation:(PFGeoPoint *)point];
+            }
+            if (objects.count == 0 && self.recommendationsLoaded == 0) {
                 [self.delegate onNoRecommendations:YES];
             }
-        }
     }];
 }
 
