@@ -371,7 +371,7 @@
 				ORGANIZATIONNAME = "Orten, Thomas";
 				TargetAttributes = {
 					45F6F685194F848D00289EF0 = {
-						DevelopmentTeam = Y9KZH5XQDN;
+						DevelopmentTeam = 4NJCGM5C75;
 					};
 					45F6F6A6194F848D00289EF0 = {
 						TestTargetID = 45F6F685194F848D00289EF0;
@@ -581,7 +581,7 @@
 				GCC_PREFIX_HEADER = "Recommend/Recommend-Prefix.pch";
 				INFOPLIST_FILE = "Recommend/Recommend-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C28040A5-3AA2-4EA1-9FFB-FB4F4C0D496F";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -591,8 +591,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -601,7 +601,7 @@
 				GCC_PREFIX_HEADER = "Recommend/Recommend-Prefix.pch";
 				INFOPLIST_FILE = "Recommend/Recommend-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "576CE710-979C-4CC8-B44B-DD18F8E46FD3";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
