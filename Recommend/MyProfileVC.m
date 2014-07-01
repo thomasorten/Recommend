@@ -9,6 +9,7 @@
 #import "MyProfileVC.h"
 #import "RecommendationsCollectionViewCell.h"
 #import "Recommendation.h"
+#import "SWRevealViewController.h"
 
 @interface MyProfileVC () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -21,7 +22,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _showMenu.target = self.revealViewController;
+    _showMenu.action = @selector(revealToggle:);
 }
+
 
 
 #pragma Mark - CollectionView Datasource/Delegate
@@ -33,7 +37,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
 
-    RecommendationsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    RecommendationsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"New" forIndexPath:indexPath];
 
     return cell;
 

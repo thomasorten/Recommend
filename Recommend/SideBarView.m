@@ -19,9 +19,10 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableViewoutlet;
 
 @property UIColor *backgroundColor;
-@property NSArray *options;
-@property NSArray *logOut;
+@property NSMutableArray *options;
+@property NSMutableArray *logOut;
 @property NSMutableArray *images;
+@property NSMutableArray *logoutImage;
 
 @end
 
@@ -31,9 +32,10 @@
 {
     [super viewDidLoad];
     self.images = [NSMutableArray new];
+    self.options = [NSMutableArray new];
+    self.logOut = [NSMutableArray new];
+    self.logoutImage = [NSMutableArray new];
     [self.logoutActivity setHidden:YES];
-    self.options = @[@""];
-    self.logOut = @[@""];
     self.profilePic.layer.cornerRadius = self.profilePic.frame.size.height/2;
     self.profilePic.layer.masksToBounds = YES;
 
@@ -54,10 +56,14 @@
     
     [FBSession openActiveSessionWithAllowLoginUI:NO];
 
-    if (FBSession.activeSession.isOpen == YES) {
-        self.options = @[@"My Recomends", @"Likes"];
-        self.logOut = @[@"Log Out"];
-        [self.images addObjectsFromArray:@[[UIImage imageNamed:@"slr"], [UIImage imageNamed:@"heart64"]]];
+    if (FBSession.activeSession.isOpen == YES && self.options.count ==0) {
+
+        [self.logoutActivity setHidesWhenStopped:NO];
+        [self.logoutActivity startAnimating];
+        [self.options addObjectsFromArray:@[@"Home",@"My Recomends", @"Likes"]];
+        [self.logOut addObjectsFromArray:@[@"Log Out"]];
+        [self.images addObjectsFromArray:@[[UIImage imageNamed:@"home"], [UIImage imageNamed:@"slr"], [UIImage imageNamed:@"heart64"]]];
+        [self.logoutImage addObject:[UIImage imageNamed:@"logoutwhite"]];
         [self.tableViewoutlet reloadData];
 
         FBRequest *request = [FBRequest requestForMe];
@@ -73,7 +79,10 @@
                 NSURLRequest *profilePicRequest = [NSURLRequest requestWithURL:pictureURL];
                 [NSURLConnection sendAsynchronousRequest:profilePicRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                     self.profilePic.image = [[UIImage alloc] initWithData:data];
-                    
+                    [self.logoutActivity setHidden:YES];
+                    [self.logoutActivity stopAnimating];
+
+
                 }];
             }
         }];
@@ -107,7 +116,7 @@
 
     if (section == 0) {
 
-    return self.options.count;
+        return self.options.count;
     }
 
     else
@@ -117,44 +126,57 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    cell.imageView.image = nil;
 
     cell.backgroundColor = [UIColor clearColor];
 
     if (indexPath.section == 0) {
     cell.textLabel.text = [self.options objectAtIndex:indexPath.row];
-        if (self.images.count == 2) {
     cell.imageView.image = [self.images objectAtIndex:indexPath.row];
     }
-    }
+
     else if (indexPath.section == 1){
         cell.textLabel.text = [self.logOut objectAtIndex:indexPath.row];
+        cell.imageView.image = [self.logoutImage objectAtIndex:indexPath.row];
+
     }
+
     return cell;
 }
 
 - (void)logedOut{
     self.nameLabel.text = @"";
-    self.options = @[@""];
-    self.logOut = @[@""];
+    [self.options removeAllObjects];
+    [self.logOut removeAllObjects];
     [self.images removeAllObjects];
+    [self.logoutImage removeAllObjects];
     [self.logoutActivity stopAnimating];
     [self.logoutActivity setHidden:YES];
     [self.tableViewoutlet reloadData];
-
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    SWRevealViewController *revealController = [[SWRevealViewController alloc] init];
+    SWRevealViewController *revealvc = (id) self.view.window.rootViewController;
 
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *profileVC = [storyBoard instantiateViewControllerWithIdentifier:@"myProfile"];
+    UIViewController *profileVC = [self.storyboard instantiateViewControllerWithIdentifier:@"myProfile"];
 
-    if (indexPath.section == 0 && indexPath.row == 0) {
-        
-        [revealController pushFrontViewController:profileVC animated:YES];
+    if (indexPath.section == 0) {
 
+        if (indexPath.row == 0 && ![revealvc.frontViewController isKindOfClass:[UITabBarController class]]) {
+
+            UIViewController *homeTab = [self.storyboard instantiateViewControllerWithIdentifier:@"Home"];
+            [revealvc pushFrontViewController:homeTab animated:YES];
+        }
+           else if (indexPath.row == 1) {
+
+                [revealvc pushFrontViewController:profileVC animated:YES];
+            }
+
+            else if(indexPath.row == 2) {
+
+                [revealvc pushFrontViewController:profileVC animated:YES];
+
+            }
     }
 
      else if (indexPath.section == 1) {
@@ -166,6 +188,10 @@
         self.profilePic.image = nil;
         [self performSelector:@selector(logedOut) withObject:nil afterDelay:.5];
        }
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
 }
 
 

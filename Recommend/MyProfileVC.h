@@ -10,4 +10,7 @@
 
 @interface MyProfileVC : UIViewController
 
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *showMenu;
+
+
 @end
