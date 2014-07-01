@@ -102,22 +102,16 @@
 
 - (void)getRecommendations:(int)limit byUser:(PFUser *)user whereKey:(NSString *)key containsString:(NSString *)string
 {
-    [self setupQuery];
-    [self.query whereKey:@"creator" equalTo:user];
-    [self.query whereKey:key containsString:string];
     [self loadRecommendations:limit orderByDescending:nil orderByDistance:NO nearUser:NO withinKm:0  nearPoint:nil whereEqualTo:@{@"creator" : user} whereContainsString:@{key: string}];
 }
 
 - (void)getRecommendations:(int)limit orderByDescending:(NSString *)column
 {
-    [self setupQuery];
-    [self.query orderByDescending:column];
     [self loadRecommendations:limit orderByDescending:column orderByDistance:NO nearUser:NO withinKm:0  nearPoint:nil whereEqualTo:nil whereContainsString:nil];
 }
 
 - (void)getRecommendations:(int)limit withinRadius:(double)km
 {
-    [self setupQuery];
     [self loadRecommendations:limit orderByDescending:nil orderByDistance:NO nearUser:YES withinKm:km  nearPoint:nil whereEqualTo:nil whereContainsString:nil];
 }
 
@@ -158,9 +152,31 @@
     return exists;
 }
 
-- (void)setupQuery
++ (UIImage *)getCategoryIcon:(NSString *)category
 {
-
+    UIImage *icon = nil;
+    if ([category isEqualToString:@"Travel & Transport"]) {
+        icon = [UIImage imageNamed:@"travel_32"];
+    } else if ([category isEqualToString:@"Residence"]) {
+        icon = [UIImage imageNamed:@"residences_32"];
+    } else if ([category isEqualToString:@"Nightlife Spot"]) {
+        icon = [UIImage imageNamed:@"nightlife_32"];
+    } else if ([category isEqualToString:@"Shop & Service"]) {
+        icon = [UIImage imageNamed:@"shops_32"];
+    } else if ([category isEqualToString:@"College & University"]) {
+        icon = [UIImage imageNamed:@"education_32"];
+    } else if ([category isEqualToString:@"Event"]) {
+        icon = [UIImage imageNamed:@"event_32"];
+    } else if ([category isEqualToString:@"Professional & Other Places"]) {
+        icon = [UIImage imageNamed:@"professional_other_32"];
+    } else if ([category isEqualToString:@"Food"]) {
+        icon = [UIImage imageNamed:@"food_32"];
+    } else if ([category isEqualToString:@"Arts & Entertainment"]) {
+        icon = [UIImage imageNamed:@"arts_entertainment_32"];
+    }  else if ([category isEqualToString:@"Outdoors & Recreation"]) {
+        icon = [UIImage imageNamed:@"outdoors_32"];
+    } else {}
+    return icon;
 }
 
 - (void)loadRecommendations:(int)limit orderByDescending:(NSString *)orderByColumn orderByDistance:(BOOL)orderByDistance nearUser:(bool)findUser withinKm:(double)km nearPoint:(PFGeoPoint *)point whereEqualTo:(NSDictionary *)whereEqualTo whereContainsString:(NSDictionary *)whereContainsString
@@ -236,16 +252,16 @@
         if (!error) {
             if (objects.count) {
                 [self.delegate onNoRecommendations:NO];
-//                if (objects.count < self.recommendations.count) {
-//                    [self.recommendations removeAllObjects];
-//                    [self.recommendations addObjectsFromArray:objects];
-//                } else {
-//                    for (PFObject *recommendation in objects) {
-//                        if (![self recommendationAlreadyExists:recommendation]) {
-//                            [self.recommendations addObject:recommendation];
-//                        }
-//                    }
-//                }
+                if (objects.count < self.recommendations.count) {
+                    [self.recommendations removeAllObjects];
+                    [self.recommendations addObjectsFromArray:objects];
+                } else {
+                    for (PFObject *recommendation in objects) {
+                        if (![self recommendationAlreadyExists:recommendation]) {
+                            [self.recommendations addObject:recommendation];
+                        }
+                    }
+                }
                 self.recommendations = (NSMutableArray *) objects;
                 if (objects.count < limit) {
                     self.lastLoaded = YES;

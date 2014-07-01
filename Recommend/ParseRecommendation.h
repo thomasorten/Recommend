@@ -24,5 +24,6 @@
 @property NSNumber *numLikes;
 @property PFGeoPoint *point;
 @property NSString *category;
+@property NSString *category_id;
 
 @end

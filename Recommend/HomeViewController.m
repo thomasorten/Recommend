@@ -123,11 +123,11 @@
 }
 
 - (void)reloadNew {
-    [self.newestRecommendations getRecommendations:100 withinRadius:50];
+    [self.newestRecommendations getRecommendations:270 withinRadius:50];
 }
 
 - (void)reloadPopular {
-    [self.popularRecommendations getRecommendations:100 withinRadius:50 orderByDescending:@"numLikes"];
+    [self.popularRecommendations getRecommendations:270 withinRadius:50 orderByDescending:@"numLikes"];
 }
 
 - (IBAction)onPlaceButtonPressed:(id)sender
@@ -250,6 +250,12 @@
     cell.timeLabel.text = [new.createdAt timeAgo];
     cell.titleLabel.text = new.title;
     cell.lovesLabel.text = new.numLikes > 0 ? (new.numLikes).description : @"0";
+
+    cell.iconImageView.image = nil;
+    UIImage *categoryIcon = [Recommendation getCategoryIcon:new.category];
+    if (categoryIcon) {
+        cell.iconImageView.image = categoryIcon;
+    }
 
     UIBezierPath *path  = [UIBezierPath bezierPathWithRect:cell.bounds];
     cell.layer.shadowPath = [path CGPath];
