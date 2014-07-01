@@ -15,6 +15,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "LoginViewController.h"
+#import "DemoImageEditor.h"
 
 #define defaultTitleString @"What do you recommend?"
 #define defaultDescriptionString @"Write a short description here."
@@ -22,13 +23,14 @@
 #define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
 @interface AddRecommendationViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, AVCaptureVideoDataOutputSampleBufferDelegate,FBLoginViewDelegate, NSLayoutManagerDelegate>
+@property(nonatomic,strong) DemoImageEditor *imageEditor;
+@property(nonatomic,strong) ALAssetsLibrary *library;
 @property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;
 @property AVCaptureSession *captureSession;
 @property AVCaptureStillImageOutput *stillImageOutput;
 @property AVCaptureDevice *device;
 @property AVCaptureFlashMode flashMode;
 @property UIImagePickerController *picker;
-@property UIImagePickerController *imageRollPicker;
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
 @property (weak, nonatomic) IBOutlet UIButton *takeAnotherButton;
 @property UIImage *currentFlashImage;
@@ -45,6 +47,7 @@
 @property (weak, nonatomic) IBOutlet UIView *continueButtonsView;
 @property (weak, nonatomic) IBOutlet UIView *cameraControlsView;
 @property (weak, nonatomic) IBOutlet UIImageView *cameraRollPreview;
+@property BOOL didPickImageFromAlbum;
 @end
 
 @implementation AddRecommendationViewController
@@ -91,11 +94,13 @@
 {
     [super viewDidAppear:animated];
 
-    if (!self.captureSession) {
-        [self setupCaptureSession];
+    if (!self.didPickImageFromAlbum) {
+        if (!self.captureSession) {
+            [self setupCaptureSession];
+        }
+        [self showCameraControls];
     }
-
-    [self showCameraControls];
+    
 
     [(TabBarViewController *)self.tabBarController setTabBarVisible:NO animated:YES];
 }
@@ -104,9 +109,15 @@
 {
     [super viewWillAppear:animated];
 
-    [self.view setBackgroundColor: RGB(2, 156, 188)];
+    if (!self.didPickImageFromAlbum) {
+        [self.view setBackgroundColor: RGB(2, 156, 188)];
 
-    self.capturedImageView.image = nil;
+        self.capturedImageView.image = nil;
+
+        self.loadingCameraLabel.hidden = NO;
+        self.videoPreviewView.hidden = YES;
+    }
+
     self.cameraScrollView.alpha = 0;
 
     [self.setLocationButton.layer setBorderWidth:1.0];
@@ -116,9 +127,6 @@
     [self.takeAnotherButton.layer setBorderWidth:1.0];
     [self.takeAnotherButton.layer setCornerRadius:5];
     [self.takeAnotherButton.layer setBorderColor:[[UIColor whiteColor] CGColor]];
-
-    self.loadingCameraLabel.hidden = NO;
-    self.videoPreviewView.hidden = YES;
 
     [self.navigationController setNavigationBarHidden:YES];
 }
@@ -164,14 +172,43 @@
 
         [self.picker dismissViewControllerAnimated:NO completion:^{
         }];
-        
-        self.imageRollPicker = [[UIImagePickerController alloc] init];
-        self.imageRollPicker.allowsEditing = YES;
-        self.imageRollPicker.delegate = self;
-        self.imageRollPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 
-        [self presentViewController:self.imageRollPicker animated:YES completion:nil];
+        self.picker = [[UIImagePickerController alloc] init];
+
+        self.picker.allowsEditing = NO;
+        self.picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        self.picker.delegate = self;
+
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        self.imageEditor = [[DemoImageEditor alloc] initWithNibName:@"DemoImageEditor" bundle:nil];
+        self.imageEditor.checkBounds = YES;
+        self.imageEditor.rotateEnabled = YES;
+        self.library = library;
+
+        self.imageEditor.doneCallback = ^(UIImage *editedImage, BOOL canceled){
+            if(!canceled) {
+                [self.imageEditor dismissViewControllerAnimated:NO completion:^{
+                    self.capturedImageView.image = editedImage;
+
+                    [self.captureSession stopRunning];
+
+                    self.didPickImageFromAlbum = YES;
+
+                    [self hideCameraControls];
+                }];
+            }
+        };
+
+        [self.captureSession stopRunning];
+
+        [self presentViewController:self.picker animated:YES completion:nil];
     }
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self.picker dismissViewControllerAnimated:NO completion:^{
+    }];
 }
 
 - (IBAction)onTakePhotoPressed:(id)sender
@@ -211,6 +248,9 @@
     }
     [self.tabBarController setSelectedIndex:0];
     [self.captureSession stopRunning];
+
+    self.capturedImageView.image = nil;
+    self.didPickImageFromAlbum = NO;
 }
 
 - (IBAction)onSetLocationPressed:(id)sender
@@ -242,17 +282,22 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-   // NSURL *path = [info valueForKey:UIImagePickerControllerReferenceURL];
+    UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
+    NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
 
-    self.capturedImageView.image = image;
+    [self.library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+        UIImage *preview = [UIImage imageWithCGImage:[asset aspectRatioThumbnail]];
 
-    [self hideCameraControls];
+        self.imageEditor.sourceImage = image;
+        self.imageEditor.previewImage = preview;
+        [self.imageEditor reset:NO];
 
-    if (!self.captureSession) {
-        [picker dismissViewControllerAnimated:YES completion:^{
-        }];
-    }
+        [picker pushViewController:self.imageEditor animated:YES];
+        [picker setNavigationBarHidden:YES animated:NO];
+
+    } failureBlock:^(NSError *error) {
+        NSLog(@"Failed to get asset from library");
+    }];
 }
 
 - (void)dismissKeyboard
@@ -415,6 +460,9 @@
 // Create and configure a capture session and start it running
 - (void)setupCaptureSession
 {
+
+    self.didPickImageFromAlbum = NO;
+
     NSError *error = nil;
 
     // Create the session

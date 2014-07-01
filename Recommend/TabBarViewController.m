@@ -62,7 +62,7 @@
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
     if ([item.title isEqualToString:@"Home"]) {
-        UINavigationController *navVC = (UINavigationController *) self.selectedViewController;
+        UINavigationController *navVC = (UINavigationController *) [self.viewControllers objectAtIndex:0];
         HomeViewController *vc = (HomeViewController *) navVC.visibleViewController;
         if (vc.scrollOffset > 0) {
             [vc.newestCollectionView setContentOffset:CGPointZero animated:YES];
