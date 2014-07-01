@@ -316,6 +316,7 @@
                             closestCategory = [category objectForKey:@"name"];
                             [self.categoryPicker selectRow:row inComponent:0 animated:NO];
                             [self.categoryButton setTitle:closestCategory forState:UIControlStateNormal];
+                            self.chosenCategory = closestCategory;
                         }
                     }
                     row ++;
