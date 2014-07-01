@@ -151,7 +151,8 @@
         }];
         [self.newestRecommendations reverseGeocode:geoPoint onComplete:^(NSMutableDictionary *address) {
                 if (address) {
-                    [self.placeButton setTitle:[NSString stringWithFormat:@"Close to you in %@", [address objectForKey:@"city"]] forState:UIControlStateNormal];
+                    NSString *where = [address objectForKey:@"city"] ? [address objectForKey:@"city"] : [address objectForKey:@"street"];
+                    [self.placeButton setTitle:[NSString stringWithFormat:@"Close to you in %@", where] forState:UIControlStateNormal];
                 }
         }];
     } else {

@@ -156,25 +156,25 @@
 {
     UIImage *icon = nil;
     if ([category isEqualToString:@"Travel & Transport"]) {
-        icon = [UIImage imageNamed:@"travel_32"];
+        icon = [UIImage imageNamed:@"travel_64"];
     } else if ([category isEqualToString:@"Residence"]) {
-        icon = [UIImage imageNamed:@"residences_32"];
+        icon = [UIImage imageNamed:@"residences_64"];
     } else if ([category isEqualToString:@"Nightlife Spot"]) {
-        icon = [UIImage imageNamed:@"nightlife_32"];
+        icon = [UIImage imageNamed:@"nightlife_64"];
     } else if ([category isEqualToString:@"Shop & Service"]) {
-        icon = [UIImage imageNamed:@"shops_32"];
+        icon = [UIImage imageNamed:@"shops_64"];
     } else if ([category isEqualToString:@"College & University"]) {
-        icon = [UIImage imageNamed:@"education_32"];
+        icon = [UIImage imageNamed:@"education_64"];
     } else if ([category isEqualToString:@"Event"]) {
-        icon = [UIImage imageNamed:@"event_32"];
+        icon = [UIImage imageNamed:@"event_64"];
     } else if ([category isEqualToString:@"Professional & Other Places"]) {
-        icon = [UIImage imageNamed:@"professional_other_32"];
+        icon = [UIImage imageNamed:@"professional_other_64"];
     } else if ([category isEqualToString:@"Food"]) {
-        icon = [UIImage imageNamed:@"food_32"];
+        icon = [UIImage imageNamed:@"food_64"];
     } else if ([category isEqualToString:@"Arts & Entertainment"]) {
-        icon = [UIImage imageNamed:@"arts_entertainment_32"];
+        icon = [UIImage imageNamed:@"arts_entertainment_64"];
     }  else if ([category isEqualToString:@"Outdoors & Recreation"]) {
-        icon = [UIImage imageNamed:@"outdoors_32"];
+        icon = [UIImage imageNamed:@"outdoors_64"];
     } else {}
     return icon;
 }

@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *addressButton;
 @property (weak, nonatomic) IBOutlet UIButton *personButton;
 @property (weak, nonatomic) IBOutlet UILabel *errorMessageLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 @property Recommendation *currentRecommendation;
 @end
 
@@ -66,6 +67,13 @@
             }
         }];
     }
+
+    // Icon
+    UIImage *categoryIcon = [Recommendation getCategoryIcon:[self.recommendation objectForKey:@"category"]];
+    if (categoryIcon) {
+        self.iconImageView.image = categoryIcon;
+    }
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
