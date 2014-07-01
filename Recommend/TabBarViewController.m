@@ -64,7 +64,7 @@
 {
     if ([item.title isEqualToString:@"Home"]) {
         UINavigationController *navVC = (UINavigationController *) [self.viewControllers objectAtIndex:0];
-        HomeViewController *vc = (HomeViewController *) navVC.visibleViewController;
+        HomeViewController *vc = (HomeViewController *) [navVC.viewControllers objectAtIndex:0];
         if (vc.scrollOffset > 0) {
             [vc.newestCollectionView setContentOffset:CGPointZero animated:YES];
             [vc.popularCollectionView setContentOffset:CGPointZero animated:YES];

@@ -86,6 +86,13 @@
                         
                         self.profilePic = [[UIImage alloc] initWithData:data];
                         self.fbImageView.image = self.profilePic;
+
+                        // Save profile image for later use
+                        NSData *imageData = UIImagePNGRepresentation(self.profilePic);
+                        PFFile *imageFile = [PFFile fileWithName:@"user.png" data:imageData];
+                        user[@"profilepic"] = imageFile;
+                        [user saveInBackground];
+
                         [self.activityIndicatior setHidden:YES];
                         [self.activityIndicatior stopAnimating];
                         [self.fbImageView setHidden:NO];

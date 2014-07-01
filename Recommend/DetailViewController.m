@@ -16,6 +16,7 @@
 @interface DetailViewController () <RecommendationDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *recommendationImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *userProfileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *likesLabel;
 @property (weak, nonatomic) IBOutlet UIButton *addressButton;
@@ -55,6 +56,16 @@
             self.recommendationImageView.image = [UIImage imageWithData:imageData];
         }
     }];
+
+    // Get user profile image
+    PFFile *profilePic = [[self.recommendation objectForKey:@"creator"] objectForKey:@"profilepic"];
+    if (profilePic) {
+        [profilePic getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
+            if (!error) {
+                self.userProfileImageView.image = [UIImage imageWithData:imageData];
+            }
+        }];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
