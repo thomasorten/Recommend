@@ -58,12 +58,6 @@
 
     self.descriptionTextView.layoutManager.delegate = self;
 
-    [FBSession openActiveSessionWithAllowLoginUI:NO];
-
-    if (FBSession.activeSession.isOpen == YES){
-
-        [FBSession openActiveSessionWithAllowLoginUI:NO];
-
     for (UIView *subview in self.cameraScrollView.subviews) {
         subview.layer.shadowColor = [[UIColor blackColor] CGColor];
         subview.layer.shadowOffset = CGSizeMake(0.8f, 0.8f);
@@ -83,15 +77,15 @@
 
     [self.view addGestureRecognizer:tap];
 
-    }
 
-    else {
-        [self performSegueWithIdentifier:@"loginSegue" sender:self];
-    }
-}
+ }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+//    if (FBSession.activeSession.isOpen == YES){
+//
+//        [FBSession openActiveSessionWithAllowLoginUI:NO];
+
     [super viewDidAppear:animated];
 
     if (!self.didPickImageFromAlbum) {
@@ -100,7 +94,7 @@
         }
         [self showCameraControls];
     }
-    
+    [self showCameraControls];
 
     [(TabBarViewController *)self.tabBarController setTabBarVisible:NO animated:YES];
 }
@@ -108,6 +102,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
 
     if (!self.didPickImageFromAlbum) {
         [self.view setBackgroundColor: RGB(2, 156, 188)];
@@ -117,6 +112,12 @@
         self.loadingCameraLabel.hidden = NO;
         self.videoPreviewView.hidden = YES;
     }
+
+    [FBSession openActiveSessionWithAllowLoginUI:NO];
+
+    if (FBSession.activeSession.isOpen == YES) {
+
+    [self.view setBackgroundColor: RGB(2, 156, 188)];
 
     self.cameraScrollView.alpha = 0;
 
@@ -129,6 +130,15 @@
     [self.takeAnotherButton.layer setBorderColor:[[UIColor whiteColor] CGColor]];
 
     [self.navigationController setNavigationBarHidden:YES];
+    [(TabBarViewController *)self.tabBarController setTabBarVisible:NO animated:YES];
+    
+    }
+    else{
+
+        [self performSegueWithIdentifier:@"loginSegue" sender:self];
+
+    }
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -240,7 +250,7 @@
     }
 }
 
-- (IBAction)onCloseCameraPressed:(id)sender
+- (IBAction)onCloseCameraPressed:(UIButton *)sender
 {
     if (self.picker) {
         [self.picker dismissViewControllerAnimated:NO completion:^{
@@ -602,5 +612,10 @@
         }
     }
 }
+
+- (IBAction)unwindFromLogin:(UIStoryboardSegue *)sender{
+    [self.tabBarController setSelectedIndex:0];
+}
+
 
 @end

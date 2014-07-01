@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
+
 @interface SideBarView : UIViewController
+
+//- (void)logedOut;
 
 @end

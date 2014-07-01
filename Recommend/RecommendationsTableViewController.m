@@ -15,6 +15,7 @@
 #import "SWRevealViewController.h"
 
 @interface RecommendationsTableViewController () <UITableViewDelegate, UITableViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate, UISearchBarDelegate, RecommendationDelegate>
+
 @property (weak, nonatomic) IBOutlet UITableView *closeToMeTableView;
 @property NSMutableArray *recommendationsArray;
 @property NSMutableArray *allRecommendationsArray;

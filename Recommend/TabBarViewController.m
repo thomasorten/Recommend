@@ -8,6 +8,7 @@
 
 #import "TabBarViewController.h"
 #import "SWRevealViewController.h"
+#import "LocationViewController.h"
 #import "HeaderImage.h"
 #import "HomeViewController.h"
 
