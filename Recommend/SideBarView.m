@@ -7,13 +7,17 @@
 //
 
 #import "SideBarView.h"
+#import "SWRevealViewController.h"
 #import "LoginViewController.h"
+#import "MyProfileVC.h"
 
 @interface SideBarView () <UITableViewDelegate, UITableViewDataSource>
+
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *logoutActivity;
 @property (strong, nonatomic) IBOutlet UIImageView *profilePic;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UITableView *tableViewoutlet;
+
 @property UIColor *backgroundColor;
 @property NSArray *options;
 @property NSArray *logOut;
@@ -142,7 +146,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    if (indexPath.section == 1) {
+    SWRevealViewController *revealController = [[SWRevealViewController alloc] init];
+
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *profileVC = [storyBoard instantiateViewControllerWithIdentifier:@"myProfile"];
+
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        
+        [revealController pushFrontViewController:profileVC animated:YES];
+
+    }
+
+     else if (indexPath.section == 1) {
 
         [FBSession.activeSession closeAndClearTokenInformation];
         [PFUser logOut];

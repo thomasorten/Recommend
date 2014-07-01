@@ -13,6 +13,7 @@
 		2678FC2E1950847400270B7F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2678FC2D1950847400270B7F /* MapKit.framework */; };
 		2681704B19520DE0008A2692 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269650D31950CC0000418FCE /* LoginViewController.m */; };
 		2681704D195228AE008A2692 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26E5CA121950E4BE00A64A7D /* HomeViewController.m */; };
+		268189911963111A00F89B80 /* MyProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 268189901963111A00F89B80 /* MyProfileVC.m */; };
 		269650D71950CE1500418FCE /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269650D61950CE1500418FCE /* FacebookSDK.framework */; };
 		269C11BD195C8ADC0053CF33 /* SideBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 269C11BC195C8ADC0053CF33 /* SideBarView.m */; };
 		26E5CA1D1951DEDE00A64A7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F695194F848D00289EF0 /* main.m */; };
@@ -73,6 +74,8 @@
 		261BFCAD195B43B3002B04B9 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		2678FC2D1950847400270B7F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2681704C19522878008A2692 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		2681898F1963111A00F89B80 /* MyProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProfileVC.h; sourceTree = "<group>"; };
+		268189901963111A00F89B80 /* MyProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProfileVC.m; sourceTree = "<group>"; };
 		269650D21950CC0000418FCE /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		269650D31950CC0000418FCE /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		269650D61950CE1500418FCE /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
@@ -281,6 +284,8 @@
 				26E5CA151950E4C800A64A7D /* LocationViewController.m */,
 				261BFCAC195B43B3002B04B9 /* SWRevealViewController.h */,
 				261BFCAD195B43B3002B04B9 /* SWRevealViewController.m */,
+				2681898F1963111A00F89B80 /* MyProfileVC.h */,
+				268189901963111A00F89B80 /* MyProfileVC.m */,
 				269C11BB195C8ADC0053CF33 /* SideBarView.h */,
 				269C11BC195C8ADC0053CF33 /* SideBarView.m */,
 				45F6F6A1194F848D00289EF0 /* Images.xcassets */,
@@ -366,7 +371,7 @@
 				ORGANIZATIONNAME = "Orten, Thomas";
 				TargetAttributes = {
 					45F6F685194F848D00289EF0 = {
-						DevelopmentTeam = 4NJCGM5C75;
+						DevelopmentTeam = Y9KZH5XQDN;
 					};
 					45F6F6A6194F848D00289EF0 = {
 						TestTargetID = 45F6F685194F848D00289EF0;
@@ -428,6 +433,7 @@
 				4599128519565B5E0083B4EF /* RecommendationTabBarItem.m in Sources */,
 				4507C07119610487000532F2 /* NSDate+TimeAgo.m in Sources */,
 				4599127F1954980D0083B4EF /* Recommendation.m in Sources */,
+				268189911963111A00F89B80 /* MyProfileVC.m in Sources */,
 				269C11BD195C8ADC0053CF33 /* SideBarView.m in Sources */,
 				459912821955E80E0083B4EF /* TabBarViewController.m in Sources */,
 				260D76D51951F78300A05669 /* LocationViewController.m in Sources */,
@@ -566,7 +572,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Dan Rudolf (Y6A35G2X89)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -575,7 +581,7 @@
 				GCC_PREFIX_HEADER = "Recommend/Recommend-Prefix.pch";
 				INFOPLIST_FILE = "Recommend/Recommend-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "C28040A5-3AA2-4EA1-9FFB-FB4F4C0D496F";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -585,8 +591,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Dan Rudolf (Y6A35G2X89)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -595,7 +601,7 @@
 				GCC_PREFIX_HEADER = "Recommend/Recommend-Prefix.pch";
 				INFOPLIST_FILE = "Recommend/Recommend-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "576CE710-979C-4CC8-B44B-DD18F8E46FD3";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
