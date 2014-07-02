@@ -11,6 +11,7 @@
 #import "LocationViewController.h"
 #import "HeaderImage.h"
 #import "HomeViewController.h"
+#import "RecommendationsTableViewController.h"
 
 #define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 #define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
@@ -62,14 +63,23 @@
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
+    UINavigationController *homeNavVC = (UINavigationController *) [self.viewControllers objectAtIndex:0];
+    HomeViewController *homeVC = (HomeViewController *) [homeNavVC.viewControllers objectAtIndex:0];
+    
+    UINavigationController *searchNavVC = (UINavigationController *) [self.viewControllers objectAtIndex:1];
+    RecommendationsTableViewController *searchVC = (RecommendationsTableViewController *) [searchNavVC.viewControllers objectAtIndex:0];
+
     if ([item.title isEqualToString:@"Home"]) {
-        UINavigationController *navVC = (UINavigationController *) [self.viewControllers objectAtIndex:0];
-        HomeViewController *vc = (HomeViewController *) [navVC.viewControllers objectAtIndex:0];
-        if (vc.scrollOffset > 0) {
-            [vc.newestCollectionView setContentOffset:CGPointZero animated:YES];
-            [vc.popularCollectionView setContentOffset:CGPointZero animated:YES];
+        if (homeVC.scrollOffset > 0) {
+            [homeVC.newestCollectionView setContentOffset:CGPointZero animated:YES];
+            [homeVC.popularCollectionView setContentOffset:CGPointZero animated:YES];
         }
     }
+
+    if ([item.title isEqualToString:@"Search"]) {
+        searchVC.selectedLocation = homeVC.selectedLocation;
+    }
+
 }
 
 @end

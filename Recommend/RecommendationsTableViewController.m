@@ -14,10 +14,14 @@
 #import <Parse/Parse.h>
 #import "SWRevealViewController.h"
 
+#define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
+#define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+
 @interface RecommendationsTableViewController () <UITableViewDelegate, UITableViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate, UISearchBarDelegate, RecommendationDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *closeToMeTableView;
 @property NSMutableArray *recommendationsArray;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *mapViewButton;
 @property NSMutableArray *allRecommendationsArray;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property PFGeoPoint *userLocation;
@@ -33,6 +37,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.mapViewButton.tintColor = RGBA(2, 156, 188, 0);
+    self.mapViewButton.enabled = NO;
+
     _sidebarButton.target = self.revealViewController;
     _sidebarButton.action = @selector(revealToggle:);
 
@@ -51,12 +59,13 @@
     [self.closeToMeTableView addSubview:self.refreshControl];
 
     self.recommendationsArray = [[NSMutableArray alloc] init];
-    [self getTableData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
+    [self getTableData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -129,6 +138,8 @@
 {
     if (self.recommendation) {
         [self getRecommendationsOfSpecificUser];
+    } else if (self.selectedLocation) {
+        [self getRecommendationsByLocation];
     } else {
         [self getRecommendationsCloseToUser];
     }
@@ -142,6 +153,11 @@
 - (void)getRecommendationsCloseToUser
 {
     [self.recommendations getRecommendationsByDistance:self.initialNumberOfRecommendations withinRadius:50];
+}
+
+- (void)getRecommendationsByLocation
+{
+    [self.recommendations getRecommendations:self.initialNumberOfRecommendations whereKey:@"city" equalTo:self.selectedLocation];
 }
 
 - (void)userLocationFound:(PFGeoPoint *)geoPoint
@@ -160,6 +176,10 @@
     [self.recommendationsArray addObjectsFromArray:recommendations];
     [self.closeToMeTableView reloadData];
     [self.refreshControl endRefreshing];
+    if (recommendations.count > 0) {
+        self.mapViewButton.tintColor = RGBA(255, 255, 255, 1);
+        self.mapViewButton.enabled = YES;
+    }
 }
 
 - (void)resetSearch

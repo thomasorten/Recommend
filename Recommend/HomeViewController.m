@@ -36,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *locationNotFoundLabel;
 @property (weak, nonatomic) IBOutlet UILabel *noRecommendationsLabel;
 @property NSMutableDictionary *categoriesDictionary;
+@property NSString *userLocationString;
 @end
 
 @implementation HomeViewController
@@ -75,13 +76,18 @@
 
     self.newestRecommendations = [[Recommendation alloc] initWithIdentifier:@"new"];
     self.newestRecommendations.delegate = self;
-
-    self.recentArray = [NSMutableArray new];
-    self.popularArray = [NSMutableArray new];
     
     self.automaticallyAdjustsScrollViewInsets = YES;
 
     [self.navigationItem.rightBarButtonItem setTitleTextAttributes:nil forState:UIControlStateDisabled];
+
+    self.recentArray = [NSMutableArray new];
+    self.popularArray = [NSMutableArray new];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
 
     [self reloadNew];
     [self reloadPopular];
@@ -103,11 +109,21 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [self.newestRecommendations reset];
-    [self.popularRecommendations reset];
-    [self.newestRecommendations getRecommendations:100 whereKey:@"city" equalTo:[self.pickerPlacesArray objectAtIndex:row]];
-    [self.popularRecommendations getRecommendations:100 whereKey:@"city" equalTo:[self.pickerPlacesArray objectAtIndex:row] orderByDescending:@"numLikes"];
-    [self.placeButton setTitle:[NSString stringWithFormat:@"In %@", [self.pickerPlacesArray objectAtIndex:row]] forState:UIControlStateNormal];
+    if (row == 0) {
+        [self reloadNew];
+        [self reloadPopular];
+        [self.placeButton setTitle:[NSString stringWithFormat:@"Close to you in %@", self.userLocationString] forState:UIControlStateNormal];
+        self.selectedLocation = nil;
+    } else {
+        [self.newestRecommendations reset];
+        [self.popularRecommendations reset];
+        [self.recentArray removeAllObjects];
+        [self.popularArray removeAllObjects];
+        [self.newestRecommendations getRecommendations:100 whereKey:@"city" equalTo:[self.pickerPlacesArray objectAtIndex:row]];
+        [self.popularRecommendations getRecommendations:100 whereKey:@"city" equalTo:[self.pickerPlacesArray objectAtIndex:row] orderByDescending:@"numLikes"];
+        [self.placeButton setTitle:[NSString stringWithFormat:@"In %@", [self.pickerPlacesArray objectAtIndex:row]] forState:UIControlStateNormal];
+        self.selectedLocation = [self.pickerPlacesArray objectAtIndex:row];
+    }
 }
 
 - (IBAction)onClosePlacePressed:(id)sender
@@ -117,16 +133,13 @@
     }];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
 - (void)reloadNew {
+    [self.newestRecommendations reset];
     [self.newestRecommendations getRecommendations:270 withinRadius:50];
 }
 
 - (void)reloadPopular {
+    [self.popularRecommendations reset];
     [self.popularRecommendations getRecommendations:270 withinRadius:50 orderByDescending:@"numLikes"];
 }
 
@@ -152,7 +165,8 @@
         [self.newestRecommendations reverseGeocode:geoPoint onComplete:^(NSMutableDictionary *address) {
                 if (address) {
                     NSString *where = [address objectForKey:@"city"] ? [address objectForKey:@"city"] : [address objectForKey:@"street"];
-                    [self.placeButton setTitle:[NSString stringWithFormat:@"Close to you in %@", where] forState:UIControlStateNormal];
+                    self.userLocationString = where;
+                    [self.placeButton setTitle:[NSString stringWithFormat:@"Close to you in %@", self.userLocationString] forState:UIControlStateNormal];
                 }
         }];
     } else {
@@ -190,12 +204,14 @@
         return;
     }
     if ([identifier isEqualToString:@"new"]) {
+        [self.recentArray removeAllObjects];
         self.recentArrayCount = recommendations.count;
         [self.recentArray addObjectsFromArray:recommendations];
         [self.newestCollectionView reloadData];
         [self.recentRefreshControl endRefreshing];
     }
     if ([identifier isEqualToString:@"popular"]) {
+        [self.popularArray removeAllObjects];
         self.popularArrayCount = recommendations.count;
         [self.popularArray addObjectsFromArray:recommendations];
         [self.popularCollectionView reloadData];

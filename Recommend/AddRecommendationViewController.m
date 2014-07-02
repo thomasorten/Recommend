@@ -24,6 +24,7 @@
 
 @interface AddRecommendationViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, AVCaptureVideoDataOutputSampleBufferDelegate,FBLoginViewDelegate, NSLayoutManagerDelegate>
 @property(nonatomic,strong) DemoImageEditor *imageEditor;
+@property (weak, nonatomic) IBOutlet UIView *allControlsView;
 @property(nonatomic,strong) ALAssetsLibrary *library;
 @property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;
 @property AVCaptureSession *captureSession;
@@ -63,7 +64,7 @@
         subview.layer.shadowOffset = CGSizeMake(0.8f, 0.8f);
         subview.layer.shadowOpacity = 0.6f;
         subview.layer.shadowRadius = 0.6f;
-        }
+    }
 
     [self setLatestImageOffAlbum];
 
@@ -88,13 +89,25 @@
 
     [super viewDidAppear:animated];
 
-    if (!self.didPickImageFromAlbum) {
-        if (!self.captureSession) {
-            [self setupCaptureSession];
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        if (!self.didPickImageFromAlbum) {
+            if (!self.captureSession) {
+                [self setupCaptureSession];
+            }
+            [self showCameraControls];
         }
         [self showCameraControls];
+    } else {
+        if (!self.didPickImageFromAlbum) {
+            [self setupImagePicker];
+        } else {
+            self.loadingCameraLabel.hidden = YES;
+            [UIView animateWithDuration:0.5 animations:^{
+                self.cameraScrollView.alpha = 1;
+            }];
+            [self hideCameraControls];
+        }
     }
-    [self showCameraControls];
 
     [(TabBarViewController *)self.tabBarController setTabBarVisible:NO animated:YES];
 }
@@ -178,55 +191,31 @@
 
 - (IBAction)onAlbumPressed:(id)sender
 {
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+    [self setupImagePicker];
+}
 
-        [self.picker dismissViewControllerAnimated:NO completion:^{
-        }];
-
-        self.picker = [[UIImagePickerController alloc] init];
-
-        self.picker.allowsEditing = NO;
-        self.picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        self.picker.delegate = self;
-
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        self.imageEditor = [[DemoImageEditor alloc] initWithNibName:@"DemoImageEditor" bundle:nil];
-        self.imageEditor.checkBounds = YES;
-        self.imageEditor.rotateEnabled = YES;
-        self.library = library;
-
-        self.imageEditor.doneCallback = ^(UIImage *editedImage, BOOL canceled){
-            if(!canceled) {
-                [self.imageEditor dismissViewControllerAnimated:NO completion:^{
-                    self.capturedImageView.image = editedImage;
-
-                    [self.captureSession stopRunning];
-
-                    self.didPickImageFromAlbum = YES;
-
-                    [self hideCameraControls];
-                }];
-            }
-        };
-
+- (void)stopCaptureSession
+{
+    if (self.captureSession) {
         [self.captureSession stopRunning];
-
-        [self presentViewController:self.picker animated:YES completion:nil];
     }
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
+
+    [self.tabBarController setSelectedIndex:0];
+
     [self.picker dismissViewControllerAnimated:NO completion:^{
     }];
+
+    [(TabBarViewController *)self.tabBarController setTabBarVisible:YES animated:YES];
 }
 
 - (IBAction)onTakePhotoPressed:(id)sender
 {
     if (self.captureSession) {
         [self captureNow];
-    } else {
-        [self.picker takePicture];
     }
     [self hideCameraControls];
 }
@@ -257,7 +246,7 @@
         }];
     }
     [self.tabBarController setSelectedIndex:0];
-    [self.captureSession stopRunning];
+    [self stopCaptureSession];
 
     self.capturedImageView.image = nil;
     self.didPickImageFromAlbum = NO;
@@ -271,7 +260,7 @@
         }];
     } else {
         if (self.captureSession) {
-            [self.captureSession stopRunning];
+            [self stopCaptureSession];
         } else {
             [self.picker dismissViewControllerAnimated:NO completion:^{
             }];
@@ -338,7 +327,7 @@
     self.cameraScrollView.contentInset = contentInsets;
     self.cameraScrollView.scrollIndicatorInsets = contentInsets;
 
-    CGRect fieldFrame = self.descriptionTextView.frame;
+    CGRect fieldFrame = self.allControlsView.frame;
     CGRect aRect = self.view.frame;
     aRect.size.height -= kbSize.height;
     CGPoint origin = fieldFrame.origin;
@@ -443,26 +432,40 @@
 
 - (void)setupImagePicker
 {
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+
+        [self.picker dismissViewControllerAnimated:NO completion:^{
+        }];
 
         self.picker = [[UIImagePickerController alloc] init];
+
+        self.picker.allowsEditing = NO;
+        self.picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         self.picker.delegate = self;
-        self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        self.picker.showsCameraControls = NO;
-        CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, 27.0);
-        CGAffineTransform scale = CGAffineTransformScale(translate, 1.6, 1.6);
-        self.picker.cameraViewTransform = scale;
-        self.picker.cameraOverlayView = self.view;
 
-        if([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear]) {
-            self.picker.cameraDevice =  UIImagePickerControllerCameraDeviceRear;
-        } else {
-            self.picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
-        }
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        self.imageEditor = [[DemoImageEditor alloc] initWithNibName:@"DemoImageEditor" bundle:nil];
+        self.imageEditor.checkBounds = YES;
+        self.imageEditor.rotateEnabled = YES;
+        self.library = library;
 
-        [self.picker setCameraCaptureMode:UIImagePickerControllerCameraCaptureModePhoto];
-        [self.picker setCameraFlashMode:UIImagePickerControllerCameraFlashModeOff];
+        self.imageEditor.doneCallback = ^(UIImage *editedImage, BOOL canceled){
+            if(!canceled) {
 
+                self.didPickImageFromAlbum = YES;
+
+                [self.imageEditor dismissViewControllerAnimated:NO completion:^{
+                    self.capturedImageView.image = editedImage;
+
+                    [self stopCaptureSession];
+
+                    [self hideCameraControls];
+                }];
+            }
+        };
+
+        [self stopCaptureSession];
+        
         [self presentViewController:self.picker animated:YES completion:nil];
     }
 }
@@ -495,6 +498,7 @@
     if (!input)
     {
         [self setupImagePicker];
+        return;
     }
 
     [session addInput:input];
@@ -584,7 +588,7 @@
 
          self.capturedImageView.image = image;
 
-         [self.captureSession stopRunning];
+         [self stopCaptureSession];
 
          [self setFlashMode:AVCaptureFlashModeOff forDevice:self.device];
      }];

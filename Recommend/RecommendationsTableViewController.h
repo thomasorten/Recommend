@@ -14,4 +14,5 @@
 @interface RecommendationsTableViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 @property PFObject *recommendation;
+@property NSString *selectedLocation;
 @end

@@ -17,7 +17,7 @@
 
 - (void)reset
 {
-    self.lastLoaded = nil;
+    self.lastLoaded = NO;
     self.recommendationsLoaded = 0;
 }
 
@@ -26,7 +26,7 @@
     self = [super init];
     if( !self ) return nil;
     self.identifier = identifier;
-    self.lastLoaded = nil;
+    self.lastLoaded = NO;
     self.recommendationsLoaded = 0;
     return self;
 }
@@ -75,7 +75,9 @@
     PFQuery *query = [PFQuery queryWithClassName:@"Location"];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         NSArray *sortedArray = [[object objectForKey:@"city"] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-        onComplete(sortedArray);
+        NSMutableArray *array = [[NSMutableArray alloc] initWithArray:@[@"Close to me"]];
+        [array addObjectsFromArray:sortedArray];
+        onComplete(array);
     }];
 }
 
