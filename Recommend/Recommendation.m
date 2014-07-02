@@ -353,6 +353,7 @@
     PFQuery *userLikes = [PFQuery queryWithClassName:@"Love"];
     [userLikes whereKey:@"user" equalTo:[PFUser currentUser]];
     [userLikes includeKey:@"recommendation"];
+    [userLikes includeKey:@"user"];
     [userLikes findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         [self.delegate likesLoaded:objects];
     }];

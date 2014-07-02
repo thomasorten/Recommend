@@ -10,6 +10,11 @@
 #import "RecommendationsCollectionViewCell.h"
 #import "SWRevealViewController.h"
 #import "Recommendation.h"
+#import "NSDate+TimeAgo.h"
+#import "DetailViewController.h"
+
+#define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+
 
 @interface MyLikes () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, RecommendationDelegate>
 
@@ -28,6 +33,8 @@
     _showMenu.target = self.revealViewController;
     _showMenu.action = @selector(revealToggle:);
 
+        [self.view setBackgroundColor:RGBA(177,177,177, 0.9)];
+
     Recommendation *myrecommendations = [[Recommendation alloc] init];
     [myrecommendations getRecommendations:30 thatUserHasLiked:[PFUser currentUser]];
     myrecommendations.delegate = self;
@@ -39,15 +46,17 @@
 
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self.collectionView reloadData];
 }
 
 - (void)likesLoaded:(NSArray *)likes
 {
     for (NSDictionary *love in likes) {
-        [self.myLikes addObject:[love objectForKey:@"recommendation"]];
+        PFObject *recommendation =[love objectForKey:@"recommendation"];
+        recommendation[@"creator"] = [love objectForKey:@"user"];
+        [self.myLikes addObject:recommendation];
     }
     
     [self.collectionView reloadData];
@@ -88,7 +97,7 @@
     pfImageView.file = (PFFile *)new.thumbnail;
     [pfImageView loadInBackground];
 
-    //    cell.timeLabel.text = [new.createdAt timeAgo];
+    cell.timeLabel.text = [new.createdAt timeAgo];
     cell.titleLabel.text = new.title;
     cell.lovesLabel.text = new.numLikes > 0 ? (new.numLikes).description : @"0";
 
@@ -122,6 +131,17 @@
     
     return cell;
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+
+    NSIndexPath *selected = [[self.collectionView indexPathsForSelectedItems] firstObject];
+    if ([segue.identifier isEqualToString:@"UserLiked"]) {
+        DetailViewController *detailView = [[DetailViewController alloc] init];
+        detailView = segue.destinationViewController;
+        detailView.recommendation = [self.myLikes objectAtIndex:selected.row];
+    }
+}
+
 
 
 @end
