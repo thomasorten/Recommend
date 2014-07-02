@@ -2,12 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "navbar.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "residences_64@2x.png"
+      "filename" : "navbar@2x.png"
     }
   ],
   "info" : {

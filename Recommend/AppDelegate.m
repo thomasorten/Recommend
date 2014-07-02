@@ -28,9 +28,10 @@
     //[[UITabBar appearance] setShadowImage:[[UIImage alloc] init]];
     [[UITabBar appearance] setBackgroundImage:tabBar];
 
-    UIImage *topNav = [UIImage imageWithColor:RGBA(2, 156, 188, 0.8)];
-    [[UINavigationBar appearance] setBackgroundImage:topNav forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance] setBackgroundImage:topNav forBarMetrics:UIBarMetricsLandscapePhone];
+    //UIImage *topNav = [UIImage imageWithColor:RGBA(2, 156, 188, 0.8)];
+    UIImage *topNav = [UIImage imageNamed:@"navbar"];
+    [[UINavigationBar appearance] setBackgroundImage:topNav forBarPosition:UIBarPositionTopAttached  barMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBackgroundImage:topNav forBarPosition:UIBarPositionTopAttached  barMetrics:UIBarMetricsLandscapePhone];
     [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
     [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
 
