@@ -152,6 +152,8 @@
 }
 
 - (void)logedOut{
+
+    SWRevealViewController *revealvc = (id) self.view.window.rootViewController;
     self.nameLabel.text = @"";
     [self.options removeAllObjects];
     [self.logOut removeAllObjects];
@@ -160,13 +162,15 @@
     [self.logoutActivity stopAnimating];
     [self.logoutActivity setHidden:YES];
     [self.tableViewoutlet reloadData];
+    UIViewController *homeTab = [self.storyboard instantiateViewControllerWithIdentifier:@"Home"];
+    [revealvc pushFrontViewController:homeTab animated:YES];
+
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
     SWRevealViewController *revealvc = (id) self.view.window.rootViewController;
-
 
     if (indexPath.section == 0) {
 

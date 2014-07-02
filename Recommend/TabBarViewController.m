@@ -65,19 +65,12 @@
 {
     UINavigationController *homeNavVC = (UINavigationController *) [self.viewControllers objectAtIndex:0];
     HomeViewController *homeVC = (HomeViewController *) [homeNavVC.viewControllers objectAtIndex:0];
-    
-    UINavigationController *searchNavVC = (UINavigationController *) [self.viewControllers objectAtIndex:1];
-    RecommendationsTableViewController *searchVC = (RecommendationsTableViewController *) [searchNavVC.viewControllers objectAtIndex:0];
 
     if ([item.title isEqualToString:@"Home"]) {
         if (homeVC.scrollOffset > 0) {
             [homeVC.newestCollectionView setContentOffset:CGPointZero animated:YES];
             [homeVC.popularCollectionView setContentOffset:CGPointZero animated:YES];
         }
-    }
-
-    if ([item.title isEqualToString:@"Search"]) {
-        searchVC.selectedLocation = homeVC.selectedLocation;
     }
 
 }

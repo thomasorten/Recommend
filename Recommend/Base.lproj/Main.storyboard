@@ -274,10 +274,14 @@
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="mS9-lk-E1u"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="UJ9-iQ-sRx" secondAttribute="bottom" constant="-2" id="3M3-v6-daG"/>
                             <constraint firstAttribute="bottom" secondItem="UJ9-iQ-sRx" secondAttribute="bottom" constant="-2" id="fKX-Bg-lCn"/>
                         </constraints>
                     </view>
@@ -686,10 +690,14 @@
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="176" id="pJN-yF-t5R"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="STI-iz-dPp" secondAttribute="bottom" id="3KI-nZ-eQo"/>
                             <constraint firstAttribute="bottom" secondItem="D1D-Jp-Eyf" secondAttribute="bottom" constant="171" id="aZs-c1-nh7"/>
                             <constraint firstAttribute="bottom" secondItem="STI-iz-dPp" secondAttribute="bottom" id="cL4-nB-kVP"/>
                         </constraints>
@@ -842,155 +850,156 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X6F-Ei-hM3">
-                                <rect key="frame" x="-5" y="-5" width="330" height="579"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please enter a title and description for your recommendation" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="160" translatesAutoresizingMaskIntoConstraints="NO" id="BjZ-68-9Gy">
+                                <rect key="frame" x="80" y="60" width="160" height="108"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="shadowOffset" width="-1" height="1"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WyJ-mD-LOd" userLabel="Button - Cancel">
+                                <rect key="frame" x="267" y="22" width="44" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <size key="titleShadowOffset" width="-1" height="1"/>
+                                <state key="normal" image="close">
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onCloseCameraPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="xj8-b7-wM1"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kwi-dt-sMv" userLabel="View - All controls">
+                                <rect key="frame" x="-3" y="280" width="330" height="287"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WyJ-mD-LOd" userLabel="Button - Cancel">
-                                        <rect key="frame" x="266" y="45" width="44" height="44"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="What do you recommend?" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m8s-DQ-6bv">
+                                        <rect key="frame" x="25" y="20" width="280" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <size key="titleShadowOffset" width="-1" height="1"/>
-                                        <state key="normal" image="close">
-                                            <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <connections>
-                                            <action selector="onCloseCameraPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="xj8-b7-wM1"/>
+                                            <outlet property="delegate" destination="SBR-78-eyY" id="Bzs-9C-jZN"/>
                                         </connections>
-                                    </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please enter a title and description for your recommendation" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="160" translatesAutoresizingMaskIntoConstraints="NO" id="BjZ-68-9Gy">
-                                        <rect key="frame" x="85" y="181" width="160" height="108"/>
+                                    </textField>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ohc-Xd-gv1">
+                                        <rect key="frame" x="25" y="50" width="280" height="2"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    </view>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Write a short description here." translatesAutoresizingMaskIntoConstraints="NO" id="K8x-Kl-G27">
+                                        <rect key="frame" x="21" y="61" width="281" height="96"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        <size key="shadowOffset" width="-1" height="1"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kwi-dt-sMv" userLabel="View - All controls">
-                                        <rect key="frame" x="2" y="295" width="330" height="287"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="SBR-78-eyY" id="ber-RB-xdO"/>
+                                        </connections>
+                                    </textView>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jrZ-ih-EdD">
+                                        <rect key="frame" x="25" y="122" width="280" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lyj-cX-3Qz">
+                                        <rect key="frame" x="26" y="90" width="280" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FOd-xs-OCQ" userLabel="View - Buttons">
+                                        <rect key="frame" x="54" y="149" width="225" height="104"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="What do you recommend?" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m8s-DQ-6bv">
-                                                <rect key="frame" x="25" y="20" width="280" height="30"/>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NH3-wj-gkM">
+                                                <rect key="frame" x="35" y="70" width="155" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                                <size key="titleShadowOffset" width="-1" height="1"/>
+                                                <state key="normal" title="Take another photo">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
                                                 <connections>
-                                                    <outlet property="delegate" destination="SBR-78-eyY" id="Bzs-9C-jZN"/>
+                                                    <action selector="onTakeAnotherPhotoPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="HGg-iO-U65"/>
                                                 </connections>
-                                            </textField>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ohc-Xd-gv1">
-                                                <rect key="frame" x="25" y="50" width="280" height="2"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                            </view>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Write a short description here." translatesAutoresizingMaskIntoConstraints="NO" id="K8x-Kl-G27">
-                                                <rect key="frame" x="21" y="61" width="281" height="96"/>
+                                            </button>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="or" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sli-A9-VIg">
+                                                <rect key="frame" x="106" y="41" width="22" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                                <size key="shadowOffset" width="-1" height="1"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9em-Va-cbz">
+                                                <rect key="frame" x="-13" y="0.0" width="251" height="36"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <size key="titleShadowOffset" width="-1" height="1"/>
+                                                <state key="normal" title="Great! Now set photo location">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
                                                 <connections>
-                                                    <outlet property="delegate" destination="SBR-78-eyY" id="ber-RB-xdO"/>
+                                                    <action selector="onSetLocationPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="qq8-A7-4PU"/>
                                                 </connections>
-                                            </textView>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jrZ-ih-EdD">
-                                                <rect key="frame" x="25" y="122" width="280" height="1"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                            </view>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lyj-cX-3Qz">
-                                                <rect key="frame" x="26" y="90" width="280" height="1"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                            </view>
-                                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FOd-xs-OCQ" userLabel="View - Buttons">
-                                                <rect key="frame" x="54" y="149" width="225" height="104"/>
+                                            </button>
+                                        </subviews>
+                                    </view>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VLY-89-uok" userLabel="View - Controls">
+                                        <rect key="frame" x="20" y="127" width="290" height="140"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bxx-7z-JDj">
+                                                <rect key="frame" x="20" y="51" width="45" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NH3-wj-gkM">
-                                                        <rect key="frame" x="35" y="70" width="155" height="30"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                                        <size key="titleShadowOffset" width="-1" height="1"/>
-                                                        <state key="normal" title="Take another photo">
-                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="onTakeAnotherPhotoPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="HGg-iO-U65"/>
-                                                        </connections>
-                                                    </button>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="or" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sli-A9-VIg">
-                                                        <rect key="frame" x="106" y="41" width="22" height="21"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <nil key="highlightedColor"/>
-                                                        <size key="shadowOffset" width="-1" height="1"/>
-                                                    </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9em-Va-cbz">
-                                                        <rect key="frame" x="-13" y="0.0" width="251" height="36"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                                        <size key="titleShadowOffset" width="-1" height="1"/>
-                                                        <state key="normal" title="Great! Now set photo location">
-                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="onSetLocationPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="qq8-A7-4PU"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                            </view>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VLY-89-uok" userLabel="View - Controls">
-                                                <rect key="frame" x="20" y="127" width="290" height="140"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUx-0s-1mh" userLabel="Button - Cameraroll">
+                                                <rect key="frame" x="14" y="48" width="56" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bxx-7z-JDj">
-                                                        <rect key="frame" x="20" y="51" width="45" height="44"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    </imageView>
-                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUx-0s-1mh" userLabel="Button - Cameraroll">
-                                                        <rect key="frame" x="14" y="48" width="56" height="50"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <size key="titleShadowOffset" width="-1" height="1"/>
-                                                        <state key="normal" image="cameraroll">
-                                                            <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="onAlbumPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="V8H-I1-fYP"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4w-xb-dbt">
-                                                        <rect key="frame" x="232" y="51" width="44" height="44"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <size key="titleShadowOffset" width="-1" height="1"/>
-                                                        <state key="normal" image="flash-off">
-                                                            <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="onFlashPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="HGZ-Wc-S17"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m5x-6b-0FO">
-                                                        <rect key="frame" x="104" y="28" width="83" height="83"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <size key="titleShadowOffset" width="-1" height="1"/>
-                                                        <state key="normal" image="snap">
-                                                            <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="onTakePhotoPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="tEd-fR-DjT"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                            </view>
+                                                <size key="titleShadowOffset" width="-1" height="1"/>
+                                                <state key="normal" image="cameraroll">
+                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="onAlbumPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="V8H-I1-fYP"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4w-xb-dbt">
+                                                <rect key="frame" x="232" y="51" width="44" height="44"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <size key="titleShadowOffset" width="-1" height="1"/>
+                                                <state key="normal" image="flash-off">
+                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="onFlashPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="HGZ-Wc-S17"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m5x-6b-0FO">
+                                                <rect key="frame" x="104" y="28" width="83" height="83"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <size key="titleShadowOffset" width="-1" height="1"/>
+                                                <state key="normal" image="snap">
+                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="onTakePhotoPressed:" destination="SBR-78-eyY" eventType="touchUpInside" id="tEd-fR-DjT"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                     </view>
                                 </subviews>
-                            </scrollView>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="287" id="sZx-8M-3V4"/>
+                                </constraints>
+                            </view>
                         </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="kwi-dt-sMv" secondAttribute="bottom" constant="1" id="A1h-V2-zmp"/>
+                            <constraint firstAttribute="bottom" secondItem="kwi-dt-sMv" secondAttribute="bottom" constant="1" id="QT3-ee-PCN"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="SxA-sF-ieT"/>
                     <connections>
@@ -998,7 +1007,6 @@
                         <outlet property="cameraControlsView" destination="VLY-89-uok" id="6LO-So-N9v"/>
                         <outlet property="cameraRollButton" destination="nUx-0s-1mh" id="8y0-8L-Ep7"/>
                         <outlet property="cameraRollPreview" destination="Bxx-7z-JDj" id="OMG-Ts-b5J"/>
-                        <outlet property="cameraScrollView" destination="X6F-Ei-hM3" id="ThF-jx-t5K"/>
                         <outlet property="cancelButton" destination="WyJ-mD-LOd" id="pso-o2-Srr"/>
                         <outlet property="capturedImageView" destination="LWQ-Ng-YjR" id="9NI-jK-sRG"/>
                         <outlet property="continueButtonsView" destination="FOd-xs-OCQ" id="EyB-WI-nd8"/>
@@ -1021,7 +1029,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i4e-Il-k94" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2262" y="824"/>
+            <point key="canvasLocation" x="1711" y="824"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="Ywy-OI-hYr">
@@ -1152,7 +1160,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EOB-sl-Uwo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="327" y="762"/>
+            <point key="canvasLocation" x="409" y="796"/>
         </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="Tzo-Gv-GDH">
@@ -1172,7 +1180,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Abq-ef-XC3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="684" y="133"/>
+            <point key="canvasLocation" x="150" y="131"/>
         </scene>
         <!--Navigation Controller - Search-->
         <scene sceneID="FMH-mx-fVw">
@@ -1300,7 +1308,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YTm-Vf-ggn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1736" y="824"/>
+            <point key="canvasLocation" x="1248" y="824"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hn3-xN-Ugx">
@@ -1318,7 +1326,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rei-kA-TZj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-199" y="762"/>
+            <point key="canvasLocation" x="-123" y="796"/>
         </scene>
         <!--My Likes-->
         <scene sceneID="nAI-hh-EGW">
@@ -1469,8 +1477,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="iXj-G9-Isr"/>
-        <segue reference="IRn-6p-b8F"/>
         <segue reference="Msd-ei-NpX"/>
+        <segue reference="IRn-6p-b8F"/>
+        <segue reference="hHy-05-Hr6"/>
     </inferredMetricsTieBreakers>
 </document>

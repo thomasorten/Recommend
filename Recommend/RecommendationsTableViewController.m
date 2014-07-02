@@ -71,6 +71,15 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    if (FBSession.activeSession.isOpen == YES){
+        [self.sidebarButton setEnabled:YES];
+        [self.sidebarButton setTintColor:RGBA(255, 255, 255, 0.8)];
+
+    }
+    else if (FBSession.activeSession.isOpen == NO){
+        [self.sidebarButton setEnabled:NO];
+        [self.sidebarButton setTintColor:RGBA(2, 156, 188, 0.0)];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -138,7 +147,7 @@
 {
     if (self.recommendation) {
         [self getRecommendationsOfSpecificUser];
-    } else if (self.selectedLocation) {
+    } else if ([Recommendation getUserSelectedLocation]) {
         [self getRecommendationsByLocation];
     } else {
         [self getRecommendationsCloseToUser];
@@ -157,7 +166,7 @@
 
 - (void)getRecommendationsByLocation
 {
-    [self.recommendations getRecommendations:self.initialNumberOfRecommendations whereKey:@"city" equalTo:self.selectedLocation];
+    [self.recommendations getRecommendations:self.initialNumberOfRecommendations whereKey:@"city" equalTo:[Recommendation getUserSelectedLocation]];
 }
 
 - (void)userLocationFound:(PFGeoPoint *)geoPoint

@@ -15,5 +15,4 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *recommendationsScrollView;
 @property float scrollOffset;
-@property NSString *selectedLocation;
 @end

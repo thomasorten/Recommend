@@ -29,7 +29,7 @@
     _showMenu.action = @selector(revealToggle:);
 
     Recommendation *myrecommendations = [[Recommendation alloc] init];
-    [myrecommendations getRecommendations:30 byUser:[PFUser currentUser]];
+    [myrecommendations getRecommendations:30 thatUserHasLiked:[PFUser currentUser]];
     myrecommendations.delegate = self;
 
 }
@@ -44,9 +44,12 @@
     [self.collectionView reloadData];
 }
 
--(void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier userLocation:(PFGeoPoint *)location
+- (void)likesLoaded:(NSArray *)likes
 {
-    [self.myLikes addObjectsFromArray:recommendations];
+    for (NSDictionary *love in likes) {
+        [self.myLikes addObject:[love objectForKey:@"recommendation"]];
+    }
+    
     [self.collectionView reloadData];
 }
 
@@ -62,7 +65,9 @@
 
     RecommendationsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Like" forIndexPath:indexPath];
     ParseRecommendation *new = [self.myLikes objectAtIndex:indexPath.row];
+
     PFImageView *pfImageView = nil;
+
     for (UIView *subview in cell.contentView.subviews)
     {
         if ([subview isKindOfClass:[PFImageView class]])
@@ -117,8 +122,6 @@
     
     return cell;
 }
-
-
 
 
 @end

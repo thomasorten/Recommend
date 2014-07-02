@@ -22,6 +22,8 @@
 
 - (void)onNoRecommendations:(bool)noRecommendations;
 
+- (void)likesLoaded:(NSArray *)likes;
+
 @end
 
 @interface Recommendation : NSObject
@@ -37,6 +39,10 @@
 @property PFGeoPoint *userLocation;
 @property NSInteger recommendationsLoaded;
 @property NSSortDescriptor *sortDescriptor;
+
++ (NSString *)getUserSelectedLocation;
+
++ (void)setNewLocation:(NSString *)location;
 
 + (UIImage *)getCategoryIcon:(NSString *)category;
 
@@ -76,6 +82,6 @@
 
 - (void)getRecommendations:(int)limit withinRadius:(double)km ofRecommendation:(PFObject *)recommendation;
 
-- (void)getRecommendations:(int)limit thatUser:(PFUser *)user hasLikes:(PFObject *)like;
+- (void)getRecommendations:(int)limit thatUserHasLiked:(PFUser *)user;
 
 @end
