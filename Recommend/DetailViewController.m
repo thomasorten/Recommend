@@ -13,6 +13,9 @@
 #import "TabBarViewController.h"
 #import <Parse/Parse.h>
 
+#define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
+#define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+
 @interface DetailViewController () <RecommendationDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *recommendationImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -31,6 +34,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [self.addressButton setTintColor:RGB(2, 156, 188)];
+    [self.personButton setTintColor:RGB(2, 156, 188)];
 
     [[self.navigationController navigationBar] setTintColor:[UIColor whiteColor]];
 
@@ -109,7 +115,7 @@
     //don't forget to add delegate.....
     [UIView setAnimationDelegate:self];
 
-    [UIView setAnimationDuration:1];
+    [UIView setAnimationDuration:0.5];
     self.errorMessageLabel.alpha = 1;
 
     //also call this before commit animations......
@@ -120,7 +126,7 @@
 -(void)animationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
 {
     [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:2];
+    [UIView setAnimationDuration:4];
     self.errorMessageLabel.alpha = 0;
     [UIView commitAnimations];
 }

@@ -17,7 +17,7 @@
 #import "LoginViewController.h"
 #import "DemoImageEditor.h"
 
-#define defaultTitleString @"What do you recommend?"
+#define defaultTitleString @"What do you kudos?"
 #define defaultDescriptionString @"Write a short description here."
 #define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 #define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]

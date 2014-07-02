@@ -51,9 +51,12 @@
     _sidebarButton.target = self.revealViewController;
     _sidebarButton.action = @selector(revealToggle:);
 
+    [self.placeButton setImage:[UIImage imageNamed:@"location"] forState:UIControlStateNormal];
+    [self.placeButton setTintColor:RGB(2, 156, 188)];
 
-    [self.view setBackgroundColor:RGBA(211,211,211, 0.9)];
-    [self.placeView setBackgroundColor:RGBA(255, 255, 255, 0.6)];
+    [self.view setBackgroundColor:RGB(211,211,211)];
+    [self.placeView setBackgroundColor:RGBA(255, 255, 255, 0.9)];
+    [self.closePickerButton setTintColor:RGB(2, 156, 188)];
 
     self.recentRefreshControl = [[UIRefreshControl alloc] init];
     self.recentRefreshControl.tintColor = [UIColor lightGrayColor];
@@ -128,7 +131,8 @@
     if (row == 0) {
         [self reloadNew];
         [self reloadPopular];
-        [self.placeButton setTitle:[NSString stringWithFormat:@"Close to you in %@", self.userLocationString] forState:UIControlStateNormal];
+        [self.placeButton setTitle:nil forState:UIControlStateNormal];
+        //[self.placeButton setTitle:[NSString stringWithFormat:@"Close to you in %@", self.userLocationString] forState:UIControlStateNormal];
         [Recommendation setNewLocation:nil];
     } else {
         [self reloadByCity:[self.pickerPlacesArray objectAtIndex:row]];
@@ -188,7 +192,8 @@
                     NSString *where = [address objectForKey:@"city"] ? [address objectForKey:@"city"] : [address objectForKey:@"street"];
                     self.userLocationString = where;
                     if (where) {
-                         [self.placeButton setTitle:[NSString stringWithFormat:@"Close to you in %@", self.userLocationString] forState:UIControlStateNormal];
+                        [self.placeButton setTitle:nil forState:UIControlStateNormal];
+                         //[self.placeButton setTitle:[NSString stringWithFormat:@"Close to you in %@", self.userLocationString] forState:UIControlStateNormal];
                     } else {
                         [self.placeButton setTitle:@"Choose location" forState:UIControlStateNormal];
                     }

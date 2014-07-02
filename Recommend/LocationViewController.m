@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIView *categoryPickerView;
 @property (weak, nonatomic) IBOutlet UIPickerView *categoryPicker;
 @property (weak, nonatomic) IBOutlet UIButton *setButton;
+@property (weak, nonatomic) IBOutlet UIButton *categoryDoneButton;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
@@ -54,7 +55,9 @@
     self.locationManager.delegate = self;
     self.mapView.delegate = self;
 
-    [self.categoryPickerView setBackgroundColor:RGBA(255, 255, 255, 0.6)];
+    [self.categoryPickerView setBackgroundColor:RGBA(255, 255, 255, 0.9)];
+    [self.categoryButton setTintColor:RGB(2, 156, 188)];
+    [self.categoryDoneButton setTintColor:RGB(2, 156, 188)];
 }
 
 - (void)setupCategories
