@@ -644,28 +644,6 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D1D-Jp-Eyf">
-                                <rect key="frame" x="79" y="320" width="162" height="77"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button alpha="0.6499999999999998" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVK-Ju-du4">
-                                        <rect key="frame" x="20" y="23" width="122" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <state key="normal" title="Set Location"/>
-                                        <connections>
-                                            <action selector="onSetButtonPressed:" destination="XyQ-Y2-tSz" eventType="touchUpInside" id="gVU-Rx-e7i"/>
-                                        </connections>
-                                    </button>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="bIt-1y-viH">
-                                        <rect key="frame" x="63" y="20" width="37" height="37"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    </activityIndicatorView>
-                                </subviews>
-                            </view>
                             <view alpha="0.0" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="STI-iz-dPp">
                                 <rect key="frame" x="0.0" y="392" width="320" height="176"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -694,11 +672,28 @@
                                     <constraint firstAttribute="height" constant="176" id="pJN-yF-t5R"/>
                                 </constraints>
                             </view>
+                            <button alpha="0.6499999999999998" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVK-Ju-du4">
+                                <rect key="frame" x="99" y="343" width="122" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Set Location"/>
+                                <connections>
+                                    <action selector="onSetButtonPressed:" destination="XyQ-Y2-tSz" eventType="touchUpInside" id="gVU-Rx-e7i"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="bIt-1y-viH">
+                                <rect key="frame" x="142" y="340" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="STI-iz-dPp" secondAttribute="bottom" id="3KI-nZ-eQo"/>
-                            <constraint firstAttribute="bottom" secondItem="D1D-Jp-Eyf" secondAttribute="bottom" constant="171" id="aZs-c1-nh7"/>
+                            <constraint firstItem="NVK-Ju-du4" firstAttribute="top" secondItem="A9b-Iz-BY2" secondAttribute="top" constant="343" id="B5I-NK-7Mw"/>
+                            <constraint firstItem="bIt-1y-viH" firstAttribute="top" secondItem="A9b-Iz-BY2" secondAttribute="top" constant="340" id="CqJ-Ek-TYF"/>
                             <constraint firstAttribute="bottom" secondItem="STI-iz-dPp" secondAttribute="bottom" id="cL4-nB-kVP"/>
                         </constraints>
                     </view>

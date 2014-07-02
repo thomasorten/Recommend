@@ -51,7 +51,8 @@
     _sidebarButton.target = self.revealViewController;
     _sidebarButton.action = @selector(revealToggle:);
 
-    [self.view setBackgroundColor:RGB(224,224,224)];
+
+    [self.view setBackgroundColor:RGBA(177,177,177, 0.9)];
     [self.placeView setBackgroundColor:RGBA(255, 255, 255, 0.6)];
 
     self.recentRefreshControl = [[UIRefreshControl alloc] init];
@@ -100,7 +101,6 @@
         [self.sidebarButton setEnabled:NO];
         [self.sidebarButton setTintColor:RGBA(2, 156, 188, 0.0)];
     }
-
     if ([Recommendation getUserSelectedLocation]) {
         [self reloadByCity:[Recommendation getUserSelectedLocation]];
     } else {
@@ -299,9 +299,9 @@
     cell.layer.shadowPath = [path CGPath];
 
     cell.layer.shadowColor = [UIColor grayColor].CGColor;
-    cell.layer.shadowOpacity = 0.6f;
+    cell.layer.shadowOpacity = 1.0f;
     cell.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
-    cell.layer.shadowRadius = 0.6f;
+    cell.layer.shadowRadius = 1.0f;
     cell.layer.masksToBounds = NO;
 
     cell.alpha = 0.0f;
