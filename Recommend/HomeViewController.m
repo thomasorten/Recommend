@@ -82,9 +82,10 @@
     self.automaticallyAdjustsScrollViewInsets = YES;
 
     [self.navigationItem.rightBarButtonItem setTitleTextAttributes:nil forState:UIControlStateDisabled];
+
+    [self reloadNew];
+    [self reloadPopular];
 }
-
-
 
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)thePickerView {
@@ -119,8 +120,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self reloadNew];
-    [self reloadPopular];
 }
 
 - (void)reloadNew {
