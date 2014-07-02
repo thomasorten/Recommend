@@ -138,7 +138,7 @@
 {
     if (self.recommendation) {
         [self getRecommendationsOfSpecificUser];
-    } else if (self.selectedLocation) {
+    } else if ([Recommendation getUserSelectedLocation]) {
         [self getRecommendationsByLocation];
     } else {
         [self getRecommendationsCloseToUser];
@@ -157,7 +157,7 @@
 
 - (void)getRecommendationsByLocation
 {
-    [self.recommendations getRecommendations:self.initialNumberOfRecommendations whereKey:@"city" equalTo:self.selectedLocation];
+    [self.recommendations getRecommendations:self.initialNumberOfRecommendations whereKey:@"city" equalTo:[Recommendation getUserSelectedLocation]];
 }
 
 - (void)userLocationFound:(PFGeoPoint *)geoPoint

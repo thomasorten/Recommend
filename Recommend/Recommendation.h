@@ -38,6 +38,10 @@
 @property NSInteger recommendationsLoaded;
 @property NSSortDescriptor *sortDescriptor;
 
++ (NSString *)getUserSelectedLocation;
+
++ (void)setNewLocation:(NSString *)location;
+
 + (UIImage *)getCategoryIcon:(NSString *)category;
 
 + (void)getLocations:(void (^)(NSArray *locations))onComplete;

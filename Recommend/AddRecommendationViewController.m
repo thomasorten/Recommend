@@ -26,7 +26,6 @@
 @property(nonatomic,strong) DemoImageEditor *imageEditor;
 @property (weak, nonatomic) IBOutlet UIView *allControlsView;
 @property(nonatomic,strong) ALAssetsLibrary *library;
-@property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;
 @property AVCaptureSession *captureSession;
 @property AVCaptureStillImageOutput *stillImageOutput;
 @property AVCaptureDevice *device;
@@ -49,6 +48,7 @@
 @property (weak, nonatomic) IBOutlet UIView *cameraControlsView;
 @property (weak, nonatomic) IBOutlet UIImageView *cameraRollPreview;
 @property BOOL didPickImageFromAlbum;
+@property int initialScrollOffsetPosition;
 @end
 
 @implementation AddRecommendationViewController
@@ -59,7 +59,7 @@
 
     self.descriptionTextView.layoutManager.delegate = self;
 
-    for (UIView *subview in self.cameraScrollView.subviews) {
+    for (UIView *subview in self.allControlsView.subviews) {
         subview.layer.shadowColor = [[UIColor blackColor] CGColor];
         subview.layer.shadowOffset = CGSizeMake(0.8f, 0.8f);
         subview.layer.shadowOpacity = 0.6f;
@@ -103,7 +103,7 @@
         } else {
             self.loadingCameraLabel.hidden = YES;
             [UIView animateWithDuration:0.5 animations:^{
-                self.cameraScrollView.alpha = 1;
+                self.allControlsView.alpha = 1;
             }];
             [self hideCameraControls];
         }
@@ -132,7 +132,7 @@
 
     [self.view setBackgroundColor: RGB(2, 156, 188)];
 
-    self.cameraScrollView.alpha = 0;
+    self.allControlsView.alpha = 0;
 
     [self.setLocationButton.layer setBorderWidth:1.0];
     [self.setLocationButton.layer setCornerRadius:5];
@@ -173,7 +173,7 @@
         self.videoPreviewView.hidden = NO;
         self.loadingCameraLabel.hidden = YES;
         [UIView animateWithDuration:0.5 animations:^{
-            self.cameraScrollView.alpha = 1;
+            self.allControlsView.alpha = 1;
         }];
     }
 
@@ -323,27 +323,33 @@
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
 
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
-    self.cameraScrollView.contentInset = contentInsets;
-    self.cameraScrollView.scrollIndicatorInsets = contentInsets;
-
     CGRect fieldFrame = self.allControlsView.frame;
     CGRect aRect = self.view.frame;
     aRect.size.height -= kbSize.height;
     CGPoint origin = fieldFrame.origin;
-    origin.y -= (self.cameraScrollView.contentOffset.y-150);
+    self.initialScrollOffsetPosition = origin.y;
+    origin.y -= (self.allControlsView.frame.origin.y-150);
     if (!CGRectContainsPoint(aRect, origin) ) {
-        CGPoint scrollPoint = CGPointMake(0.0, (fieldFrame.origin.y+150)-(aRect.size.height));
-        [self.cameraScrollView setContentOffset:scrollPoint animated:YES];
+        [UIView animateWithDuration:0.2 animations:^{
+            CGRect frame;
+            // move our subView to its new position
+            frame = self.allControlsView.frame;
+            frame.origin.y = (fieldFrame.origin.y+150)-(aRect.size.height);
+            self.allControlsView.frame=frame;
+        }];
     }
 }
 
 // Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
-    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-    self.cameraScrollView.contentInset = contentInsets;
-    self.cameraScrollView.scrollIndicatorInsets = contentInsets;
+    [UIView animateWithDuration:0.2 animations:^{
+        CGRect frame;
+        // move our subView to its new position
+        frame=self.allControlsView.frame;
+        frame.origin.y = self.initialScrollOffsetPosition;
+        self.allControlsView.frame=frame;
+    }];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

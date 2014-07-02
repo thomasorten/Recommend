@@ -89,8 +89,12 @@
 {
     [super viewDidAppear:animated];
 
-    [self reloadNew];
-    [self reloadPopular];
+    if ([Recommendation getUserSelectedLocation]) {
+        [self reloadByCity:[Recommendation getUserSelectedLocation]];
+    } else {
+        [self reloadNew];
+        [self reloadPopular];
+    }
 }
 
 
@@ -113,16 +117,9 @@
         [self reloadNew];
         [self reloadPopular];
         [self.placeButton setTitle:[NSString stringWithFormat:@"Close to you in %@", self.userLocationString] forState:UIControlStateNormal];
-        self.selectedLocation = nil;
+        [Recommendation setNewLocation:nil];
     } else {
-        [self.newestRecommendations reset];
-        [self.popularRecommendations reset];
-        [self.recentArray removeAllObjects];
-        [self.popularArray removeAllObjects];
-        [self.newestRecommendations getRecommendations:100 whereKey:@"city" equalTo:[self.pickerPlacesArray objectAtIndex:row]];
-        [self.popularRecommendations getRecommendations:100 whereKey:@"city" equalTo:[self.pickerPlacesArray objectAtIndex:row] orderByDescending:@"numLikes"];
-        [self.placeButton setTitle:[NSString stringWithFormat:@"In %@", [self.pickerPlacesArray objectAtIndex:row]] forState:UIControlStateNormal];
-        self.selectedLocation = [self.pickerPlacesArray objectAtIndex:row];
+        [self reloadByCity:[self.pickerPlacesArray objectAtIndex:row]];
     }
 }
 
@@ -141,6 +138,18 @@
 - (void)reloadPopular {
     [self.popularRecommendations reset];
     [self.popularRecommendations getRecommendations:270 withinRadius:50 orderByDescending:@"numLikes"];
+}
+
+- (void)reloadByCity:(NSString *)city
+{
+    [self.newestRecommendations reset];
+    [self.popularRecommendations reset];
+    [self.recentArray removeAllObjects];
+    [self.popularArray removeAllObjects];
+    [self.newestRecommendations getRecommendations:100 whereKey:@"city" equalTo:city];
+    [self.popularRecommendations getRecommendations:100 whereKey:@"city" equalTo:city  orderByDescending:@"numLikes"];
+    [self.placeButton setTitle:[NSString stringWithFormat:@"In %@", city] forState:UIControlStateNormal];
+    [Recommendation setNewLocation:city];
 }
 
 - (IBAction)onPlaceButtonPressed:(id)sender

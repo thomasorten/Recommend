@@ -181,6 +181,30 @@
     return icon;
 }
 
++ (NSString *)getUserSelectedLocation
+{
+    NSString *savedLocation;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[self dataFilePath]]) {
+        savedLocation = [[[NSDictionary alloc] initWithContentsOfFile:[self dataFilePath]] objectForKey:@"manualLocation"];
+    }
+    return savedLocation;
+}
+
++ (void)setNewLocation:(NSString *)location
+{
+    if (location) {
+        [@{@"manualLocation" : location} writeToFile:[self dataFilePath] atomically:YES];
+    } else {
+        [[NSFileManager defaultManager] removeItemAtPath:[self dataFilePath] error:nil];
+    }
+}
+
++ (NSString *)dataFilePath {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    return [documentsDirectory stringByAppendingPathComponent:@"manualLocation"];
+}
+
 - (void)loadRecommendations:(int)limit orderByDescending:(NSString *)orderByColumn orderByDistance:(BOOL)orderByDistance nearUser:(bool)findUser withinKm:(double)km nearPoint:(PFGeoPoint *)point whereEqualTo:(NSDictionary *)whereEqualTo whereContainsString:(NSDictionary *)whereContainsString
 {
     if (self.lastLoaded && self.userLocation) {
