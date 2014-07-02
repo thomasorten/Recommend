@@ -286,7 +286,6 @@
 
     [self.library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
         UIImage *preview = [UIImage imageWithCGImage:[asset aspectRatioThumbnail]];
-
         self.imageEditor.sourceImage = image;
         self.imageEditor.previewImage = preview;
         [self.imageEditor reset:NO];
@@ -434,6 +433,11 @@
     }];
 }
 
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    [viewController.navigationItem setTitle:@""];
+}
+
 #pragma mark - image capture
 
 - (void)setupImagePicker
@@ -453,6 +457,7 @@
         self.imageEditor = [[DemoImageEditor alloc] initWithNibName:@"DemoImageEditor" bundle:nil];
         self.imageEditor.checkBounds = YES;
         self.imageEditor.rotateEnabled = YES;
+
         self.library = library;
 
         self.imageEditor.doneCallback = ^(UIImage *editedImage, BOOL canceled){

@@ -52,7 +52,7 @@
     _sidebarButton.action = @selector(revealToggle:);
 
 
-    [self.view setBackgroundColor:RGBA(177,177,177, 0.9)];
+    [self.view setBackgroundColor:RGBA(211,211,211, 0.9)];
     [self.placeView setBackgroundColor:RGBA(255, 255, 255, 0.6)];
 
     self.recentRefreshControl = [[UIRefreshControl alloc] init];
@@ -187,7 +187,11 @@
                 if (address) {
                     NSString *where = [address objectForKey:@"city"] ? [address objectForKey:@"city"] : [address objectForKey:@"street"];
                     self.userLocationString = where;
-                    [self.placeButton setTitle:[NSString stringWithFormat:@"Close to you in %@", self.userLocationString] forState:UIControlStateNormal];
+                    if (where) {
+                         [self.placeButton setTitle:[NSString stringWithFormat:@"Close to you in %@", self.userLocationString] forState:UIControlStateNormal];
+                    } else {
+                        [self.placeButton setTitle:@"Choose location" forState:UIControlStateNormal];
+                    }
                 }
         }];
     } else {

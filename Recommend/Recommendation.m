@@ -316,6 +316,8 @@
         return;
     }
 
+    self.lovesPhoto = YES;
+
     PFQuery *loveQuery = [PFQuery queryWithClassName:@"Love"];
     [loveQuery whereKey:@"recommendation" equalTo:recommendation];
     [loveQuery whereKey:@"user" equalTo:[PFUser currentUser]];
