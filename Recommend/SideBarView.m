@@ -9,7 +9,8 @@
 #import "SideBarView.h"
 #import "SWRevealViewController.h"
 #import "LoginViewController.h"
-#import "MyProfileVC.h"
+#import "MyRecommends.h"
+#import "MyLikes.h"
 
 @interface SideBarView () <UITableViewDelegate, UITableViewDataSource>
 
@@ -23,6 +24,8 @@
 @property NSMutableArray *logOut;
 @property NSMutableArray *images;
 @property NSMutableArray *logoutImage;
+@property MyRecommends *myRecommends;
+@property MyLikes *myLikes;
 
 @end
 
@@ -50,6 +53,11 @@
     
     self.view.backgroundColor = self.backgroundColor;
     self.tableViewoutlet.backgroundColor = self.backgroundColor;
+
+    self.myRecommends = [self.storyboard instantiateViewControllerWithIdentifier:@"myRecommends"];
+    self.myLikes = [self.storyboard instantiateViewControllerWithIdentifier:@"MyLikes"];
+
+
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -60,7 +68,7 @@
 
         [self.logoutActivity setHidesWhenStopped:NO];
         [self.logoutActivity startAnimating];
-        [self.options addObjectsFromArray:@[@"Home",@"My Recomends", @"Likes"]];
+        [self.options addObjectsFromArray:@[@"Home",@"Kudos", @"Favorites"]];
         [self.logOut addObjectsFromArray:@[@"Log Out"]];
         [self.images addObjectsFromArray:@[[UIImage imageNamed:@"home"], [UIImage imageNamed:@"slr"], [UIImage imageNamed:@"heart64"]]];
         [self.logoutImage addObject:[UIImage imageNamed:@"logoutwhite"]];
@@ -154,11 +162,11 @@
     [self.tableViewoutlet reloadData];
 }
 
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
     SWRevealViewController *revealvc = (id) self.view.window.rootViewController;
 
-    UIViewController *profileVC = [self.storyboard instantiateViewControllerWithIdentifier:@"myProfile"];
 
     if (indexPath.section == 0) {
 
@@ -167,19 +175,25 @@
             UIViewController *homeTab = [self.storyboard instantiateViewControllerWithIdentifier:@"Home"];
             [revealvc pushFrontViewController:homeTab animated:YES];
         }
-           else if (indexPath.row == 1) {
 
-                [revealvc pushFrontViewController:profileVC animated:YES];
-            }
+        else if (indexPath.row == 0){
 
-            else if(indexPath.row == 2) {
+            [self.tabBarController setSelectedIndex:0];
 
-                [revealvc pushFrontViewController:profileVC animated:YES];
+        }
+        else if (indexPath.row == 1) {
 
-            }
+            [revealvc pushFrontViewController:self.myRecommends animated:YES];
+        }
+
+        else if(indexPath.row == 2) {
+
+            [revealvc pushFrontViewController:self.myLikes animated:YES];
+
+        }
     }
 
-     else if (indexPath.section == 1) {
+     if (indexPath.section == 1) {
 
         [FBSession.activeSession closeAndClearTokenInformation];
         [PFUser logOut];
@@ -190,9 +204,7 @@
        }
 }
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-}
+
 
 
 

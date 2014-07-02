@@ -76,4 +76,6 @@
 
 - (void)getRecommendations:(int)limit withinRadius:(double)km ofRecommendation:(PFObject *)recommendation;
 
+- (void)getRecommendations:(int)limit thatUser:(PFUser *)user hasLikes:(PFObject *)like;
+
 @end

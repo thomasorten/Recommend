@@ -13,10 +13,11 @@
 		2678FC2E1950847400270B7F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2678FC2D1950847400270B7F /* MapKit.framework */; };
 		2681704B19520DE0008A2692 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269650D31950CC0000418FCE /* LoginViewController.m */; };
 		2681704D195228AE008A2692 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26E5CA121950E4BE00A64A7D /* HomeViewController.m */; };
-		268189911963111A00F89B80 /* MyProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 268189901963111A00F89B80 /* MyProfileVC.m */; };
+		268189911963111A00F89B80 /* MyRecommends.m in Sources */ = {isa = PBXBuildFile; fileRef = 268189901963111A00F89B80 /* MyRecommends.m */; };
 		269650D71950CE1500418FCE /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269650D61950CE1500418FCE /* FacebookSDK.framework */; };
 		269C11BD195C8ADC0053CF33 /* SideBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 269C11BC195C8ADC0053CF33 /* SideBarView.m */; };
 		26E5CA1D1951DEDE00A64A7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F6F695194F848D00289EF0 /* main.m */; };
+		26F2628F19646DC10069ACA6 /* MyLikes.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F2628E19646DC10069ACA6 /* MyLikes.m */; };
 		450506E019578BB4001D035E /* RecommendationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 450506DF19578BB4001D035E /* RecommendationsCollectionViewCell.m */; };
 		450506E619587B1A001D035E /* HeaderImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 450506E519587B1A001D035E /* HeaderImage.m */; };
 		4507C07119610487000532F2 /* NSDate+TimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4507C06F19610487000532F2 /* NSDate+TimeAgo.m */; };
@@ -74,8 +75,8 @@
 		261BFCAD195B43B3002B04B9 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		2678FC2D1950847400270B7F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2681704C19522878008A2692 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
-		2681898F1963111A00F89B80 /* MyProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProfileVC.h; sourceTree = "<group>"; };
-		268189901963111A00F89B80 /* MyProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProfileVC.m; sourceTree = "<group>"; };
+		2681898F1963111A00F89B80 /* MyRecommends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRecommends.h; sourceTree = "<group>"; };
+		268189901963111A00F89B80 /* MyRecommends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRecommends.m; sourceTree = "<group>"; };
 		269650D21950CC0000418FCE /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		269650D31950CC0000418FCE /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		269650D61950CE1500418FCE /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
@@ -84,6 +85,8 @@
 		26E5CA121950E4BE00A64A7D /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		26E5CA141950E4C800A64A7D /* LocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
 		26E5CA151950E4C800A64A7D /* LocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
+		26F2628D19646DC10069ACA6 /* MyLikes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLikes.h; sourceTree = "<group>"; };
+		26F2628E19646DC10069ACA6 /* MyLikes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLikes.m; sourceTree = "<group>"; };
 		450506DE19578BB4001D035E /* RecommendationsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendationsCollectionViewCell.h; sourceTree = SOURCE_ROOT; };
 		450506DF19578BB4001D035E /* RecommendationsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendationsCollectionViewCell.m; sourceTree = SOURCE_ROOT; };
 		450506E419587B1A001D035E /* HeaderImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeaderImage.h; path = ../HeaderImage.h; sourceTree = "<group>"; };
@@ -284,8 +287,10 @@
 				26E5CA151950E4C800A64A7D /* LocationViewController.m */,
 				261BFCAC195B43B3002B04B9 /* SWRevealViewController.h */,
 				261BFCAD195B43B3002B04B9 /* SWRevealViewController.m */,
-				2681898F1963111A00F89B80 /* MyProfileVC.h */,
-				268189901963111A00F89B80 /* MyProfileVC.m */,
+				26F2628D19646DC10069ACA6 /* MyLikes.h */,
+				26F2628E19646DC10069ACA6 /* MyLikes.m */,
+				2681898F1963111A00F89B80 /* MyRecommends.h */,
+				268189901963111A00F89B80 /* MyRecommends.m */,
 				269C11BB195C8ADC0053CF33 /* SideBarView.h */,
 				269C11BC195C8ADC0053CF33 /* SideBarView.m */,
 				45F6F6A1194F848D00289EF0 /* Images.xcassets */,
@@ -371,7 +376,7 @@
 				ORGANIZATIONNAME = "Orten, Thomas";
 				TargetAttributes = {
 					45F6F685194F848D00289EF0 = {
-						DevelopmentTeam = 4NJCGM5C75;
+						DevelopmentTeam = Y9KZH5XQDN;
 					};
 					45F6F6A6194F848D00289EF0 = {
 						TestTargetID = 45F6F685194F848D00289EF0;
@@ -426,6 +431,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4599127C1953E5080083B4EF /* ParseRecommendation.m in Sources */,
+				26F2628F19646DC10069ACA6 /* MyLikes.m in Sources */,
 				2681704D195228AE008A2692 /* HomeViewController.m in Sources */,
 				4507C09D19625574000532F2 /* HFImageEditorFrameView.m in Sources */,
 				450506E619587B1A001D035E /* HeaderImage.m in Sources */,
@@ -433,7 +439,7 @@
 				4599128519565B5E0083B4EF /* RecommendationTabBarItem.m in Sources */,
 				4507C07119610487000532F2 /* NSDate+TimeAgo.m in Sources */,
 				4599127F1954980D0083B4EF /* Recommendation.m in Sources */,
-				268189911963111A00F89B80 /* MyProfileVC.m in Sources */,
+				268189911963111A00F89B80 /* MyRecommends.m in Sources */,
 				269C11BD195C8ADC0053CF33 /* SideBarView.m in Sources */,
 				459912821955E80E0083B4EF /* TabBarViewController.m in Sources */,
 				260D76D51951F78300A05669 /* LocationViewController.m in Sources */,
