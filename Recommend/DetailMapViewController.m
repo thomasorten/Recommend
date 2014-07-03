@@ -43,7 +43,24 @@
         [self.detailMapView addAnnotation:annotation];
     }
 
-    [self.detailMapView showAnnotations:self.detailMapView.annotations animated:YES];
+    // [self.detailMapView showAnnotations:self.detailMapView.annotations animated:YES];
+
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    MKMapRect zoomRect = MKMapRectNull;
+    for (id <MKAnnotation> annotation in self.detailMapView.annotations) {
+        MKMapPoint annotationPoint = MKMapPointForCoordinate(annotation.coordinate);
+        MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0, 0);
+        if (MKMapRectIsNull(zoomRect)) {
+            zoomRect = pointRect;
+        } else {
+            zoomRect = MKMapRectUnion(zoomRect, pointRect);
+        }
+    }
+
+    [self.detailMapView setVisibleMapRect:zoomRect edgePadding:UIEdgeInsetsMake(50, 50, 50, 50) animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated{

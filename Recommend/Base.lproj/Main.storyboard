@@ -376,7 +376,7 @@
                             <inset key="imageInsets" minX="-6" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="View as map" id="9zr-Sg-Sso">
+                        <barButtonItem key="rightBarButtonItem" title="Map View" id="9zr-Sg-Sso">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <segue destination="7VK-Jt-0OT" kind="push" identifier="TableToMapSegue" id="Msd-ei-NpX"/>
@@ -645,7 +645,7 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </view>
                             <view alpha="0.0" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="STI-iz-dPp">
-                                <rect key="frame" x="0.0" y="392" width="320" height="176"/>
+                                <rect key="frame" x="0.0" y="384" width="320" height="176"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j9U-zC-QOv">
@@ -669,7 +669,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="176" id="pJN-yF-t5R"/>
+                                    <constraint firstAttribute="height" constant="176" id="aej-dT-ckH"/>
                                 </constraints>
                             </view>
                             <button alpha="0.6499999999999998" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVK-Ju-du4">
@@ -688,13 +688,32 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dwN-7z-COT">
+                                <rect key="frame" x="0.0" y="543" width="320" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Kudos information by FourSquare" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VHL-WA-4GY">
+                                        <rect key="frame" x="75" y="2" width="170" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="ggi-be-hzr"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="STI-iz-dPp" secondAttribute="bottom" id="3KI-nZ-eQo"/>
+                            <constraint firstAttribute="bottom" secondItem="dwN-7z-COT" secondAttribute="bottom" id="9YS-rE-lAq"/>
                             <constraint firstItem="NVK-Ju-du4" firstAttribute="top" secondItem="A9b-Iz-BY2" secondAttribute="top" constant="343" id="B5I-NK-7Mw"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="STI-iz-dPp" secondAttribute="bottom" constant="8" id="CEa-eV-4KT"/>
                             <constraint firstItem="bIt-1y-viH" firstAttribute="top" secondItem="A9b-Iz-BY2" secondAttribute="top" constant="340" id="CqJ-Ek-TYF"/>
-                            <constraint firstAttribute="bottom" secondItem="STI-iz-dPp" secondAttribute="bottom" id="cL4-nB-kVP"/>
+                            <constraint firstAttribute="bottom" secondItem="dwN-7z-COT" secondAttribute="bottom" id="LH5-QM-aAw"/>
+                            <constraint firstAttribute="bottom" secondItem="STI-iz-dPp" secondAttribute="bottom" constant="8" id="Qnt-wi-vEz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="147-5E-6rF"/>
@@ -1475,8 +1494,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="eqa-xD-Jr9"/>
-        <segue reference="iXj-G9-Isr"/>
+        <segue reference="Msd-ei-NpX"/>
         <segue reference="IRn-6p-b8F"/>
+        <segue reference="hHy-05-Hr6"/>
     </inferredMetricsTieBreakers>
 </document>
