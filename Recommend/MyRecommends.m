@@ -18,6 +18,7 @@
 @interface MyRecommends () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, RecommendationDelegate>
 
 @property NSMutableArray *myRecommends;
+@property UIRefreshControl *pullRefresh;
 
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 
@@ -34,10 +35,20 @@
 
     [self.view setBackgroundColor:RGBA(177,177,177, 0.9)];
 
+    [self refresh];
+
+    self.pullRefresh = [[UIRefreshControl alloc] init];
+    [self.pullRefresh addTarget:self
+                     action:@selector(refresh)
+             forControlEvents:UIControlEventValueChanged];
+    [self.collectionView addSubview:self.pullRefresh];
+    
+}
+
+- (void)refresh{
     Recommendation *myrecommendations = [[Recommendation alloc] init];
     [myrecommendations getRecommendations:30 byUser:[PFUser currentUser]];
     myrecommendations.delegate = self;
-    
 }
 
 -(void)onNoRecommendations:(bool)noRecommendations
@@ -47,13 +58,13 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.collectionView reloadData];
 }
 
 -(void)recommendationsLoaded:(NSArray *)recommendations forIdentifier:(NSString *)identifier userLocation:(PFGeoPoint *)location
 {
     [self.myRecommends addObjectsFromArray:recommendations];
     [self.collectionView reloadData];
+    [self.pullRefresh endRefreshing];
 }
 
 

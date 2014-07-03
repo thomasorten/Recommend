@@ -21,6 +21,7 @@
 @property NSMutableArray *myLikes;
 
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
+@property UIRefreshControl *pullRefresh;
 
 @end
 
@@ -33,11 +34,17 @@
     _showMenu.target = self.revealViewController;
     _showMenu.action = @selector(revealToggle:);
 
-        [self.view setBackgroundColor:RGBA(177,177,177, 0.9)];
+    [self.view setBackgroundColor:RGBA(177,177,177, 0.9)];
 
-    Recommendation *myrecommendations = [[Recommendation alloc] init];
-    [myrecommendations getRecommendations:30 thatUserHasLiked:[PFUser currentUser]];
-    myrecommendations.delegate = self;
+    [self refresh];
+
+
+    self.pullRefresh = [[UIRefreshControl alloc] init];
+    [self.pullRefresh addTarget:self
+                         action:@selector(refresh)
+               forControlEvents:UIControlEventValueChanged];
+    [self.collectionView addSubview:self.pullRefresh];
+    self.collectionView.alwaysBounceVertical = YES;
 
 }
 
@@ -46,9 +53,14 @@
 
 }
 
+- (void)refresh{
+    Recommendation *myrecommendations = [[Recommendation alloc] init];
+    [myrecommendations getRecommendations:30 thatUserHasLiked:[PFUser currentUser]];
+    myrecommendations.delegate = self;
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.collectionView reloadData];
 }
 
 - (void)likesLoaded:(NSArray *)likes
@@ -60,6 +72,7 @@
     }
     
     [self.collectionView reloadData];
+    [self.pullRefresh endRefreshing];
 }
 
 

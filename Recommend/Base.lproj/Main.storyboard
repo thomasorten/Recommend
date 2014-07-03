@@ -729,6 +729,7 @@
                         <outlet property="setButton" destination="NVK-Ju-du4" id="saR-5d-lgT"/>
                         <outlet property="titleLabel" destination="evE-9d-38c" id="Ugp-n8-zeM"/>
                         <segue destination="XOj-o4-j2b" kind="unwind" identifier="Unwind" unwindAction="backToMain:" id="sXR-5N-Nuy"/>
+                        <segue destination="XOj-o4-j2b" kind="unwind" identifier="UnwindFromAdd" unwindAction="unwindFromSet:" id="JnK-zI-tVE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="odz-jN-dcm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1494,8 +1495,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Msd-ei-NpX"/>
+        <segue reference="rKD-9c-IX3"/>
         <segue reference="IRn-6p-b8F"/>
-        <segue reference="hHy-05-Hr6"/>
+        <segue reference="Msd-ei-NpX"/>
     </inferredMetricsTieBreakers>
 </document>

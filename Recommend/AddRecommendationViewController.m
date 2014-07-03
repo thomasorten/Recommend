@@ -162,6 +162,10 @@
     [(TabBarViewController *)self.tabBarController setTabBarVisible:YES animated:YES];
 }
 
+- (IBAction)unwindFromSet:(UIStoryboardSegue *)sender{
+    [self.tabBarController setSelectedIndex:0];
+}
+
 - (void)showCameraControls
 {
     [UIView animateWithDuration:0.2 animations:^{

@@ -188,7 +188,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
 
     if ([alertView.title isEqualToString:@"Recommendation Added!"] && buttonIndex == 0) {
-        [self.tabBarController setSelectedIndex:0];
+        [self performSegueWithIdentifier:@"UnwindFromAdd" sender:self];
     }
 }
 
