@@ -64,7 +64,7 @@
     
     [FBSession openActiveSessionWithAllowLoginUI:NO];
 
-    if (FBSession.activeSession.isOpen == YES && self.options.count ==0) {
+    if ([PFUser currentUser] && FBSession.activeSession.isOpen == YES && self.options.count ==0) {
 
         [self.logoutActivity setHidesWhenStopped:NO];
         [self.logoutActivity startAnimating];

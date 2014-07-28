@@ -22,10 +22,12 @@
 @dynamic description;
 @dynamic city;
 @dynamic street;
+@dynamic country;
 @dynamic creator;
 @dynamic numLikes;
 @dynamic point;
 @dynamic category;
 @dynamic category_id;
+@dynamic flags;
 
 @end

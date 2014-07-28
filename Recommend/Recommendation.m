@@ -39,7 +39,7 @@
     [geo reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
         if (!error) {
             CLPlacemark *addressPlacmark = [placemarks firstObject];
-            NSString *street = [NSString stringWithFormat:@"%@ %@",addressPlacmark.subThoroughfare, addressPlacmark.thoroughfare];
+            NSString *street = [NSString stringWithFormat:@"%@ %@",addressPlacmark.thoroughfare, addressPlacmark.thoroughfare];
             NSString *city = [NSString stringWithFormat:@"%@",addressPlacmark.locality];
 
             NSMutableDictionary *addressDictionary = [[NSMutableDictionary alloc] initWithObjects:@[street, city] forKeys:@[@"street", @"city"]];
@@ -63,20 +63,36 @@
     }];
 }
 
-+ (void)saveLocation:(NSString *)city
-{
-    PFObject *location = [PFObject objectWithClassName:@"Location"];
-    [location addUniqueObjectsFromArray:@[city] forKey:@"city"];
-    [location saveInBackground];
-}
-
-+ (void)getLocations:(void (^)(NSArray *locations))onComplete
++ (void)saveLocation:(NSDictionary *)location
 {
     PFQuery *query = [PFQuery queryWithClassName:@"Location"];
+    [query whereKey:@"country" equalTo:[location objectForKey:@"country"]];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        NSArray *sortedArray = [[object objectForKey:@"city"] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-        NSMutableArray *array = [[NSMutableArray alloc] initWithArray:@[@"Close to me"]];
-        [array addObjectsFromArray:sortedArray];
+        if (!object) {
+            PFObject *newLocation = [PFObject objectWithClassName:@"Location"];
+            newLocation[@"country"] = [location objectForKey:@"country"];
+            [newLocation addObject:[location objectForKey:@"city"] forKey:@"city"];
+            [newLocation saveInBackground];
+        } else {
+            // The find succeeded.
+            [object addUniqueObject:[location objectForKey:@"city"] forKey:@"city"];
+            [object saveInBackground];
+        }
+    }];
+}
+
++ (void)getLocations:(void (^)(NSMutableArray *locations))onComplete
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Location"];
+    [query orderByAscending:@"country"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        [array addObject:@"Close to me"];
+        for (PFObject *country in objects) {
+            NSArray *sortedCityArray = [[country objectForKey:@"city"] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+            [array addObject: [NSString stringWithFormat:@"- %@ -", [country objectForKey:@"country"]]];
+            [array addObjectsFromArray:sortedCityArray];
+        }
         onComplete(array);
     }];
 }
@@ -263,6 +279,7 @@
     }
 
     [query whereKey:@"thumbnail" notEqualTo:[NSNull null]];
+    [query whereKey:@"flags" equalTo:[NSNull null]];
 
     if (!orderByDistance && !orderByColumn) {
         [query orderByDescending:@"createdAt"];
@@ -306,13 +323,13 @@
 {
     // Check if user has liked
     if (self.lovesPhoto) {
-        [self.delegate recommendationLoved:@"You have already liked this recommendation." count:0 recommendation:recommendation];
+        [self.delegate recommendationLoved:@"You have already given a kudos." count:0 recommendation:recommendation];
         return;
     }
 
     if (![PFUser currentUser]) {
         // The find succeeded.
-        [self.delegate recommendationLoved:@"You have to log in to like a recommendation." count:0 recommendation:nil];
+        [self.delegate recommendationLoved:@"You have to log in to give kudos." count:0 recommendation:nil];
         return;
     }
 
@@ -342,7 +359,7 @@
             }];
         } else {
             // The find succeeded.
-            [self.delegate recommendationLoved:@"You have already liked this recommendation." count:0 recommendation:recommendation];
+            [self.delegate recommendationLoved:@"You have already given a kudos." count:0 recommendation:recommendation];
         }
     }];
 
@@ -355,7 +372,15 @@
     [userLikes includeKey:@"recommendation"];
     [userLikes includeKey:@"user"];
     [userLikes findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        [self.delegate likesLoaded:objects];
+        NSMutableArray *tmpArray = [[NSMutableArray alloc] init];
+        for (PFObject *object in objects) {
+            PFObject *recommendation = [object objectForKey:@"recommendation"];
+            recommendation[@"creator"] = [object objectForKey:@"user"];
+            if (recommendation && !recommendation[@"flags"]) {
+                [tmpArray addObject:recommendation];
+            }
+        }
+        [self.delegate likesLoaded:(NSArray *) tmpArray];
     }];
 }
 

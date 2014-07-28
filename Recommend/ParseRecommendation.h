@@ -20,10 +20,12 @@
 @property NSString *description;
 @property NSString *city;
 @property NSString *street;
+@property NSString *country;
 @property PFObject *creator;
 @property NSNumber *numLikes;
 @property PFGeoPoint *point;
 @property NSString *category;
 @property NSString *category_id;
+@property NSNumber *flags;
 
 @end

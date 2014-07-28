@@ -156,12 +156,15 @@
     newRecommend.point = [self.recommendation objectForKey:@"location"];
     newRecommend.street = [self.recommendation objectForKey:@"street"];
     newRecommend.city = [self.recommendation objectForKey:@"city"];
+    newRecommend.country = [self.recommendation objectForKey:@"country"];
     newRecommend.category = self.chosenCategory;
 
     [newRecommend saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
 
-            [Recommendation saveLocation:newRecommend.city];
+
+            NSDictionary *locationDictionary = [[NSDictionary alloc] initWithObjects:@[newRecommend.street, newRecommend.city, newRecommend.country] forKeys:@[@"street", @"city", @"country"]];
+            [Recommendation saveLocation: locationDictionary];
 
             [self.activityIndicator stopAnimating];
             [self.activityIndicator setHidden:YES];
@@ -240,8 +243,9 @@
         CLPlacemark *addressPlacmark = [placemarks firstObject];
         NSString *street = [NSString stringWithFormat:@"%@ %@",addressPlacmark.subThoroughfare, addressPlacmark.thoroughfare];
         NSString *city = [NSString stringWithFormat:@"%@",addressPlacmark.locality];
+        NSString *country = [NSString stringWithFormat:@"%@", addressPlacmark.country];
 
-        NSMutableDictionary *addressDictionary = [[NSMutableDictionary alloc] initWithObjects:@[street, city] forKeys:@[@"street", @"city"]];
+        NSMutableDictionary *addressDictionary = [[NSMutableDictionary alloc] initWithObjects:@[street, city, country] forKeys:@[@"street", @"city", @"country"]];
 
         [self.recommendation addEntriesFromDictionary:addressDictionary];
         [self uploadData];
@@ -306,25 +310,28 @@
         NSDictionary *locationResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&connectionError];
         NSArray *venues = [[locationResponse objectForKey:@"response"] objectForKey:@"venues"];
         NSString *closestCategory;
+        NSString *closestMatchSubCategory;
         if (venues.count) {
             NSArray *categories = [[venues objectAtIndex:0] objectForKey:@"categories"];
             if (categories.count) {
-                NSString *closestMatchSubCategory = [[categories objectAtIndex:0] objectForKey:@"name"];
-                // Find match in array
-                NSInteger row = 0;
-                for (NSDictionary *category in self.categoriesArray) {
-                    for (NSString *matchToCategory in [category objectForKey:@"categories"]) {
-                        if ([closestMatchSubCategory isEqualToString:matchToCategory])
-                        {
-                            closestCategory = [category objectForKey:@"name"];
-                            [self.categoryPicker selectRow:row inComponent:0 animated:NO];
-                            [self.categoryButton setTitle:closestCategory forState:UIControlStateNormal];
-                            self.chosenCategory = closestCategory;
-                        }
-                    }
-                    row ++;
+                closestMatchSubCategory = [[categories objectAtIndex:0] objectForKey:@"name"];
+            }
+        } else {
+            closestMatchSubCategory = @"Village";
+        }
+        // Find match in array
+        NSInteger row = 0;
+        for (NSDictionary *category in self.categoriesArray) {
+            for (NSString *matchToCategory in [category objectForKey:@"categories"]) {
+                if ([closestMatchSubCategory isEqualToString:matchToCategory])
+                {
+                    closestCategory = [category objectForKey:@"name"];
+                    [self.categoryPicker selectRow:row inComponent:0 animated:NO];
+                    [self.categoryButton setTitle:closestCategory forState:UIControlStateNormal];
+                    self.chosenCategory = closestCategory;
                 }
             }
+            row ++;
         }
     }];
 }

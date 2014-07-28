@@ -46,9 +46,9 @@
 
 + (UIImage *)getCategoryIcon:(NSString *)category;
 
-+ (void)getLocations:(void (^)(NSArray *locations))onComplete;
++ (void)getLocations:(void (^)(NSMutableArray *locations))onComplete;
 
-+ (void)saveLocation:(NSString *)city;
++ (void)saveLocation:(NSDictionary *)location;
 
 - (void)reset;
 

@@ -13,6 +13,7 @@
 #import "NSDate+TimeAgo.h"
 #import "DetailViewController.h"
 
+#define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 #define RGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
 
@@ -34,7 +35,7 @@
     _showMenu.target = self.revealViewController;
     _showMenu.action = @selector(revealToggle:);
 
-    [self.view setBackgroundColor:RGBA(177,177,177, 0.9)];
+    [self.view setBackgroundColor:RGB(211,211,211)];
 
     [self refresh];
 
@@ -65,12 +66,8 @@
 
 - (void)likesLoaded:(NSArray *)likes
 {
-    for (NSDictionary *love in likes) {
-        PFObject *recommendation =[love objectForKey:@"recommendation"];
-        recommendation[@"creator"] = [love objectForKey:@"user"];
-        [self.myLikes addObject:recommendation];
-    }
-    
+    [self.myLikes removeAllObjects];
+    [self.myLikes addObjectsFromArray:likes];
     [self.collectionView reloadData];
     [self.pullRefresh endRefreshing];
 }

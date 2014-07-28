@@ -95,12 +95,11 @@
 {
     [super viewDidAppear:animated];
 
-    if (FBSession.activeSession.isOpen == YES){
+    if ([PFUser currentUser] && FBSession.activeSession.isOpen == YES){
         [self.sidebarButton setEnabled:YES];
         [self.sidebarButton setTintColor:RGBA(255, 255, 255, 0.8)];
 
-    }
-    else if (FBSession.activeSession.isOpen == NO){
+    } else {
         [self.sidebarButton setEnabled:NO];
         [self.sidebarButton setTintColor:RGBA(2, 156, 188, 0.0)];
     }
@@ -135,7 +134,11 @@
         //[self.placeButton setTitle:[NSString stringWithFormat:@"Close to you in %@", self.userLocationString] forState:UIControlStateNormal];
         [Recommendation setNewLocation:nil];
     } else {
-        [self reloadByCity:[self.pickerPlacesArray objectAtIndex:row]];
+        NSString *city = [self.pickerPlacesArray objectAtIndex:row];
+        if ([city hasPrefix:@"-"]) {
+            return;
+        }
+        [self reloadByCity:city];
     }
 }
 
@@ -170,8 +173,8 @@
 
 - (IBAction)onPlaceButtonPressed:(id)sender
 {
-    [Recommendation getLocations:^(NSArray *locations) {
-        self.pickerPlacesArray = [[NSMutableArray alloc] initWithArray:locations];
+    [Recommendation getLocations:^(NSMutableArray *locations) {
+        self.pickerPlacesArray = locations;
         [self.placePickerView reloadAllComponents];
         [UIView animateWithDuration:0.2 animations:^{
             self.placeView.alpha = 1;
